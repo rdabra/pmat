@@ -1,0 +1,8 @@
+CompileFlags: # Para incluir headers que não estejam nos includes do msys4                      
+ Add: [-xc++,-I,"c:/msys64/clang64/include/opencv4",-I,""]
+
+InlayHints: # Turning off parameter hints (boring)
+  Designators: Yes
+  Enabled: Yes
+  ParameterNames: No
+  DeducedTypes: Yes

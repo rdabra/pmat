@@ -1,10 +1,13 @@
-cmake_minimum_required(VERSION 3.7)
 
-add_definitions(-std=c++17)
+cmake_minimum_required (VERSION 3.26)
 
-set(CXX_FLAGS "-Wall")
-set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
-project(HelloWorld)
+project(pmat LANGUAGES CXX VERSION 0.1 DESCRIPTION "SIMPLE C++ STATIC LIBRARY FOR MATRIX OPERATIONS")
 
-add_executable(HelloWorld src/main.cpp)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON) 
+
+enable_testing()
+
+add_subdirectory (src)
+add_subdirectory (test) 
