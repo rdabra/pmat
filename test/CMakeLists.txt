@@ -10,7 +10,8 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(
   pmat_test
-  pmat_test.cpp 
+  tVector.h 
+  pmat_test.cpp
 )  
 
 target_link_libraries(
@@ -18,6 +19,8 @@ target_link_libraries(
   GTest::gtest_main pmatLib 
 )
 
+
 include(GoogleTest)
-gtest_add_tests(TARGET pmat_test)
+gtest_discover_tests(pmat_test)
+#gtest_add_tests(TARGET pmat_test)
 

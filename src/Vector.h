@@ -14,7 +14,7 @@ class Vector : public Array {
       std::vector<double> _vector{};
 
    public:
-      Vector();
+      Vector() = default;
       Vector(unsigned size) : _vector(size, 0.){};
       Vector(const Vector &vector);
       Vector(Vector &&vector) noexcept : _vector{std::move(vector._vector)} {};

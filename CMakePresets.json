@@ -1,35 +1,49 @@
 {
-    "version": 2,
-    "configurePresets": [
-        {
-            "name": "clang_x86_64-w64-mingw64",
-            "displayName": "CLANG 16.0.2 x86_64-w64 (mingw64)",
-            "description": "Using compilers: C = C:\\msys64\\clang64\\bin\\clang.exe, CXX = C:\\msys64\\clang64\\bin\\clang++.exe",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/out/build/debug/${presetName}",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/debug/${presetName}",
-                "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
-                "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
-                "CMAKE_CXX_FLAGS": "-fprofile-arcs -ftest-coverage -fPIC -O0",
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        }
-    ],
-    "buildPresets": [
-        {
-            "name": "build_clang_x86_64-w64-mingw64",
-            "description": "",
-            "displayName": "CLANG 16.0.2 x86_64-w64 (mingw64)",
-            "configurePreset": "clang_x86_64-w64-mingw64"
-        }
-    ],
-    "testPresets": [
-        {
-            "name": "testclang_x86_64-w64-mingw64",
-            "description": "",
-            "displayName": "CLANG 16.0.2 x86_64-w64 (mingw64)",
-            "configurePreset": "clang_x86_64-w64-mingw64"
-        }
-    ]
+   "version": 2,
+   "configurePresets": [
+      {
+         "name": "covClang",
+         "displayName": "Clang(gcov)",
+         "description": "Using compilers: C = C:\\msys64\\clang64\\bin\\clang.exe, CXX = C:\\msys64\\clang64\\bin\\clang++.exe",
+         "generator": "Ninja",
+         "binaryDir": "${sourceDir}/out/build/${presetName}",
+         "cacheVariables": {
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+            "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
+            "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+            "CMAKE_CXX_FLAGS": "-O0 -coverage",
+            "CMAKE_BUILD_TYPE": "Debug"
+         }
+      },
+      {
+         "name": "debugClang",
+         "displayName": "Clang(debug)",
+         "description": "Using compilers: C = C:\\msys64\\clang64\\bin\\clang.exe, CXX = C:\\msys64\\clang64\\bin\\clang++.exe",
+         "generator": "Ninja",
+         "binaryDir": "${sourceDir}/out/build/${presetName}",
+         "cacheVariables": {
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+            "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
+            "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+            "CMAKE_CXX_FLAGS": "",
+            "CMAKE_BUILD_TYPE": "Debug"
+         }
+      }
+   ],
+   "buildPresets": [
+      {
+         "name": "debugClang",
+         "description": "",
+         "displayName": "Clang(Debug)",
+         "configurePreset": "debugClang"
+      }
+   ],
+   "testPresets": [
+      {
+         "name": "testClang",
+         "description": "",
+         "displayName": "Clang(Test)",
+         "configurePreset": "covClang"
+      }
+   ]
 }
