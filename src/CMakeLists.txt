@@ -2,7 +2,7 @@
 
 #file(GLOB_RECURSE sources *.cpp *.h)
 
-add_library(pmatLib STATIC Array.cpp Vector.cpp)
+add_library(pmatLib STATIC Array.cpp Vector.cpp Matrix.cpp)
 target_include_directories(pmatLib BEFORE PUBLIC ../src)
 
 
