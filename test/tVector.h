@@ -1,3 +1,4 @@
+#include "../src/Matrix.h"
 #include "../src/Vector.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
@@ -234,9 +235,9 @@ TEST(TestVector, TestOccurrences) {
    v.setValue(5.0, 5);
    v.setValue(7.0, 6);
 
-   EXPECT_TRUE(v.numberOfOccurrences(5.0) == 3);
-   EXPECT_TRUE(v.numberOfOccurrences(7.0) == 2);
-   EXPECT_TRUE(v.numberOfOccurrences(9.0) == 0);
+   EXPECT_TRUE(v.occurrences(5.0) == 3);
+   EXPECT_TRUE(v.occurrences(7.0) == 2);
+   EXPECT_TRUE(v.occurrences(9.0) == 0);
 }
 
 TEST(TestVector, TestMisc) {
@@ -274,9 +275,34 @@ TEST(TestVector, TestMisc) {
    res1.setValue(7.0, 6);
 
    Vector vv(v);
-
    vv.swapElements(1, 4);
 
+   Vector v1{};
+   v1.resize(5);
+   v1.fillRandomly(-2.0, 10.0);
+
+   Matrix co{7, 1};
+   co.setValue(2.0, 0, 0);
+   co.setValue(4.0, 1, 0);
+   co.setValue(6.0, 2, 0);
+   co.setValue(8.0, 3, 0);
+   co.setValue(10.0, 4, 0);
+   co.setValue(12.0, 5, 0);
+   co.setValue(14.0, 6, 0);
+
+   Matrix li{1, 7};
+   li.setValue(2.0, 0, 0);
+   li.setValue(4.0, 0, 1);
+   li.setValue(6.0, 0, 2);
+   li.setValue(8.0, 0, 3);
+   li.setValue(10.0, 0, 4);
+   li.setValue(12.0, 0, 5);
+   li.setValue(14.0, 0, 6);
+
+   EXPECT_TRUE(res.toColumnMatrix() == co);
+   EXPECT_TRUE(res.toRowMatrix() == li);
+   EXPECT_TRUE(v1.size() == 5);
+   EXPECT_TRUE(v1(3) >= -2.0 && v1(3) <= 10.0);
    EXPECT_TRUE(a == v);
    EXPECT_TRUE(v.dimension() == 1);
    EXPECT_TRUE(b == v);

@@ -55,8 +55,8 @@ class Matrix : public pmat::Array {
       virtual void multiplyColumnBy(const unsigned &column, const double &scalar);
       virtual void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
                             const unsigned &endColumn);
-      virtual void partialSwapColumns(const unsigned &columnA, const unsigned &columnB,
-                                      const unsigned &startRow, const unsigned &endRow);
+      virtual void swapColumns(const unsigned &columnA, const unsigned &columnB,
+                               const unsigned &startRow, const unsigned &endRow);
       virtual void transpose();
       [[nodiscard]] virtual double getFrobeniusNorm() const;
       void fillRandomly(const double &min, const double &max) override;

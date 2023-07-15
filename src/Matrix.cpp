@@ -1,6 +1,8 @@
 #include "Matrix.h"
 #include "utils.h"
+#include <fstream>
 #include <random>
+#include <sstream>
 #include <vector>
 
 pmat::Matrix::Matrix(const unsigned &rowSize, const unsigned &columnSize)
@@ -9,7 +11,23 @@ pmat::Matrix::Matrix(const unsigned &rowSize, const unsigned &columnSize)
 }
 
 pmat::Matrix::Matrix(const std::string &fileName) {
-   // TODO Implementar este construtor
+   std::ifstream f{fileName};
+   if (f.is_open()) {
+      unsigned i{0};
+      std::string line;
+      while (std::getline(f, line)) {
+         std::stringstream lineStream{line};
+         std::string element;
+         while (std::getline(lineStream, element, ','))
+            _matrix.emplace_back(std::stod(element));
+         i++;
+      }
+      f.close();
+      _rowSize = i;
+      if (_matrix.size() % i == 0)
+         _columnSize = _matrix.size() / i;
+      // TODO else throw algum_erro
+   } // TODO else throw algum_erro
 }
 
 void pmat::Matrix::resize(const unsigned &rowSize, const unsigned &columnSize) {
@@ -49,10 +67,16 @@ pmat::Matrix &pmat::Matrix::operator=(Matrix &&matrix) noexcept {
 }
 
 bool pmat::Matrix::operator==(const Matrix &matrix) const {
-   if (this->rowSize() == matrix.rowSize() && this->columnSize() == matrix.columnSize())
-      return _matrix == matrix._matrix;
+   if (this->rowSize() == matrix.rowSize() && this->columnSize() == matrix.columnSize()) {
+      for (unsigned i = 0; i < this->rowSize(); i++)
+         for (unsigned j = 0; j < this->columnSize(); j++)
+            if (!pmat::utils::areEqual((*this)(i, j), matrix(i, j)))
+               return false;
 
-   return false;
+   } else
+      return false;
+
+   return true;
 }
 
 double pmat::Matrix::dotProduct(const Matrix &matrix) const {
@@ -67,7 +91,7 @@ double pmat::Matrix::dotProduct(const Matrix &matrix) const {
 
 pmat::Matrix pmat::Matrix::operator+(const Matrix &matrix) const {
    // TODO Domensões iguais
-   Matrix resp{};
+   Matrix resp{this->rowSize(), this->columnSize()};
    resp._rowSize = this->rowSize();
    resp._columnSize = this->columnSize();
    for (unsigned i = 0; i < this->rowSize(); i++)
@@ -140,7 +164,7 @@ pmat::Matrix pmat::Matrix::operator*(const double &scalar) const {
 
 void pmat::Matrix::multiplyBy(const double &scalar) {
    for (unsigned i = 0; i < this->size(); i++)
-      _matrix.emplace_back(scalar * _matrix[i]);
+      _matrix[i] *= scalar;
 }
 
 pmat::Matrix pmat::Matrix::multiplyHadamardBy(const Matrix &matrix) const {
@@ -173,8 +197,8 @@ void pmat::Matrix::swapRows(const unsigned &rowA, const unsigned &rowB, const un
           _matrix[this->getVectorIndex(rowA, j)], _matrix[this->getVectorIndex(rowB, j)]);
 }
 
-void pmat::Matrix::partialSwapColumns(const unsigned &columnA, const unsigned &columnB,
-                                      const unsigned &startRow, const unsigned &endRow) {
+void pmat::Matrix::swapColumns(const unsigned &columnA, const unsigned &columnB,
+                               const unsigned &startRow, const unsigned &endRow) {
    // TODO compatibiliar os indices
    for (unsigned i = startRow; i <= endRow; i++)
       _matrix[this->getVectorIndex(i, columnB)] = std::exchange(
@@ -183,7 +207,7 @@ void pmat::Matrix::partialSwapColumns(const unsigned &columnA, const unsigned &c
 
 void pmat::Matrix::transpose() {
    _isTransposed = !_isTransposed;
-   std::swap(_columnSize, _rowSize);
+   std::swap(_rowSize, _columnSize);
 }
 
 double pmat::Matrix::getFrobeniusNorm() const {

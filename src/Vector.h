@@ -9,6 +9,8 @@
 
 namespace pmat {
 
+class Matrix;
+
 class Vector : public Array {
    private:
       std::vector<double> _vector{};
@@ -42,9 +44,8 @@ class Vector : public Array {
       void swapElements(const unsigned &elmIndexA, const unsigned &elmIndexB);
       void ascendingSort();
       void descendingSort();
-      /**< @todo implement methods below */
-      //	Matrix toColumnMatrix() const;
-      //	Matrix toRowMatrix() const;
+      [[nodiscard]] Matrix toColumnMatrix() const;
+      [[nodiscard]] Matrix toRowMatrix() const;
 };
 
 } // namespace pmat

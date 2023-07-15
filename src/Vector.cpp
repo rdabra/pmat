@@ -1,4 +1,5 @@
 #include "Vector.h"
+#include "Matrix.h"
 #include "utils.h"
 #include <random>
 
@@ -146,4 +147,18 @@ void pmat::Vector::ascendingSort() {
 void pmat::Vector::descendingSort() {
    std::sort(_vector.begin(), _vector.end(),
              [](double &left, double &right) -> bool { return left > right; });
+}
+
+pmat::Matrix pmat::Vector::toColumnMatrix() const {
+   Matrix res{this->size(), 1};
+   for (unsigned i = 0; i < this->size(); i++)
+      res.setValue(_vector[i], i, 0);
+   return res;
+}
+
+pmat::Matrix pmat::Vector::toRowMatrix() const {
+   Matrix res{1, this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      res.setValue(_vector[i], 0, i);
+   return res;
 }
