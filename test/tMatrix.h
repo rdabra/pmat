@@ -509,7 +509,7 @@ TEST(TestMatrix, TestMisc) {
    EXPECT_TRUE(resp1 == c);
    EXPECT_TRUE(resp2 == d);
    EXPECT_TRUE(resp3 == f);
-   EXPECT_TRUE(k.size() == 21);
+   EXPECT_TRUE(k.length() == 21);
    EXPECT_TRUE(e(2, 2) < 2.0 && e(2, 2) > -1.0);
 }
 

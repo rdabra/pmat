@@ -44,9 +44,9 @@ pmat::Vector &pmat::Vector::operator=(Vector &&vector) noexcept {
 }
 
 bool pmat::Vector::operator==(const Vector &vector) const {
-   bool resp = this->size() == vector.size();
+   bool resp = this->length() == vector.length();
    if (resp) {
-      for (unsigned i = 0; i < this->size(); i++) {
+      for (unsigned i = 0; i < this->length(); i++) {
          resp = pmat::utils::areEqual((*this)(i), vector(i));
          if (!resp)
             break;
@@ -58,7 +58,7 @@ bool pmat::Vector::operator==(const Vector &vector) const {
 pmat::Vector pmat::Vector::operator+(const Vector &vector) const {
    // TODO Implementar pre condição
    pmat::Vector resp{};
-   for (int i{0}; i < vector.size(); i++)
+   for (int i{0}; i < vector.length(); i++)
       resp.emplaceBack((*this)(i) + vector(i));
 
    return resp;
@@ -66,14 +66,14 @@ pmat::Vector pmat::Vector::operator+(const Vector &vector) const {
 
 void pmat::Vector::addBy(const Vector &vector) {
    // TODO Implementar pre condição
-   for (int i{0}; i < vector.size(); i++)
+   for (int i{0}; i < vector.length(); i++)
       this->setValue((*this)(i) + vector(i), i);
 }
 
 pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
    // TODO Implementar pre condição
    pmat::Vector resp{};
-   for (int i{0}; i < vector.size(); i++)
+   for (int i{0}; i < vector.length(); i++)
       resp.emplaceBack((*this)(i)-vector(i));
 
    return resp;
@@ -81,27 +81,27 @@ pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
 
 void pmat::Vector::subtractBy(const Vector &vector) {
    // TODO Implementar pre condição
-   for (int i{0}; i < vector.size(); i++)
+   for (int i{0}; i < vector.length(); i++)
       this->setValue((*this)(i)-vector(i), i);
 }
 
 pmat::Vector pmat::Vector::operator*(const double &scalar) const {
    pmat::Vector resp{};
-   for (int i{0}; i < this->size(); i++)
+   for (int i{0}; i < this->length(); i++)
       resp.emplaceBack((*this)(i)*scalar);
 
    return resp;
 }
 
 void pmat::Vector::multiplyBy(const double &scalar) {
-   for (int i{0}; i < this->size(); i++)
+   for (int i{0}; i < this->length(); i++)
       this->setValue((*this)(i)*scalar, i);
 }
 
 double pmat::Vector::dotProduct(const Vector &vector) const {
    // TODO Implementar pre condição
    double resp = pmat::utils::ZERO;
-   for (unsigned i = 0; i < vector.size(); i++)
+   for (unsigned i = 0; i < vector.length(); i++)
       resp += (*this)(i)*vector(i);
 
    return resp;
@@ -120,7 +120,7 @@ pmat::Vector pmat::Vector::getUnitaryVector() const {
 
 unsigned pmat::Vector::occurrences(const double &value) const {
    unsigned res{0};
-   for (unsigned i = 0; i < this->size(); i++)
+   for (unsigned i = 0; i < this->length(); i++)
       if (pmat::utils::areEqual((*this)(i), value))
          res++;
 
@@ -131,7 +131,7 @@ void pmat::Vector::fillRandomly(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 
-   for (unsigned i = 0; i < this->size(); i++)
+   for (unsigned i = 0; i < this->length(); i++)
       this->setValue(dist(rng), i);
 }
 
@@ -150,15 +150,15 @@ void pmat::Vector::descendingSort() {
 }
 
 pmat::Matrix pmat::Vector::toColumnMatrix() const {
-   Matrix res{this->size(), 1};
-   for (unsigned i = 0; i < this->size(); i++)
+   Matrix res{this->length(), 1};
+   for (unsigned i = 0; i < this->length(); i++)
       res.setValue(_vector[i], i, 0);
    return res;
 }
 
 pmat::Matrix pmat::Vector::toRowMatrix() const {
-   Matrix res{1, this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
+   Matrix res{1, this->length()};
+   for (unsigned i = 0; i < this->length(); i++)
       res.setValue(_vector[i], 0, i);
    return res;
 }

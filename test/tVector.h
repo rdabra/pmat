@@ -301,7 +301,7 @@ TEST(TestVector, TestMisc) {
 
    EXPECT_TRUE(res.toColumnMatrix() == co);
    EXPECT_TRUE(res.toRowMatrix() == li);
-   EXPECT_TRUE(v1.size() == 5);
+   EXPECT_TRUE(v1.length() == 5);
    EXPECT_TRUE(v1(3) >= -2.0 && v1(3) <= 10.0);
    EXPECT_TRUE(a == v);
    EXPECT_TRUE(v.dimension() == 1);

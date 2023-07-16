@@ -34,7 +34,7 @@ void pmat::Matrix::resize(const unsigned &rowSize, const unsigned &columnSize) {
    _matrix.clear();
    _rowSize = rowSize;
    _columnSize = columnSize;
-   _matrix.resize(this->size());
+   _matrix.resize(this->length());
 }
 
 void pmat::Matrix::setValue(const double &value, const unsigned &row, const unsigned &column) {
@@ -156,14 +156,14 @@ pmat::Matrix pmat::Matrix::operator*(const double &scalar) const {
    Matrix resp{};
    resp._columnSize = this->columnSize();
    resp._rowSize = this->rowSize();
-   for (unsigned i = 0; i < resp.size(); i++)
+   for (unsigned i = 0; i < resp.length(); i++)
       resp._matrix.emplace_back(scalar * _matrix[i]);
 
    return resp;
 }
 
 void pmat::Matrix::multiplyBy(const double &scalar) {
-   for (unsigned i = 0; i < this->size(); i++)
+   for (unsigned i = 0; i < this->length(); i++)
       _matrix[i] *= scalar;
 }
 
@@ -246,7 +246,7 @@ pmat::Vector pmat::Matrix::extractColumn(const unsigned &column) const {
 
 unsigned pmat::Matrix::occurrences(const double &value) const {
    unsigned res{0};
-   for (unsigned i = 0; i < this->size(); i++)
+   for (unsigned i = 0; i < this->length(); i++)
       if (pmat::utils::areEqual(_matrix[i], value))
          res++;
 

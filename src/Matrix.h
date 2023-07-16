@@ -1,10 +1,10 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-
 #pragma once
 
 #include "Array.h"
 #include "Vector.h"
+#include <algorithm>
 
 namespace pmat {
 
@@ -31,7 +31,7 @@ class Matrix : public pmat::Array {
           : _matrix{std::vector<double>{std::move(matrix._matrix)}}, _rowSize(matrix.rowSize()),
             _columnSize(matrix.columnSize()){};
       ~Matrix() override = default;
-      [[nodiscard]] inline unsigned size() const override { return _rowSize * _columnSize; }
+      [[nodiscard]] inline unsigned length() const override { return _rowSize * _columnSize; }
       [[nodiscard]] inline unsigned dimension() const override { return 2; }
       void resize(const unsigned &rowSize, const unsigned &columnSize);
       virtual void setValue(const double &value, const unsigned &row, const unsigned &column);

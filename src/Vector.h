@@ -21,7 +21,7 @@ class Vector : public Array {
       Vector(const Vector &vector);
       Vector(Vector &&vector) noexcept : _vector{std::move(vector._vector)} {};
       ~Vector() override = default;
-      [[nodiscard]] unsigned size() const override { return _vector.size(); };
+      [[nodiscard]] unsigned length() const override { return _vector.size(); };
       [[nodiscard]] unsigned dimension() const override { return 1; };
       void resize(const unsigned &size);
       void emplaceBack(const double &value);
