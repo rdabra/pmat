@@ -24,6 +24,7 @@ class Vector : public Array {
       [[nodiscard]] unsigned length() const override { return _vector.size(); };
       [[nodiscard]] unsigned dimension() const override { return 1; };
       void resize(const unsigned &size);
+      void clear() override { _vector.clear(); };
       void emplaceBack(const double &value);
       void setValue(const double &value, const unsigned &index);
       const double &operator()(const unsigned &index) const;

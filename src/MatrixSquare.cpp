@@ -11,6 +11,13 @@ unsigned pmat::MatrixSquare::size() const {
    return this->rowSize();
 }
 
+void pmat::MatrixSquare::resize(const unsigned &size) {
+   _matrix.clear();
+   _columnSize = size;
+   _rowSize = size;
+   _matrix.resize(this->length());
+}
+
 pmat::MatrixSquare &pmat::MatrixSquare::operator=(const MatrixSquare &matrix) {
    if (this != &matrix) {
       Matrix::operator=(matrix);
@@ -81,6 +88,10 @@ double pmat::MatrixSquare::trace() const {
    for (unsigned i = 0; i < this->size(); i++)
       resp += (*this)(i, i);
    return resp;
+}
+
+pmat::Vector pmat::MatrixSquare::linearSolve(const Vector &rhs) {
+   return Vector{2};
 }
 
 void pmat::MatrixSquare::fillDiagonalWith(const double &value) {

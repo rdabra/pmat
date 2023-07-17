@@ -2,7 +2,11 @@
 
 #file(GLOB_RECURSE sources *.cpp *.h)
 
-add_library(pmatLib STATIC Array.cpp Vector.cpp Matrix.cpp)
+add_library(pmatLib STATIC Array.cpp Vector.cpp Matrix.cpp MatrixSquare.cpp MatrixTriangular.cpp 
+MatrixLowerTriangular.cpp MatrixUpperTriangular.cpp )
+
+#DPLU_MatrixSquare.cpp DPQR_MatrixSquare.cpp DSAS_MatrixSquare.cpp
+
 target_include_directories(pmatLib BEFORE PUBLIC ../src)
 
 

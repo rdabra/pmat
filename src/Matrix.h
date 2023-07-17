@@ -9,14 +9,13 @@
 namespace pmat {
 
 class Matrix : public pmat::Array {
-   private:
+   protected:
       std::vector<double> _matrix;
       bool _isTransposed{false};
       unsigned _rowSize{0}, _columnSize{0};
 
-   protected:
-      [[nodiscard]] virtual inline unsigned getVectorIndex(const unsigned &i,
-                                                           const unsigned &j) const {
+      [[nodiscard]] virtual inline unsigned vectorIndex(const unsigned &i,
+                                                        const unsigned &j) const {
          return _isTransposed ? i + j * _rowSize : j + i * _columnSize;
       }
 
@@ -34,6 +33,7 @@ class Matrix : public pmat::Array {
       [[nodiscard]] inline unsigned length() const override { return _rowSize * _columnSize; }
       [[nodiscard]] inline unsigned dimension() const override { return 2; }
       void resize(const unsigned &rowSize, const unsigned &columnSize);
+      void clear() override;
       virtual void setValue(const double &value, const unsigned &row, const unsigned &column);
       virtual double operator()(const unsigned &row, const unsigned &column) const;
       [[nodiscard]] inline unsigned rowSize() const { return _rowSize; }

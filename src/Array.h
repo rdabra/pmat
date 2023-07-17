@@ -20,6 +20,7 @@ class Array {
 
       [[nodiscard]] virtual unsigned length() const = 0;
       [[nodiscard]] virtual unsigned dimension() const = 0;
+      virtual void clear() = 0;
       [[nodiscard]] virtual unsigned occurrences(const double &value) const = 0;
       virtual void fillRandomly(const double &min, const double &max) = 0;
 };

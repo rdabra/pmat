@@ -37,12 +37,18 @@ void pmat::Matrix::resize(const unsigned &rowSize, const unsigned &columnSize) {
    _matrix.resize(this->length());
 }
 
+void pmat::Matrix::clear() {
+   _matrix.clear();
+   _rowSize = 0;
+   _columnSize = 0;
+}
+
 void pmat::Matrix::setValue(const double &value, const unsigned &row, const unsigned &column) {
-   _matrix[this->getVectorIndex(row, column)] = value;
+   _matrix[this->vectorIndex(row, column)] = value;
 }
 
 double pmat::Matrix::operator()(const unsigned &row, const unsigned &column) const {
-   return _matrix[this->getVectorIndex(row, column)];
+   return _matrix[this->vectorIndex(row, column)];
 }
 
 pmat::Matrix &pmat::Matrix::operator=(const Matrix &matrix) {
@@ -51,6 +57,7 @@ pmat::Matrix &pmat::Matrix::operator=(const Matrix &matrix) {
       _columnSize = matrix.columnSize();
       _matrix.clear();
       _matrix = matrix._matrix;
+      _isTransposed = matrix._isTransposed;
    }
 
    return *this;
@@ -59,6 +66,7 @@ pmat::Matrix &pmat::Matrix::operator=(const Matrix &matrix) {
 pmat::Matrix &pmat::Matrix::operator=(Matrix &&matrix) noexcept {
    _rowSize = matrix.rowSize();
    _columnSize = matrix.columnSize();
+   _isTransposed = matrix._isTransposed;
    _matrix.clear();
    _matrix = std::move(matrix._matrix);
    matrix.~Matrix();
@@ -92,8 +100,6 @@ double pmat::Matrix::dotProduct(const Matrix &matrix) const {
 pmat::Matrix pmat::Matrix::operator+(const Matrix &matrix) const {
    // TODO Domensões iguais
    Matrix resp{this->rowSize(), this->columnSize()};
-   resp._rowSize = this->rowSize();
-   resp._columnSize = this->columnSize();
    for (unsigned i = 0; i < this->rowSize(); i++)
       for (unsigned j = 0; j < this->columnSize(); j++)
          resp.setValue((*this)(i, j) + matrix(i, j), i, j);
@@ -193,16 +199,16 @@ void pmat::Matrix::swapRows(const unsigned &rowA, const unsigned &rowB, const un
                             const unsigned &endColumn) {
    // TODO compatibiliar os indices
    for (unsigned j = startColumn; j <= endColumn; j++)
-      _matrix[this->getVectorIndex(rowB, j)] = std::exchange(
-          _matrix[this->getVectorIndex(rowA, j)], _matrix[this->getVectorIndex(rowB, j)]);
+      _matrix[this->vectorIndex(rowB, j)] =
+          std::exchange(_matrix[this->vectorIndex(rowA, j)], _matrix[this->vectorIndex(rowB, j)]);
 }
 
 void pmat::Matrix::swapColumns(const unsigned &columnA, const unsigned &columnB,
                                const unsigned &startRow, const unsigned &endRow) {
    // TODO compatibiliar os indices
    for (unsigned i = startRow; i <= endRow; i++)
-      _matrix[this->getVectorIndex(i, columnB)] = std::exchange(
-          _matrix[this->getVectorIndex(i, columnA)], _matrix[this->getVectorIndex(i, columnB)]);
+      _matrix[this->vectorIndex(i, columnB)] = std::exchange(
+          _matrix[this->vectorIndex(i, columnA)], _matrix[this->vectorIndex(i, columnB)]);
 }
 
 void pmat::Matrix::transpose() {
