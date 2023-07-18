@@ -16,17 +16,15 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
 
    public:
       MatrixUpperTriangular() = default;
-      explicit MatrixUpperTriangular(const unsigned &size);
       MatrixUpperTriangular(const MatrixSquare &matrix);
-      MatrixUpperTriangular(const MatrixUpperTriangular &matrix)
-          : MatrixTriangular::MatrixTriangular{std::move(matrix)} {}
-      MatrixUpperTriangular(MatrixUpperTriangular &&matrix)
-          : MatrixTriangular::MatrixTriangular{std::move(matrix)} {};
-      MatrixUpperTriangular &operator=(const MatrixUpperTriangular &matrix);
-      MatrixUpperTriangular &operator=(MatrixUpperTriangular &&matrix);
+      MatrixUpperTriangular(const MatrixUpperTriangular &matrix) = default;
+      MatrixUpperTriangular(MatrixUpperTriangular &&matrix) = default;
+      explicit MatrixUpperTriangular(const unsigned &size)
+          : MatrixTriangular::MatrixTriangular(size){};
       ~MatrixUpperTriangular() override = default;
+      MatrixUpperTriangular &operator=(const MatrixUpperTriangular &matrix) = default;
+      MatrixUpperTriangular &operator=(MatrixUpperTriangular &&matrix) = default;
       double operator()(const unsigned &row, const unsigned &column) const override;
-      void resize(const unsigned &size) override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixUpperTriangular operator+(const MatrixUpperTriangular &matrix) const;
       virtual void addBy(const MatrixUpperTriangular &matrix);

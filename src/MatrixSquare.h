@@ -13,15 +13,15 @@ enum class SubMatrixPos { lower, upper };
 class MatrixSquare : public Matrix {
    public:
       MatrixSquare() = default;
-      explicit MatrixSquare(const unsigned &size) : Matrix{size, size} {}
-      MatrixSquare(const MatrixSquare &matrix);
-      MatrixSquare(MatrixSquare &&matrix) noexcept : Matrix{std::move(matrix)} {}
+      MatrixSquare(MatrixSquare &&matrix) noexcept = default;
       MatrixSquare(Matrix &&matrix);
+      explicit MatrixSquare(const unsigned &size) : Matrix{size, size} {}
+      MatrixSquare(const MatrixSquare &matrix) = default;
       ~MatrixSquare() override = default;
+      MatrixSquare &operator=(const MatrixSquare &matrix) = default;
+      MatrixSquare &operator=(MatrixSquare &&matrix) noexcept = default;
       [[nodiscard]] unsigned size() const;
       virtual void resize(const unsigned &size);
-      MatrixSquare &operator=(const MatrixSquare &matrix);
-      MatrixSquare &operator=(MatrixSquare &&matrix) noexcept;
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
       virtual MatrixSquare operator*(const MatrixSquare &matrix) const;

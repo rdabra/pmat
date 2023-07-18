@@ -9,16 +9,16 @@ namespace pmat {
 
 class MatrixTriangular : public pmat::MatrixSquare {
    private:
-      void transpose() override { throw std::logic_error(messages::MATRIX_NOT_TRANSP); }
+      void transpose() override {}
 
    protected:
       [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override = 0;
 
    public:
-      MatrixTriangular() : MatrixSquare::MatrixSquare{} {};
+      MatrixTriangular() = default;
       MatrixTriangular(const MatrixTriangular &matrix) = default;
-      MatrixTriangular(const MatrixTriangular &&matrix)
-          : MatrixSquare::MatrixSquare{std::move(matrix)} {};
+      MatrixTriangular(MatrixTriangular &&matrix) = default;
+      explicit MatrixTriangular(const unsigned &size) : MatrixSquare::MatrixSquare(size){};
       ~MatrixTriangular() override = default;
       MatrixTriangular &operator=(const MatrixTriangular &) = default;
       MatrixTriangular &operator=(MatrixTriangular &&) = default;
@@ -26,7 +26,6 @@ class MatrixTriangular : public pmat::MatrixSquare {
          return (this->size() * this->size() + this->size()) / 2;
       }
       double operator()(const unsigned &row, const unsigned &column) const override = 0;
-      void resize(const unsigned &size) override = 0;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override = 0;
       [[nodiscard]] MatrixSquare toMatrixSquare() const;
       [[nodiscard]] MatrixSquare getSwappedByRows(const unsigned &rowA, const unsigned &rowB,

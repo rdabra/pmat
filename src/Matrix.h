@@ -8,15 +8,29 @@
 
 namespace pmat {
 
+// TODO Tirar os data members do protected e colocar no private
+
 class Matrix : public pmat::Array {
-   protected:
+   private:
       std::vector<double> _matrix;
       bool _isTransposed{false};
       unsigned _rowSize{0}, _columnSize{0};
 
-      [[nodiscard]] virtual inline unsigned vectorIndex(const unsigned &i,
-                                                        const unsigned &j) const {
-         return _isTransposed ? i + j * _rowSize : j + i * _columnSize;
+   protected:
+      [[nodiscard]] virtual inline unsigned vectorIndex(const unsigned &row,
+                                                        const unsigned &column) const {
+         return _isTransposed ? row + column * _rowSize : column + row * _columnSize;
+      }
+
+      [[nodiscard]] double vectorElement(const unsigned &row, const unsigned &column) const {
+         return _matrix[this->vectorIndex(row, column)];
+      }
+
+      void initializeMembers(unsigned rowSize, unsigned columnSize) {
+         _matrix.clear();
+         _rowSize = rowSize;
+         _columnSize = columnSize;
+         _matrix.resize(this->length());
       }
 
    public:
@@ -24,11 +38,11 @@ class Matrix : public pmat::Array {
       Matrix(const unsigned &rowSize, const unsigned &columnSize);
       Matrix(const std::string &fileName);
       Matrix(const Matrix &matrix)
-          : _matrix{std::vector<double>{matrix._matrix}}, _rowSize(matrix.rowSize()),
-            _columnSize(matrix.columnSize()){};
+          : _matrix{std::vector<double>{matrix._matrix}}, _rowSize{matrix.rowSize()},
+            _columnSize{matrix.columnSize()}, _isTransposed{matrix._isTransposed} {};
       Matrix(Matrix &&matrix) noexcept
-          : _matrix{std::vector<double>{std::move(matrix._matrix)}}, _rowSize(matrix.rowSize()),
-            _columnSize(matrix.columnSize()){};
+          : _matrix{std::move(matrix._matrix)}, _rowSize{matrix.rowSize()},
+            _columnSize{matrix.columnSize()}, _isTransposed{matrix._isTransposed} {}
       ~Matrix() override = default;
       [[nodiscard]] inline unsigned length() const override { return _rowSize * _columnSize; }
       [[nodiscard]] inline unsigned dimension() const override { return 2; }

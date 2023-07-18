@@ -3,55 +3,16 @@
 #include "utils.h"
 #include <random>
 
-pmat::MatrixLowerTriangular::MatrixLowerTriangular(const unsigned &size) {
-   _columnSize = size;
-   _rowSize = size;
-   _matrix.resize(this->length());
-}
-
 pmat::MatrixLowerTriangular::MatrixLowerTriangular(const MatrixSquare &matrix) {
-   _columnSize = matrix.size();
-   _rowSize = matrix.size();
-   _matrix.resize(this->length());
+   this->initializeMembers(matrix.size(), matrix.size());
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
          this->setValue(matrix(i, j), i, j);
 }
 
-pmat::MatrixLowerTriangular &
-pmat::MatrixLowerTriangular::operator=(const MatrixLowerTriangular &matrix) {
-   if (this != &matrix) {
-      _rowSize = matrix.rowSize();
-      _columnSize = matrix.columnSize();
-      _matrix.clear();
-      _matrix = matrix._matrix;
-   }
-
-   return *this;
-}
-
-pmat::MatrixLowerTriangular &
-pmat::MatrixLowerTriangular::operator=(MatrixLowerTriangular &&matrix) {
-   _rowSize = matrix.rowSize();
-   _columnSize = matrix.columnSize();
-   _matrix.clear();
-   _matrix = std::move(matrix._matrix);
-   matrix.~MatrixLowerTriangular();
-
-   return *this;
-}
-
 double pmat::MatrixLowerTriangular::operator()(const unsigned &row, const unsigned &column) const {
    // TODO	validateIndex(rowIndex, columnIndex);
-
-   return column > row ? pmat::utils::ZERO : _matrix[this->vectorIndex(row, column)];
-}
-
-void pmat::MatrixLowerTriangular::resize(const unsigned &size) {
-   _matrix.clear();
-   _columnSize = size;
-   _rowSize = size;
-   _matrix.resize(this->length());
+   return column > row ? pmat::utils::ZERO : this->vectorElement(row, column);
 }
 
 double pmat::MatrixLowerTriangular::dotProduct(const Matrix &matrix) const {

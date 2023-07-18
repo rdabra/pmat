@@ -12,24 +12,7 @@ unsigned pmat::MatrixSquare::size() const {
 }
 
 void pmat::MatrixSquare::resize(const unsigned &size) {
-   _matrix.clear();
-   _columnSize = size;
-   _rowSize = size;
-   _matrix.resize(this->length());
-}
-
-pmat::MatrixSquare &pmat::MatrixSquare::operator=(const MatrixSquare &matrix) {
-   if (this != &matrix) {
-      Matrix::operator=(matrix);
-   }
-
-   return (*this);
-}
-
-pmat::MatrixSquare &pmat::MatrixSquare::operator=(MatrixSquare &&matrix) noexcept {
-   Matrix::operator=(std::move(matrix));
-
-   return (*this);
+   this->initializeMembers(size, size);
 }
 
 pmat::MatrixSquare pmat::MatrixSquare::operator+(const MatrixSquare &matrix) const {

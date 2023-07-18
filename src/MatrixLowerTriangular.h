@@ -16,17 +16,17 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
 
    public:
       MatrixLowerTriangular() = default;
-      explicit MatrixLowerTriangular(const unsigned &size);
+      explicit MatrixLowerTriangular(const unsigned &size)
+          : MatrixTriangular::MatrixTriangular(size){};
       MatrixLowerTriangular(const MatrixSquare &matrix);
       MatrixLowerTriangular(const MatrixLowerTriangular &matrix)
           : MatrixTriangular::MatrixTriangular{std::move(matrix)} {}
       MatrixLowerTriangular(MatrixLowerTriangular &&matrix)
           : MatrixTriangular::MatrixTriangular{std::move(matrix)} {};
-      MatrixLowerTriangular &operator=(const MatrixLowerTriangular &matrix);
-      MatrixLowerTriangular &operator=(MatrixLowerTriangular &&matrix);
+      MatrixLowerTriangular &operator=(const MatrixLowerTriangular &matrix) = default;
+      MatrixLowerTriangular &operator=(MatrixLowerTriangular &&matrix) = default;
       ~MatrixLowerTriangular() override = default;
       double operator()(const unsigned &row, const unsigned &column) const override;
-      void resize(const unsigned &size) override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixLowerTriangular operator+(const MatrixLowerTriangular &matrix) const;
       virtual void addBy(const MatrixLowerTriangular &matrix);

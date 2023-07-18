@@ -1,5 +1,4 @@
 #include "MatrixTriangular.h"
-#include "utils.h"
 
 pmat::MatrixSquare pmat::MatrixTriangular::toMatrixSquare() const {
    MatrixSquare res(this->size());
@@ -32,5 +31,6 @@ pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByColumns(const unsigned &c
 }
 
 pmat::Vector pmat::MatrixTriangular::linearSolve(const Vector &rhs) {
+   // TODO Implement linear solve
    return Vector{2};
 }
