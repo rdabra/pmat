@@ -63,6 +63,11 @@ pmat::MatrixSkewSymmetric pmat::MatrixSkewSymmetric::operator*(const double &sca
    return res;
 }
 
+pmat::MatrixSkewSymmetric
+pmat::MatrixSkewSymmetric::operator*(const MatrixSkewSymmetric &matrix) const {
+   return MatrixSkewSymmetric{MatrixSquare::operator*(matrix)};
+}
+
 void pmat::MatrixSkewSymmetric::multiplyBy(const double &scalar) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)

@@ -26,6 +26,11 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       MatrixSymmetric operator-(const MatrixSymmetric &matrix) const;
       virtual void subtractBy(const MatrixSymmetric &matrix);
       MatrixSymmetric operator*(const double &scalar) const;
+      MatrixSymmetric operator*(const MatrixSymmetric &matrix) const;
+      Vector operator*(const Vector &vector) const override {
+         return MatrixSquare::operator*(vector);
+      }
+
       void multiplyBy(const double &scalar) override;
       void transpose() override{};
       void fillRandomly(const double &min, const double &max) override;

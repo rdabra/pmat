@@ -1,5 +1,19 @@
 #include "MatrixSymmetry.h"
 
+pmat::MatrixSquare pmat::MatrixSymmetry::operator+(const MatrixSquare &matrix) const {
+   return matrix + (*this);
+}
+
+pmat::MatrixSquare pmat::MatrixSymmetry::operator-(const MatrixSquare &matrix) const {
+   MatrixSquare res(this->size());
+   for (unsigned i = 0; i < this->size(); ++i) {
+      for (unsigned j = 0; j < this->size(); ++j)
+         res.setValue((*this)(i, j) - matrix(i, j), i, j);
+   }
+
+   return res;
+}
+
 pmat::MatrixSquare pmat::MatrixSymmetry::toMatrixSquare() const {
    MatrixSquare res(this->size());
    for (unsigned i = 0; i < this->size(); ++i) {
@@ -10,24 +24,16 @@ pmat::MatrixSquare pmat::MatrixSymmetry::toMatrixSquare() const {
    return res;
 }
 
-pmat::MatrixSquare pmat::MatrixSymmetry::getSwappedByRows(const unsigned &rowA,
-                                                          const unsigned &rowB,
-                                                          const unsigned &startColumn,
-                                                          const unsigned &endColumn) const {
-   MatrixSquare res{this->toMatrixSquare()};
-   res.swapRows(rowA, rowB, startColumn, endColumn);
-
-   return res;
+pmat::Matrix pmat::MatrixSymmetry::operator*(const Matrix &matrix) const {
+   return Matrix{Matrix::operator*(matrix)};
 }
 
-pmat::MatrixSquare pmat::MatrixSymmetry::getSwappedByColumns(const unsigned &columnA,
-                                                             const unsigned &columnB,
-                                                             const unsigned &startRow,
-                                                             const unsigned &endRow) const {
-   MatrixSquare res{this->toMatrixSquare()};
-   res.swapColumns(columnA, columnB, startRow, endRow);
+pmat::MatrixSquare pmat::MatrixSymmetry::operator*(const MatrixSquare &matrix) const {
+   return MatrixSquare{MatrixSquare::operator*(matrix)};
+}
 
-   return res;
+pmat::MatrixSquare pmat::MatrixSymmetry::operator*(const MatrixSymmetry &matrix) const {
+   return MatrixSquare{MatrixSquare::operator*(matrix)};
 }
 
 pmat::Vector pmat::MatrixSymmetry::linearSolve(const Vector &rhs) {

@@ -9,7 +9,6 @@ MatrixLowerTriangular.cpp MatrixUpperTriangular.cpp MatrixSymmetry.cpp  MatrixSy
 
 target_include_directories(pmatLib BEFORE PUBLIC ../src)
 
-
 add_executable(pmat_main pmat_main.cpp)
 
 
@@ -17,3 +16,4 @@ target_link_libraries(
   pmat_main
   pmatLib
 )
+

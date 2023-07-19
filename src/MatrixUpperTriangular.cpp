@@ -73,6 +73,52 @@ void pmat::MatrixUpperTriangular::multiplyBy(const double &scalar) {
          this->setValue((*this)(i, j) * scalar, i, j);
 }
 
+pmat::MatrixSquare pmat::MatrixUpperTriangular::toMatrixSquare() const {
+   MatrixSquare res(this->size());
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = i; j < this->size(); j++)
+         res.setValue((*this)(i, j), i, j);
+
+   return res;
+}
+
+pmat::MatrixSquare pmat::MatrixUpperTriangular::operator+(const MatrixSquare &matrix) const {
+   MatrixSquare res{this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = i; j < this->size(); j++)
+         res.setValue((*this)(i, j) + matrix(i, j), i, j);
+
+   return res;
+}
+
+pmat::MatrixSquare pmat::MatrixUpperTriangular::operator-(const MatrixSquare &matrix) const {
+   MatrixSquare res{this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = i; j < this->size(); j++)
+         res.setValue((*this)(i, j) - matrix(i, j), i, j);
+
+   return res;
+}
+
+pmat::MatrixUpperTriangular
+pmat::MatrixUpperTriangular::operator*(const MatrixUpperTriangular &matrix) const {
+   // TODO O numero de colunas desta matriz deve ser igual ao numero de linhas da outra
+   MatrixUpperTriangular resp{this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = i; j < matrix.columnSize(); j++) {
+         double aux = pmat::utils::ZERO;
+         for (unsigned k = i; k < this->columnSize(); k++)
+            aux += (*this)(i, k) * matrix(k, j);
+         resp.setValue(aux, i, j);
+      }
+
+   return resp;
+}
+
+pmat::MatrixSquare pmat::MatrixUpperTriangular::operator*(const MatrixTriangular &matrix) const {
+   return MatrixSquare{MatrixSquare::operator*(matrix)};
+}
+
 pmat::MatrixLowerTriangular pmat::MatrixUpperTriangular::getTranspose() const {
    MatrixLowerTriangular resp(this->size());
    for (unsigned i = 0; i < this->size(); i++)

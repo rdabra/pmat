@@ -27,14 +27,12 @@ class MatrixTriangular : public pmat::MatrixSquare {
       }
       double operator()(const unsigned &row, const unsigned &column) const override = 0;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override = 0;
-      [[nodiscard]] MatrixSquare toMatrixSquare() const;
-      [[nodiscard]] MatrixSquare getSwappedByRows(const unsigned &rowA, const unsigned &rowB,
-                                                  const unsigned &startColumn,
-                                                  const unsigned &endColumn) const;
-      [[nodiscard]] MatrixSquare getSwappedByColumns(const unsigned &columnA,
-                                                     const unsigned &columnB,
-                                                     const unsigned &startRow,
-                                                     const unsigned &endRow) const;
+      [[nodiscard]] virtual MatrixSquare toMatrixSquare() const = 0;
+      MatrixSquare operator*(const MatrixTriangular &matrix) const;
+      [[nodiscard]] MatrixSquare getSwappedByRows(const unsigned &rowIndexA,
+                                                  const unsigned &rowIndexB) const;
+      [[nodiscard]] MatrixSquare getSwappedByColumns(const unsigned &columnIndexA,
+                                                     const unsigned &columnIndexB) const;
       void fillRandomly(const double &min, const double &max) override = 0;
       void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
                     const unsigned &endColumn) override = 0;

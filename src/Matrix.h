@@ -26,6 +26,15 @@ class Matrix : public pmat::Array {
          return _matrix[this->vectorIndex(row, column)];
       }
 
+      void moveToThis(Matrix &&matrix) {
+         _rowSize = matrix.rowSize();
+         _columnSize = matrix.columnSize();
+         _isTransposed = matrix._isTransposed;
+         _matrix.clear();
+         _matrix = std::move(matrix._matrix);
+         matrix.~Matrix();
+      }
+
       void initializeMembers(unsigned rowSize, unsigned columnSize) {
          _matrix.clear();
          _rowSize = rowSize;

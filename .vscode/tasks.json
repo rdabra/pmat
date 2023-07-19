@@ -1,0 +1,79 @@
+{
+   // See https://go.microsoft.com/fwlink/?LinkId=733558
+   // for the documentation about the tasks.json format
+   "version": "2.0.0",
+   "tasks": [
+      {
+         "label": "eraseGcov",
+         "type": "shell",
+         "command": "del /q /s *.gcda *.gcno",
+         "options": {
+            "cwd": "${workspaceFolder}/out"
+         },
+         "presentation": {
+            "clear": true
+         },
+         "problemMatcher": []
+      },
+      {
+         "label": "cmakeClean",
+         "type": "shell",
+         "command": "cmake --build ${workspaceFolder}/out/build/covClang --parallel 8 --target clean",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "dependsOn": [
+            "eraseGcov"
+         ],
+         "problemMatcher": []
+      },
+      {
+         "label": "cmakeBuild",
+         "type": "shell",
+         "command": "cmake --build ${workspaceFolder}/out/build/covClang --parallel 8 --target pmat_test",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "dependsOn": [
+            "cmakeClean"
+         ],
+         "problemMatcher": []
+      },
+      {
+         "label": "runTests",
+         "type": "shell",
+         "command": "pmat_test.exe",
+         "options": {
+            "cwd": "${workspaceFolder}/out/build/covClang/test/"
+         },
+         "dependsOn": [
+            "cmakeBuild"
+         ],
+         "problemMatcher": []
+      },
+      {
+         "label": "eraseGcovR",
+         "type": "shell",
+         "command": "del /q *.*",
+         "options": {
+            "cwd": "${workspaceFolder}/out/gcov/"
+         },
+         "dependsOn": [
+            "runTests"
+         ],
+         "problemMatcher": []
+      },
+      {
+         "label": "runGcovr",
+         "type": "shell",
+         "command": "gcovr --config gcovr.cfg",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "dependsOn": [
+            "eraseGcovR"
+         ],
+         "problemMatcher": []
+      }
+   ]
+}

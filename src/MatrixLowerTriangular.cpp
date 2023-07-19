@@ -10,6 +10,15 @@ pmat::MatrixLowerTriangular::MatrixLowerTriangular(const MatrixSquare &matrix) {
          this->setValue(matrix(i, j), i, j);
 }
 
+pmat::MatrixSquare pmat::MatrixLowerTriangular::toMatrixSquare() const {
+   MatrixSquare res{this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = 0; j <= i; j++)
+         res.setValue((*this)(i, j), i, j);
+
+   return res;
+}
+
 double pmat::MatrixLowerTriangular::operator()(const unsigned &row, const unsigned &column) const {
    // TODO	validateIndex(rowIndex, columnIndex);
    return column > row ? pmat::utils::ZERO : this->vectorElement(row, column);
@@ -67,6 +76,41 @@ void pmat::MatrixLowerTriangular::multiplyBy(const double &scalar) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
          this->setValue((*this)(i, j) * scalar, i, j);
+}
+
+pmat::MatrixSquare pmat::MatrixLowerTriangular::operator+(const MatrixSquare &matrix) const {
+   MatrixSquare res{this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = 0; j <= i; j++)
+         res.setValue((*this)(i, j) + matrix(i, j), i, j);
+   return res;
+}
+
+pmat::MatrixSquare pmat::MatrixLowerTriangular::operator-(const MatrixSquare &matrix) const {
+   MatrixSquare res{this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = 0; j <= i; j++)
+         res.setValue((*this)(i, j) + matrix(i, j), i, j);
+   return res;
+}
+
+pmat::MatrixSquare pmat::MatrixLowerTriangular::operator*(const MatrixTriangular &matrix) const {
+   return MatrixSquare{MatrixSquare::operator*(matrix)};
+}
+
+pmat::MatrixLowerTriangular
+pmat::MatrixLowerTriangular::operator*(const MatrixLowerTriangular &matrix) const {
+   // TODO O numero de colunas desta matriz deve ser igual ao numero de linhas da outra
+   MatrixUpperTriangular resp{this->size()};
+   for (unsigned i = 0; i < this->size(); i++)
+      for (unsigned j = 0; j <= i; j++) {
+         double aux = pmat::utils::ZERO;
+         for (unsigned k = 0; k <= i; k++)
+            aux += (*this)(i, k) * matrix(k, j);
+         resp.setValue(aux, i, j);
+      }
+
+   return resp;
 }
 
 pmat::MatrixUpperTriangular pmat::MatrixLowerTriangular::getTranspose() const {

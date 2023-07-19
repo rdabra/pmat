@@ -1,33 +1,45 @@
 #include "MatrixTriangular.h"
 
-pmat::MatrixSquare pmat::MatrixTriangular::toMatrixSquare() const {
-   MatrixSquare res(this->size());
+pmat::MatrixSquare pmat::MatrixTriangular::operator*(const MatrixTriangular &matrix) const {
+   return MatrixSquare{};
+}
+
+pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByRows(const unsigned &rowIndexA,
+                                                            const unsigned &rowIndexB) const {
+   // TODO this->validateIndex(rowIndexA, 0);
+   // this->validateIndex(rowIndexB, 0);
+
+   MatrixSquare resp(this->size());
    for (unsigned i = 0; i < this->size(); ++i) {
+      unsigned k = i;
+      if (i == rowIndexA)
+         k = rowIndexB;
+      else if (i == rowIndexB)
+         k = rowIndexA;
       for (unsigned j = 0; j < this->size(); ++j)
-         res.setValue((*this)(i, j), i, j);
+         resp.setValue((*this)(k, j), i, j);
    }
 
-   return res;
+   return resp;
 }
 
-pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByRows(const unsigned &rowA,
-                                                            const unsigned &rowB,
-                                                            const unsigned &startColumn,
-                                                            const unsigned &endColumn) const {
-   MatrixSquare res{this->toMatrixSquare()};
-   res.swapRows(rowA, rowB, startColumn, endColumn);
+pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByColumns(const unsigned &columnIndexA,
+                                                               const unsigned &columnIndexB) const {
+   // TODO this->validateIndex(0, columnIndexA);
+   // this->validateIndex(0, columnIndexB);
 
-   return res;
-}
+   MatrixSquare resp(this->size());
+   for (unsigned j = 0; j < this->size(); ++j) {
+      unsigned k = j;
+      if (j == columnIndexA)
+         k = columnIndexB;
+      else if (j == columnIndexB)
+         k = columnIndexA;
+      for (unsigned i = 0; i < this->size(); ++i)
+         resp.setValue((*this)(i, k), i, j);
+   }
 
-pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByColumns(const unsigned &columnA,
-                                                               const unsigned &columnB,
-                                                               const unsigned &startRow,
-                                                               const unsigned &endRow) const {
-   MatrixSquare res{this->toMatrixSquare()};
-   res.swapColumns(columnA, columnB, startRow, endRow);
-
-   return res;
+   return resp;
 }
 
 pmat::Vector pmat::MatrixTriangular::linearSolve(const Vector &rhs) {

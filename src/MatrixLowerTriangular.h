@@ -26,6 +26,7 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       MatrixLowerTriangular &operator=(const MatrixLowerTriangular &matrix) = default;
       MatrixLowerTriangular &operator=(MatrixLowerTriangular &&matrix) = default;
       ~MatrixLowerTriangular() override = default;
+      [[nodiscard]] MatrixSquare toMatrixSquare() const override;
       double operator()(const unsigned &row, const unsigned &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixLowerTriangular operator+(const MatrixLowerTriangular &matrix) const;
@@ -34,6 +35,14 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       virtual void subtractBy(const MatrixLowerTriangular &matrix);
       MatrixLowerTriangular operator*(const double &scalar) const;
       void multiplyBy(const double &scalar) override;
+      MatrixSquare operator+(const MatrixSquare &matrix) const;
+      MatrixSquare operator-(const MatrixSquare &matrix) const;
+      MatrixSquare operator*(const MatrixTriangular &matrix) const;
+      MatrixLowerTriangular operator*(const MatrixLowerTriangular &matrix) const;
+      Vector operator*(const Vector &vector) const override {
+         return MatrixSquare::operator*(vector);
+      }
+
       [[nodiscard]] MatrixUpperTriangular getTranspose() const;
       void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
                     const unsigned &endColumn) override;

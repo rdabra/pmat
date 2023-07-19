@@ -27,6 +27,10 @@ class MatrixSkewSymmetric : public pmat::MatrixSymmetry {
       MatrixSkewSymmetric operator-(const MatrixSkewSymmetric &matrix) const;
       virtual void subtractBy(const MatrixSkewSymmetric &matrix);
       MatrixSkewSymmetric operator*(const double &scalar) const;
+      MatrixSkewSymmetric operator*(const MatrixSkewSymmetric &matrix) const;
+      Vector operator*(const Vector &vector) const override {
+         return MatrixSquare::operator*(vector);
+      }
       void multiplyBy(const double &scalar) override;
       void transpose() override{};
       void fillRandomly(const double &min, const double &max) override;

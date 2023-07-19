@@ -24,7 +24,7 @@ class MatrixSquare : public Matrix {
       virtual void resize(const unsigned &size);
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
-      virtual MatrixSquare operator*(const MatrixSquare &matrix) const;
+      MatrixSquare operator*(const MatrixSquare &matrix) const;
       virtual MatrixSquare multiplyByBiggerMatrix(const MatrixSquare &matrix, SubMatrixPos pos);
       MatrixSquare operator*(const double &scalar) const;
       Vector operator*(const Vector &vector) const override { return Matrix::operator*(vector); }

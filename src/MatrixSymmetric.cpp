@@ -59,6 +59,10 @@ pmat::MatrixSymmetric pmat::MatrixSymmetric::operator*(const double &scalar) con
    return res;
 }
 
+pmat::MatrixSymmetric pmat::MatrixSymmetric::operator*(const MatrixSymmetric &matrix) const {
+   return MatrixSymmetric{MatrixSquare::operator*(matrix)};
+}
+
 void pmat::MatrixSymmetric::multiplyBy(const double &scalar) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)

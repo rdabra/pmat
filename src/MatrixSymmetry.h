@@ -31,16 +31,14 @@ class MatrixSymmetry : public MatrixSquare {
       }
       double operator()(const unsigned &row, const unsigned &column) const override = 0;
       void transpose() override = 0;
+      MatrixSquare operator+(const MatrixSquare &matrix) const;
+      MatrixSquare operator-(const MatrixSquare &matrix) const;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override = 0;
       [[nodiscard]] MatrixSquare toMatrixSquare() const;
+      Matrix operator*(const Matrix &matrix) const override;
+      MatrixSquare operator*(const MatrixSquare &matrix) const;
+      MatrixSquare operator*(const MatrixSymmetry &matrix) const;
       void fillRandomly(const double &min, const double &max) override = 0;
-      [[nodiscard]] MatrixSquare getSwappedByRows(const unsigned &rowA, const unsigned &rowB,
-                                                  const unsigned &startColumn,
-                                                  const unsigned &endColumn) const;
-      [[nodiscard]] MatrixSquare getSwappedByColumns(const unsigned &columnA,
-                                                     const unsigned &columnB,
-                                                     const unsigned &startRow,
-                                                     const unsigned &endRow) const;
       Vector linearSolve(const Vector &rhs) override;
 };
 

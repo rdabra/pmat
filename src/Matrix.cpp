@@ -5,9 +5,8 @@
 #include <sstream>
 #include <vector>
 
-pmat::Matrix::Matrix(const unsigned &rowSize, const unsigned &columnSize)
-    : _rowSize{rowSize}, _columnSize{columnSize} {
-   _matrix.resize(this->rowSize() * this->columnSize());
+pmat::Matrix::Matrix(const unsigned &rowSize, const unsigned &columnSize) {
+   this->initializeMembers(rowSize, columnSize);
 }
 
 pmat::Matrix::Matrix(const std::string &fileName) {
@@ -31,10 +30,7 @@ pmat::Matrix::Matrix(const std::string &fileName) {
 }
 
 void pmat::Matrix::resize(const unsigned &rowSize, const unsigned &columnSize) {
-   _matrix.clear();
-   _rowSize = rowSize;
-   _columnSize = columnSize;
-   _matrix.resize(this->length());
+   this->initializeMembers(rowSize, columnSize);
 }
 
 void pmat::Matrix::clear() {
@@ -64,12 +60,7 @@ pmat::Matrix &pmat::Matrix::operator=(const Matrix &matrix) {
 }
 
 pmat::Matrix &pmat::Matrix::operator=(Matrix &&matrix) noexcept {
-   _rowSize = matrix.rowSize();
-   _columnSize = matrix.columnSize();
-   _isTransposed = matrix._isTransposed;
-   _matrix.clear();
-   _matrix = std::move(matrix._matrix);
-   matrix.~Matrix();
+   this->moveToThis(std::move(matrix));
 
    return *this;
 }

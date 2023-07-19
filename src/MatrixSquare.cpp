@@ -3,7 +3,7 @@
 
 pmat::MatrixSquare::MatrixSquare(Matrix &&matrix) {
    if (matrix.rowSize() == matrix.columnSize()) {
-      Matrix{std::move(matrix)};
+      this->moveToThis(std::move(matrix));
    } // TODO else throw alguma excecao
 }
 

@@ -35,6 +35,7 @@
          "name": "debugClang",
          "description": "",
          "displayName": "Clang(Debug)",
+         "jobs": 8,
          "configurePreset": "debugClang"
       }
    ],

@@ -10,7 +10,10 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(
   pmat_test
-  tVector.h 
+  tVector.h
+  tMatrix.h
+  tMatrixSquare.h
+  tMatrixTriangular.h
   pmat_test.cpp
 )  
 
