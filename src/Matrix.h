@@ -5,6 +5,7 @@
 #include "Array.h"
 #include "Vector.h"
 #include <algorithm>
+#include <string>
 
 namespace pmat {
 
@@ -12,7 +13,7 @@ namespace pmat {
 
 class Matrix : public pmat::Array {
    private:
-      std::vector<double> _matrix;
+      std::vector<double> _matrix{};
       bool _isTransposed{false};
       unsigned _rowSize{0}, _columnSize{0};
 
@@ -42,13 +43,15 @@ class Matrix : public pmat::Array {
          _matrix.resize(this->length());
       }
 
+      [[nodiscard]] bool isTransposed() const { return _isTransposed; }
+
    public:
       Matrix() = default;
       Matrix(const unsigned &rowSize, const unsigned &columnSize);
       Matrix(const std::string &fileName);
       Matrix(const Matrix &matrix)
-          : _matrix{std::vector<double>{matrix._matrix}}, _rowSize{matrix.rowSize()},
-            _columnSize{matrix.columnSize()}, _isTransposed{matrix._isTransposed} {};
+          : _matrix{matrix._matrix}, _rowSize{matrix.rowSize()}, _columnSize{matrix.columnSize()},
+            _isTransposed{matrix._isTransposed} {};
       Matrix(Matrix &&matrix) noexcept
           : _matrix{std::move(matrix._matrix)}, _rowSize{matrix.rowSize()},
             _columnSize{matrix.columnSize()}, _isTransposed{matrix._isTransposed} {}

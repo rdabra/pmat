@@ -23,6 +23,7 @@ class Vector : public Array {
       ~Vector() override = default;
       [[nodiscard]] unsigned length() const override { return _vector.size(); };
       [[nodiscard]] unsigned dimension() const override { return 1; };
+      [[nodiscard]] unsigned size() const { return _vector.size(); }
       void resize(const unsigned &size);
       void clear() override { _vector.clear(); };
       void emplaceBack(const double &value);

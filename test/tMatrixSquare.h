@@ -1,3 +1,4 @@
+#include "../src/DPLU_MatrixSquare.h"     // In order to define the class completely
 #include "../src/MatrixLowerTriangular.h" // In order to define the class completely
 #include "../src/MatrixSkewSymmetric.h"   // In order to define the class completely
 #include "../src/MatrixSquare.h"
@@ -44,121 +45,125 @@ TEST(TestMatrixSquare, TestTrace) {
    EXPECT_TRUE(A.trace() == 16.0);
 }
 
-// TEST(TestMatrixSquare, TestDeterminant) {
-//    MatrixSquare A(4);
+TEST(TestMatrixSquare, TestDeterminant) {
+   MatrixSquare A(4);
 
-//    A.setValue(1.0, 0, 0);
-//    A.setValue(2.0, 0, 1);
-//    A.setValue(3.0, 0, 2);
-//    A.setValue(4.0, 0, 3);
+   A.setValue(1.0, 0, 0);
+   A.setValue(2.0, 0, 1);
+   A.setValue(3.0, 0, 2);
+   A.setValue(4.0, 0, 3);
 
-//    A.setValue(1.0, 1, 0);
-//    A.setValue(3.0, 1, 1);
-//    A.setValue(2.0, 1, 2);
-//    A.setValue(5.0, 1, 3);
+   A.setValue(1.0, 1, 0);
+   A.setValue(3.0, 1, 1);
+   A.setValue(2.0, 1, 2);
+   A.setValue(5.0, 1, 3);
 
-//    A.setValue(2.0, 2, 0);
-//    A.setValue(1.0, 2, 1);
-//    A.setValue(6.0, 2, 2);
-//    A.setValue(3.0, 2, 3);
+   A.setValue(2.0, 2, 0);
+   A.setValue(1.0, 2, 1);
+   A.setValue(6.0, 2, 2);
+   A.setValue(3.0, 2, 3);
 
-//    A.setValue(3.0, 3, 0);
-//    A.setValue(2.0, 3, 1);
-//    A.setValue(1.0, 3, 2);
-//    A.setValue(1.0, 3, 3);
+   A.setValue(3.0, 3, 0);
+   A.setValue(2.0, 3, 1);
+   A.setValue(1.0, 3, 2);
+   A.setValue(1.0, 3, 3);
 
-//    MatrixSquare B(3);
+   MatrixSquare B(3);
 
-//    B.setValue(1.0, 0, 0);
-//    B.setValue(1.0, 0, 1);
-//    B.setValue(1.0, 0, 2);
+   B.setValue(1.0, 0, 0);
+   B.setValue(1.0, 0, 1);
+   B.setValue(1.0, 0, 2);
 
-//    B.setValue(1.0, 1, 0);
-//    B.setValue(1.0, 1, 1);
-//    B.setValue(3.0, 1, 2);
+   B.setValue(1.0, 1, 0);
+   B.setValue(1.0, 1, 1);
+   B.setValue(3.0, 1, 2);
 
-//    B.setValue(2.0, 2, 0);
-//    B.setValue(5.0, 2, 1);
-//    B.setValue(8.0, 2, 2);
+   B.setValue(2.0, 2, 0);
+   B.setValue(5.0, 2, 1);
+   B.setValue(8.0, 2, 2);
 
-//    MatrixSquare C(3);
+   MatrixSquare C(3);
 
-//    EXPECT_TRUE(utils::areEqual(A.determinant(), -3.0));
-//    EXPECT_TRUE(utils::areEqual(B.determinant(), -6.0));
-//    EXPECT_TRUE(A.isInvertible());
-//    EXPECT_FALSE(C.isInvertible());
-// }
+   DPLU_MatrixSquare dA{A.decomposeToPLU()};
+   DPLU_MatrixSquare dB{B.decomposeToPLU()};
+   DPLU_MatrixSquare dC{C.decomposeToPLU()};
 
-// TEST(TestMatrixSquare, TestDecompPLU) {
-//    MatrixSquare A(4);
+   EXPECT_TRUE(utils::areEqual(dA.determinant(), -3.0));
+   EXPECT_TRUE(utils::areEqual(dB.determinant(), -6.0));
+   EXPECT_TRUE(dA.isInvertible());
+   EXPECT_FALSE(dC.isInvertible());
+}
 
-//    A.setValue(1.0, 0, 0);
-//    A.setValue(2.0, 0, 1);
-//    A.setValue(3.0, 0, 2);
-//    A.setValue(4.0, 0, 3);
+TEST(TestMatrixSquare, TestDecompPLU) {
+   MatrixSquare A(4);
 
-//    A.setValue(1.0, 1, 0);
-//    A.setValue(3.0, 1, 1);
-//    A.setValue(2.0, 1, 2);
-//    A.setValue(5.0, 1, 3);
+   A.setValue(1.0, 0, 0);
+   A.setValue(2.0, 0, 1);
+   A.setValue(3.0, 0, 2);
+   A.setValue(4.0, 0, 3);
 
-//    A.setValue(2.0, 2, 0);
-//    A.setValue(1.0, 2, 1);
-//    A.setValue(6.0, 2, 2);
-//    A.setValue(3.0, 2, 3);
+   A.setValue(1.0, 1, 0);
+   A.setValue(3.0, 1, 1);
+   A.setValue(2.0, 1, 2);
+   A.setValue(5.0, 1, 3);
 
-//    A.setValue(3.0, 3, 0);
-//    A.setValue(2.0, 3, 1);
-//    A.setValue(1.0, 3, 2);
-//    A.setValue(1.0, 3, 3);
+   A.setValue(2.0, 2, 0);
+   A.setValue(1.0, 2, 1);
+   A.setValue(6.0, 2, 2);
+   A.setValue(3.0, 2, 3);
 
-//    MatrixSquare B(3);
+   A.setValue(3.0, 3, 0);
+   A.setValue(2.0, 3, 1);
+   A.setValue(1.0, 3, 2);
+   A.setValue(1.0, 3, 3);
 
-//    B.setValue(1.0, 0, 0);
-//    B.setValue(2.0, 0, 1);
-//    B.setValue(3.0, 0, 2);
+   MatrixSquare B(3);
 
-//    B.setValue(2.0, 1, 0);
-//    B.setValue(4.0, 1, 1);
-//    B.setValue(7.0, 1, 2);
+   B.setValue(1.0, 0, 0);
+   B.setValue(2.0, 0, 1);
+   B.setValue(3.0, 0, 2);
 
-//    B.setValue(3.0, 2, 0);
-//    B.setValue(5.0, 2, 1);
-//    B.setValue(3.0, 2, 2);
+   B.setValue(2.0, 1, 0);
+   B.setValue(4.0, 1, 1);
+   B.setValue(7.0, 1, 2);
 
-//    MatrixSquare C(3);
+   B.setValue(3.0, 2, 0);
+   B.setValue(5.0, 2, 1);
+   B.setValue(3.0, 2, 2);
 
-//    C.setValue(1.0, 0, 0);
-//    C.setValue(1.0, 0, 1);
-//    C.setValue(1.0, 0, 2);
+   MatrixSquare C(3);
 
-//    C.setValue(1.0, 1, 0);
-//    C.setValue(1.0, 1, 1);
-//    C.setValue(3.0, 1, 2);
+   C.setValue(1.0, 0, 0);
+   C.setValue(1.0, 0, 1);
+   C.setValue(1.0, 0, 2);
 
-//    C.setValue(2.0, 2, 0);
-//    C.setValue(5.0, 2, 1);
-//    C.setValue(8.0, 2, 2);
+   C.setValue(1.0, 1, 0);
+   C.setValue(1.0, 1, 1);
+   C.setValue(3.0, 1, 2);
 
-//    D_PLU mats = A.getPLU();
+   C.setValue(2.0, 2, 0);
+   C.setValue(5.0, 2, 1);
+   C.setValue(8.0, 2, 2);
 
-//    MatrixSquare PA((*mats.matP) * A);
-//    MatrixSquare LU((*mats.matL) * (*mats.matU));
+   DPLU_MatrixSquare mats = A.decomposeToPLU();
 
-//    D_PLU mats1 = B.getPLU();
+   MatrixSquare PA((mats.matP()) * A);
+   MatrixSquare LU((mats.matL()) * (mats.matU()));
 
-//    MatrixSquare PB((*mats1.matP) * B);
-//    MatrixSquare LU1((*mats1.matL) * (*mats1.matU));
+   DPLU_MatrixSquare mats1 = B.decomposeToPLU();
 
-//    D_PLU mats2 = A.getStrictLU();
+   MatrixSquare PB((mats1.matP()) * B);
+   MatrixSquare LU1((mats1.matL()) * (mats1.matU()));
 
-//    MatrixSquare LU2((*mats2.matL) * (*mats2.matU));
+   DPLU_MatrixSquare mats2 = A.decomposeToPLU();
 
-//    EXPECT_TRUE(PA == LU);
-//    EXPECT_TRUE(PB == LU1);
-//    EXPECT_TRUE(A == LU2);
-//    EXPECT_FALSE(C.isStrictLUDecomposable());
-// }
+   MatrixSquare LU2((mats2.matL()) * (mats2.matU()));
+
+   EXPECT_TRUE(PA == LU);
+   EXPECT_TRUE(PB == LU1);
+   EXPECT_TRUE(A == LU2);
+   EXPECT_FALSE(C.decomposeToPLU().isStrictLUDecomposable());
+}
 
 // TEST(TestMatrixSquare, TestInverse) {
 //    MatrixSquare A(4);

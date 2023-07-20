@@ -2,16 +2,16 @@
 #define MATRIXUPPERTRIANGULAR_H
 #pragma once
 
+#include "MatrixLowerTriangular.h"
 #include "MatrixTriangular.h"
 
 namespace pmat {
 
-class MatrixLowerTriangular;
-
 class MatrixUpperTriangular : public pmat::MatrixTriangular {
+
    protected:
       [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override {
-         return (i * (i + 1)) / 2 + j;
+         return (j * (j + 1)) / 2 + i;
       }
 
    public:
@@ -46,6 +46,7 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
       void swapColumns(const unsigned &colA, const unsigned &colB, const unsigned &startRow,
                        const unsigned &endRow) override;
       void fillRandomly(const double &min, const double &max) override;
+      [[nodiscard]] TriangType type() const override { return TriangType::UPPER; };
 };
 
 } // namespace pmat

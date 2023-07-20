@@ -41,8 +41,3 @@ pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByColumns(const unsigned &c
 
    return resp;
 }
-
-pmat::Vector pmat::MatrixTriangular::linearSolve(const Vector &rhs) {
-   // TODO Implement linear solve
-   return Vector{2};
-}

@@ -7,6 +7,8 @@
 
 namespace pmat {
 
+enum class TriangType { UPPER, LOWER };
+
 class MatrixTriangular : public pmat::MatrixSquare {
    private:
       void transpose() override {}
@@ -38,7 +40,7 @@ class MatrixTriangular : public pmat::MatrixSquare {
                     const unsigned &endColumn) override = 0;
       void swapColumns(const unsigned &columnA, const unsigned &columnB, const unsigned &startRow,
                        const unsigned &endRow) override = 0;
-      Vector linearSolve(const Vector &rhs) override;
+      [[nodiscard]] virtual TriangType type() const = 0;
 };
 
 } // namespace pmat

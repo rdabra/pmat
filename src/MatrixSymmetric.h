@@ -20,13 +20,12 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       MatrixSymmetric &operator=(MatrixSymmetric &&matrix) = default;
       ~MatrixSymmetric() override = default;
       double operator()(const unsigned &row, const unsigned &column) const override;
-      [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixSymmetric operator+(const MatrixSymmetric &matrix) const;
       virtual void addBy(const MatrixSymmetric &matrix);
       MatrixSymmetric operator-(const MatrixSymmetric &matrix) const;
       virtual void subtractBy(const MatrixSymmetric &matrix);
       MatrixSymmetric operator*(const double &scalar) const;
-      MatrixSymmetric operator*(const MatrixSymmetric &matrix) const;
+      MatrixSquare operator*(const MatrixSymmetric &matrix) const;
       Vector operator*(const Vector &vector) const override {
          return MatrixSquare::operator*(vector);
       }

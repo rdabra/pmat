@@ -1,5 +1,7 @@
 #include "tMatrix.h"
+#include "tMatrixSkewSymmetric.h"
 #include "tMatrixSquare.h"
+#include "tMatrixSymmetric.h"
 #include "tMatrixTriangular.h"
 #include "tVector.h"
 #include <iostream>

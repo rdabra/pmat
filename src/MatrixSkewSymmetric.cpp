@@ -11,18 +11,10 @@ pmat::MatrixSkewSymmetric::MatrixSkewSymmetric(const MatrixSquare &matrix) {
 
 double pmat::MatrixSkewSymmetric::operator()(const unsigned &row, const unsigned &column) const {
    // TODO	validateIndex(rowIndex, columnIndex);
-   return column > row ? pmat::utils::MINUS_ONE * this->vectorElement(column, row)
-                       : this->vectorElement(row, column);
-}
-
-double pmat::MatrixSkewSymmetric::dotProduct(const Matrix &matrix) const {
-   // TODO this->validateOperands(matrix);
-   double resp = 0.0;
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         resp += (*this)(i, j) * matrix(i, j);
-
-   return resp;
+   double aux = this->isTransposed() ? pmat::utils::MINUS_ONE : pmat::utils::ONE;
+   double val = column > row ? pmat::utils::MINUS_ONE * this->vectorElement(column, row)
+                             : this->vectorElement(row, column);
+   return val * aux;
 }
 
 pmat::MatrixSkewSymmetric
@@ -63,15 +55,18 @@ pmat::MatrixSkewSymmetric pmat::MatrixSkewSymmetric::operator*(const double &sca
    return res;
 }
 
-pmat::MatrixSkewSymmetric
-pmat::MatrixSkewSymmetric::operator*(const MatrixSkewSymmetric &matrix) const {
-   return MatrixSkewSymmetric{MatrixSquare::operator*(matrix)};
+pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator*(const MatrixSkewSymmetric &matrix) const {
+   return MatrixSquare::operator*(matrix);
 }
 
 void pmat::MatrixSkewSymmetric::multiplyBy(const double &scalar) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
          this->setValue((*this)(i, j) * scalar, i, j);
+}
+
+void pmat::MatrixSkewSymmetric::transpose() {
+   Matrix::transpose();
 }
 
 void pmat::MatrixSkewSymmetric::fillRandomly(const double &min, const double &max) {

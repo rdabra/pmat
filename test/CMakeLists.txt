@@ -14,6 +14,8 @@ add_executable(
   tMatrix.h
   tMatrixSquare.h
   tMatrixTriangular.h
+  tMatrixSymmetric.h
+  tMatrixSkewSymmetric.h
   pmat_test.cpp
 )  
 

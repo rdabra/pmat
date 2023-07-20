@@ -1,4 +1,5 @@
 #include "MatrixSquare.h"
+#include "DPLU_MatrixSquare.h"
 #include "utils.h"
 
 pmat::MatrixSquare::MatrixSquare(Matrix &&matrix) {
@@ -67,17 +68,20 @@ pmat::MatrixSquare pmat::MatrixSquare::operator*(const double &scalar) const {
 }
 
 double pmat::MatrixSquare::trace() const {
-   double resp = pmat::utils::ZERO;
+   double res = pmat::utils::ZERO;
    for (unsigned i = 0; i < this->size(); i++)
-      resp += (*this)(i, i);
-   return resp;
-}
+      res += (*this)(i, i);
 
-pmat::Vector pmat::MatrixSquare::linearSolve(const Vector &rhs) {
-   return Vector{2};
+   return res;
 }
 
 void pmat::MatrixSquare::fillDiagonalWith(const double &value) {
    for (unsigned i = 0; i < this->size(); ++i)
       this->setValue(value, i, i);
+}
+
+pmat::DPLU_MatrixSquare pmat::MatrixSquare::decomposeToPLU() const {
+   DPLU_MatrixSquare res{*this};
+
+   return res;
 }

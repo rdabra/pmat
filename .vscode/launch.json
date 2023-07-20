@@ -5,10 +5,26 @@
    "version": "0.2.0",
    "configurations": [
       {
-         "name": "pmat_test",
+         "type": "lldb",
+         "request": "launch",
+         "name": "pmat_test(lldb)",
+         "program": "${workspaceFolder}/out/build/covClang/test/pmat_test.exe",
+         "args": [],
+         "cwd": "${workspaceFolder}"
+      },
+      {
+         "type": "lldb",
+         "request": "launch",
+         "name": "pmat_main(lldb)",
+         "program": "${workspaceFolder}/out/build/debugClang/src/pmat_main.exe",
+         "args": [],
+         "cwd": "${workspaceFolder}"
+      },
+      {
+         "name": "pmat_test(gdb)",
          "type": "cppdbg",
          "request": "launch",
-         "program": "${workspaceFolder}/out/build/covClang/test/pmat_test.exe",
+         "program": "${workspaceFolder}/out/build/covGcc/test/pmat_test.exe",
          "args": [],
          "stopAtEntry": false,
          "cwd": "${fileDirname}",
@@ -30,10 +46,10 @@
          ]
       },
       {
-         "name": "pmat_main",
+         "name": "pmat_main(gdb)",
          "type": "cppdbg",
          "request": "launch",
-         "program": "${workspaceFolder}/out/build/debugClang/src/pmat_main.exe",
+         "program": "${workspaceFolder}/out/build/debugGcc/src/pmat_main.exe",
          "args": [],
          "stopAtEntry": false,
          "cwd": "${fileDirname}",

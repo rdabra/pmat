@@ -49,6 +49,7 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       void swapColumns(const unsigned &colA, const unsigned &colB, const unsigned &startRow,
                        const unsigned &endRow) override;
       void fillRandomly(const double &min, const double &max) override;
+      [[nodiscard]] TriangType type() const override { return TriangType::LOWER; };
 };
 
 } // namespace pmat

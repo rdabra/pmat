@@ -28,6 +28,34 @@
             "CMAKE_CXX_FLAGS": "",
             "CMAKE_BUILD_TYPE": "Debug"
          }
+      },
+      {
+         "name": "covGcc",
+         "displayName": "GCC(gcov)",
+         "description": "Using compilers: gcc.exe, g++.exe",
+         "generator": "Ninja",
+         "binaryDir": "${sourceDir}/out/build/${presetName}",
+         "cacheVariables": {
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+            "CMAKE_C_COMPILER": "C:/msys64/mingw64/bin/gcc.exe",
+            "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
+            "CMAKE_CXX_FLAGS": "-O0 -coverage",
+            "CMAKE_BUILD_TYPE": "Debug"
+         }
+      },
+      {
+         "name": "debugGcc",
+         "displayName": "GCC(debug)",
+         "description": "Using compilers: g++.exe, gcc.exe",
+         "generator": "Ninja",
+         "binaryDir": "${sourceDir}/out/build/${presetName}",
+         "cacheVariables": {
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+            "CMAKE_C_COMPILER": "C:/msys64/mingw64/bin/gcc.exe",
+            "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
+            "CMAKE_CXX_FLAGS": "",
+            "CMAKE_BUILD_TYPE": "Debug"
+         }
       }
    ],
    "buildPresets": [
@@ -37,6 +65,13 @@
          "displayName": "Clang(Debug)",
          "jobs": 8,
          "configurePreset": "debugClang"
+      },
+      {
+         "name": "debugGcc",
+         "description": "",
+         "displayName": "GCC(Debug)",
+         "jobs": 8,
+         "configurePreset": "debugGcc"
       }
    ],
    "testPresets": [

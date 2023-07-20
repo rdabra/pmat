@@ -34,6 +34,10 @@ static inline bool isZero(const double &a) {
    return areEqual(a, ZERO);
 }
 
+static inline bool isOne(const double &a) {
+   return areEqual(a, ONE);
+}
+
 static inline double signOf(const double &a) {
    return a < 0 ? -ONE : ONE;
 }

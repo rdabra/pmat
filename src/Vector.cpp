@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "utils.h"
 #include <random>
+#include <utility>
 
 pmat::Vector::Vector(const Vector &vector) {
    for (auto elm : vector._vector)

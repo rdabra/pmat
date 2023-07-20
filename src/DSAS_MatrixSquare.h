@@ -5,6 +5,8 @@
 #include "MatrixSkewSymmetric.h"
 #include "MatrixSymmetric.h"
 
+namespace pmat {
+
 class DSAS_MatrixSquare {
    private:
       MatrixSymmetric matS;
@@ -17,4 +19,5 @@ class DSAS_MatrixSquare {
    private:
 };
 
+} // namespace pmat
 #endif

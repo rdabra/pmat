@@ -79,19 +79,11 @@ void pmat::MatrixLowerTriangular::multiplyBy(const double &scalar) {
 }
 
 pmat::MatrixSquare pmat::MatrixLowerTriangular::operator+(const MatrixSquare &matrix) const {
-   MatrixSquare res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) + matrix(i, j), i, j);
-   return res;
+   return MatrixSquare::operator+(matrix);
 }
 
 pmat::MatrixSquare pmat::MatrixLowerTriangular::operator-(const MatrixSquare &matrix) const {
-   MatrixSquare res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) + matrix(i, j), i, j);
-   return res;
+   return MatrixSquare::operator-(matrix);
 }
 
 pmat::MatrixSquare pmat::MatrixLowerTriangular::operator*(const MatrixTriangular &matrix) const {

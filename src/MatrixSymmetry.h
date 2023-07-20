@@ -33,13 +33,9 @@ class MatrixSymmetry : public MatrixSquare {
       void transpose() override = 0;
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
-      [[nodiscard]] double dotProduct(const Matrix &matrix) const override = 0;
       [[nodiscard]] MatrixSquare toMatrixSquare() const;
       Matrix operator*(const Matrix &matrix) const override;
-      MatrixSquare operator*(const MatrixSquare &matrix) const;
-      MatrixSquare operator*(const MatrixSymmetry &matrix) const;
       void fillRandomly(const double &min, const double &max) override = 0;
-      Vector linearSolve(const Vector &rhs) override;
 };
 
 } // namespace pmat

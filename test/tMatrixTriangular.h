@@ -155,8 +155,8 @@ TEST(TestMatrixTriangular, TestPlus) {
    x1 = z + v;
    MatrixSquare x2(z + v);
    MatrixLowerTriangular z1(z);
-   MatrixSquare z2(z + z);
-   MatrixSquare v2(v + v);
+   MatrixLowerTriangular z2(z + z);
+   MatrixUpperTriangular v2(v + v);
    z.addBy(z);
 
    MatrixUpperTriangular v1(v);
@@ -400,7 +400,7 @@ TEST(TestMatrixTriangular, TestTimes) {
    MatrixSquare x5(v * z);
 
    MatrixLowerTriangular x3(4);
-   z.times(2.0, x3);
+   x3 = z * 2.0;
    MatrixLowerTriangular x4(z * 2.0);
    z.multiplyBy(2.0);
 
@@ -718,8 +718,8 @@ TEST(TestMatrixTriangular, TestMisc2) {
    MatrixUpperTriangular aux{z * 2.0};
    MatrixUpperTriangular zz(std::move(aux));
 
-   z.reset(3);
+   z.resize(3);
 
    EXPECT_TRUE(zz == resp);
-   EXPECT_TRUE(z.getSize() == 3);
+   EXPECT_TRUE(z.size() == 3);
 }

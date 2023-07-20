@@ -8,6 +8,8 @@
 
 namespace pmat {
 
+class DPLU_MatrixSquare;
+
 enum class SubMatrixPos { lower, upper };
 
 class MatrixSquare : public Matrix {
@@ -29,8 +31,8 @@ class MatrixSquare : public Matrix {
       MatrixSquare operator*(const double &scalar) const;
       Vector operator*(const Vector &vector) const override { return Matrix::operator*(vector); }
       [[nodiscard]] virtual double trace() const;
-      virtual Vector linearSolve(const Vector &rhs);
       virtual void fillDiagonalWith(const double &value);
+      [[nodiscard]] DPLU_MatrixSquare decomposeToPLU() const;
 };
 
 } // namespace pmat

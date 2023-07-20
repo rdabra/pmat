@@ -1,5 +1,4 @@
 #include "MatrixUpperTriangular.h"
-#include "MatrixLowerTriangular.h"
 #include "utils.h"
 #include <random>
 
@@ -28,7 +27,7 @@ double pmat::MatrixUpperTriangular::dotProduct(const Matrix &matrix) const {
 
 pmat::MatrixUpperTriangular
 pmat::MatrixUpperTriangular::operator+(const MatrixUpperTriangular &matrix) const {
-   MatrixLowerTriangular res{this->size()};
+   MatrixUpperTriangular res{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = i; j < this->size(); j++)
          res.setValue((*this)(i, j) + matrix(i, j), i, j);
@@ -44,7 +43,7 @@ void pmat::MatrixUpperTriangular::addBy(const MatrixUpperTriangular &matrix) {
 
 pmat::MatrixUpperTriangular
 pmat::MatrixUpperTriangular::operator-(const MatrixUpperTriangular &matrix) const {
-   MatrixLowerTriangular res{this->size()};
+   MatrixUpperTriangular res{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = i; j < this->size(); j++)
          res.setValue((*this)(i, j) - matrix(i, j), i, j);
@@ -59,7 +58,7 @@ void pmat::MatrixUpperTriangular::subtractBy(const MatrixUpperTriangular &matrix
 }
 
 pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::operator*(const double &scalar) const {
-   MatrixLowerTriangular res{this->size()};
+   MatrixUpperTriangular res{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = i; j < this->size(); j++)
          res.setValue((*this)(i, j) * scalar, i, j);
@@ -83,21 +82,11 @@ pmat::MatrixSquare pmat::MatrixUpperTriangular::toMatrixSquare() const {
 }
 
 pmat::MatrixSquare pmat::MatrixUpperTriangular::operator+(const MatrixSquare &matrix) const {
-   MatrixSquare res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
-         res.setValue((*this)(i, j) + matrix(i, j), i, j);
-
-   return res;
+   return MatrixSquare::operator+(matrix);
 }
 
 pmat::MatrixSquare pmat::MatrixUpperTriangular::operator-(const MatrixSquare &matrix) const {
-   MatrixSquare res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
-         res.setValue((*this)(i, j) - matrix(i, j), i, j);
-
-   return res;
+   return MatrixSquare::operator-(matrix);
 }
 
 pmat::MatrixUpperTriangular

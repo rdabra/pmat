@@ -13,16 +13,6 @@ double pmat::MatrixSymmetric::operator()(const unsigned &row, const unsigned &co
    return column > row ? this->vectorElement(column, row) : this->vectorElement(row, column);
 }
 
-double pmat::MatrixSymmetric::dotProduct(const Matrix &matrix) const {
-   // TODO this->validateOperands(matrix);
-   double resp = 0.0;
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         resp += (*this)(i, j) * matrix(i, j);
-
-   return resp;
-}
-
 pmat::MatrixSymmetric pmat::MatrixSymmetric::operator+(const MatrixSymmetric &matrix) const {
    MatrixSymmetric res{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
@@ -59,8 +49,8 @@ pmat::MatrixSymmetric pmat::MatrixSymmetric::operator*(const double &scalar) con
    return res;
 }
 
-pmat::MatrixSymmetric pmat::MatrixSymmetric::operator*(const MatrixSymmetric &matrix) const {
-   return MatrixSymmetric{MatrixSquare::operator*(matrix)};
+pmat::MatrixSquare pmat::MatrixSymmetric::operator*(const MatrixSymmetric &matrix) const {
+   return MatrixSquare::operator*(matrix);
 }
 
 void pmat::MatrixSymmetric::multiplyBy(const double &scalar) {
