@@ -20,7 +20,7 @@ class MatrixTriangular : public pmat::MatrixSquare {
       MatrixTriangular() = default;
       MatrixTriangular(const MatrixTriangular &matrix) = default;
       MatrixTriangular(MatrixTriangular &&matrix) = default;
-      explicit MatrixTriangular(const unsigned &size) : MatrixSquare::MatrixSquare(size){};
+      explicit MatrixTriangular(const unsigned &size) { this->initializeMembers(size, size); };
       ~MatrixTriangular() override = default;
       MatrixTriangular &operator=(const MatrixTriangular &) = default;
       MatrixTriangular &operator=(MatrixTriangular &&) = default;
@@ -41,6 +41,11 @@ class MatrixTriangular : public pmat::MatrixSquare {
       void swapColumns(const unsigned &columnA, const unsigned &columnB, const unsigned &startRow,
                        const unsigned &endRow) override = 0;
       [[nodiscard]] virtual TriangType type() const = 0;
+
+      static void findInverseByBackSubstitution(const MatrixTriangular &matrix,
+                                                MatrixTriangular &resp);
+      static pmat::Vector findSolutionByBackSubstitution(const MatrixTriangular &matrix,
+                                                         const Vector &rhs);
 };
 
 } // namespace pmat

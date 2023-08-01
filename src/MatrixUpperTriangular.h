@@ -16,7 +16,6 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
 
    public:
       MatrixUpperTriangular() = default;
-      MatrixUpperTriangular(const MatrixSquare &matrix);
       MatrixUpperTriangular(const MatrixUpperTriangular &matrix) = default;
       MatrixUpperTriangular(MatrixUpperTriangular &&matrix) = default;
       explicit MatrixUpperTriangular(const unsigned &size)
@@ -31,6 +30,7 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
       MatrixUpperTriangular operator-(const MatrixUpperTriangular &matrix) const;
       virtual void subtractBy(const MatrixUpperTriangular &matrix);
       MatrixUpperTriangular operator*(const double &scalar) const;
+      MatrixSquare operator*(const MatrixSquare &matrix) const;
       void multiplyBy(const double &scalar) override;
       [[nodiscard]] MatrixSquare toMatrixSquare() const override;
       MatrixSquare operator+(const MatrixSquare &matrix) const;

@@ -22,11 +22,11 @@ class MatrixSymmetry : public MatrixSquare {
       MatrixSymmetry() = default;
       MatrixSymmetry(const MatrixSymmetry &matrix) = default;
       MatrixSymmetry(MatrixSymmetry &&matrix) = default;
-      explicit MatrixSymmetry(const unsigned &size) : MatrixSquare::MatrixSquare(size){};
+      explicit MatrixSymmetry(const unsigned &size) { this->initializeMembers(size, size); };
       ~MatrixSymmetry() override = default;
       MatrixSymmetry &operator=(const MatrixSymmetry &) = default;
       MatrixSymmetry &operator=(MatrixSymmetry &&) = default;
-      [[nodiscard]] inline unsigned length() const override {
+      [[nodiscard]] unsigned length() const override {
          return (this->size() * this->size() + this->size()) / 2;
       }
       double operator()(const unsigned &row, const unsigned &column) const override = 0;

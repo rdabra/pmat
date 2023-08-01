@@ -1,5 +1,6 @@
 #include "DPLU_MatrixSquare.h"
 #include "utils.h"
+#include <stdexcept>
 
 void pmat::DPLU_MatrixSquare::swapRowsBellow(MatrixSquare &matU, const unsigned &idxPivot) {
    unsigned idxMax = idxPivot;
@@ -56,50 +57,6 @@ void pmat::DPLU_MatrixSquare::calculate() {
 
       _calculated = true;
    }
-}
-
-void pmat::DPLU_MatrixSquare::findInverseByBackSubstitution(const MatrixTriangular &matrix,
-                                                            MatrixTriangular &resp) const {
-   std::vector<unsigned> ids(matrix.size());
-   if (matrix.type() == TriangType::LOWER)
-      for (unsigned k = 0; k < matrix.size(); k++)
-         ids[k] = k;
-   else
-      for (unsigned k = 0; k < matrix.size(); k++)
-         ids[k] = matrix.size() - k - 1;
-
-   for (unsigned idxPivot = 0; idxPivot < matrix.size(); idxPivot++) {
-      resp.setValue(pmat::utils::ONE / matrix(ids[idxPivot], ids[idxPivot]), ids[idxPivot],
-                    ids[idxPivot]);
-      for (unsigned i = idxPivot + 1; i < matrix.size(); i++) {
-         double num{pmat::utils::ZERO};
-         for (unsigned j = idxPivot; j < i; j++)
-            num -= matrix(ids[i], ids[j]) * resp(ids[j], ids[idxPivot]);
-         resp.setValue(num / matrix(ids[i], ids[i]), ids[i], ids[idxPivot]);
-      }
-   }
-}
-
-pmat::Vector pmat::DPLU_MatrixSquare::findSolutionByBackSubstitution(const MatrixTriangular &matrix,
-                                                                     const Vector &rhs) const {
-   Vector resp(rhs.size());
-   std::vector<unsigned> ids(matrix.size());
-   if (matrix.type() == TriangType::LOWER)
-      for (unsigned k = 0; k < matrix.size(); k++)
-         ids[k] = k;
-   else
-      for (unsigned k = 0; k < matrix.size(); k++)
-         ids[k] = matrix.size() - k - 1;
-
-   resp.setValue(rhs(ids[0]) / matrix(ids[0], ids[0]), ids[0]);
-   for (unsigned i = 1; i < matrix.size(); i++) {
-      double num{rhs(ids[i])};
-      for (unsigned j = 0; j < i; j++)
-         num -= matrix(ids[i], ids[j]) * resp(ids[j]);
-      resp.setValue(num / matrix(ids[i], ids[i]), ids[i]);
-   }
-
-   return resp;
 }
 
 pmat::DPLU_MatrixSquare::DPLU_MatrixSquare(const MatrixSquare &matrix)
@@ -172,9 +129,9 @@ pmat::MatrixSquare pmat::DPLU_MatrixSquare::inverse() {
       throw std::logic_error(messages::MATRIX_SINGULAR);
 
    MatrixUpperTriangular invU(_matrix->size());
-   this->findInverseByBackSubstitution(_matU, invU);
+   MatrixTriangular::findInverseByBackSubstitution(_matU, invU);
    MatrixLowerTriangular invL(_matrix->size());
-   this->findInverseByBackSubstitution(_matL, invL);
+   MatrixTriangular::findInverseByBackSubstitution(_matL, invL);
    MatrixSquare resp(invU * invL);
 
    // Recovering adequate positions by swapping columns in reverse order of the swapped rows

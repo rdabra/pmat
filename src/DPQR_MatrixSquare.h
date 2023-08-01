@@ -9,17 +9,32 @@ namespace pmat {
 
 class DPQR_MatrixSquare {
    private:
-      MatrixSquare matP;
-      MatrixSquare matQ;
-      //      MatrixUpperTriangular matR;
-      std::vector<std::pair<unsigned, unsigned>> swappedColumns;
-      unsigned rank{0};
+      const MatrixSquare *_matrix;
+      MatrixSquare _matP;
+      MatrixSquare _matQ;
+      MatrixUpperTriangular _matR;
+      std::vector<std::pair<unsigned, unsigned>> _swappedColumns;
+      unsigned _rank{0};
+      bool _calculated{false};
+
+      [[nodiscard]] MatrixSquare calculateHouseholderSubMatrix(const MatrixSquare &partialR,
+                                                               const unsigned idxPivot) const;
+      void swapPivotColumn(MatrixSquare &partialR, const unsigned &idxPivot);
+
+      void calculate();
 
    public:
-      DPQR_MatrixSquare();
-      ~DPQR_MatrixSquare();
-
-   private:
+      DPQR_MatrixSquare(const MatrixSquare &matrix);
+      DPQR_MatrixSquare(const DPQR_MatrixSquare &pqr) = default;
+      DPQR_MatrixSquare(DPQR_MatrixSquare &&pqr) = default;
+      DPQR_MatrixSquare &operator=(const DPQR_MatrixSquare &pqr) = default;
+      DPQR_MatrixSquare &operator=(DPQR_MatrixSquare &&pqr) = default;
+      ~DPQR_MatrixSquare() = default;
+      const MatrixSquare &matP();
+      const MatrixSquare &matQ();
+      const MatrixUpperTriangular &matR();
+      const unsigned &rank();
+      MatrixSquare inverse();
 };
 } // namespace pmat
 #endif

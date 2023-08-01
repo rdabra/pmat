@@ -9,6 +9,7 @@ namespace pmat {
 
 class DPLU_MatrixSquare;
 class DSAS_MatrixSquare;
+class DPQR_MatrixSquare;
 
 enum class SubMatrixPos { lower, upper };
 
@@ -34,6 +35,7 @@ class MatrixSquare : public Matrix {
       virtual void fillDiagonalWith(const double &value);
       [[nodiscard]] DPLU_MatrixSquare decomposeToPLU() const;
       [[nodiscard]] DSAS_MatrixSquare decomposeToSAS() const;
+      [[nodiscard]] DPQR_MatrixSquare decomposeToPQR() const;
 };
 
 } // namespace pmat

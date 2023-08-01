@@ -258,14 +258,14 @@ TEST(TestMatrixTriangular, TestMinus) {
 
    z.subtractBy(z);
 
-   MatrixSquare x3(4);
-   MatrixSquare x4(4);
+   MatrixUpperTriangular x3(4);
+   MatrixLowerTriangular x4(4);
    x3 = v - v;
 
    MatrixLowerTriangular vvv(v.getTranspose());
    x4 = vvv - vvv;
 
-   MatrixSquare x5(4);
+   MatrixUpperTriangular x5(4);
    x5 = v - v;
 
    MatrixSquare x6(vv - zz);

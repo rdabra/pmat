@@ -2,13 +2,13 @@
 #include "utils.h"
 #include <random>
 
-pmat::MatrixUpperTriangular::MatrixUpperTriangular(const MatrixSquare &matrix) {
+/* pmat::MatrixUpperTriangular::MatrixUpperTriangular(const MatrixSquare &matrix) {
    this->initializeMembers(matrix.size(), matrix.size());
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = i; j < this->size(); j++)
          this->setValue(matrix(i, j), i, j);
 }
-
+ */
 double pmat::MatrixUpperTriangular::operator()(const unsigned &row, const unsigned &column) const {
    // TODO validateIndex(rowIndex, columnIndex);
 
@@ -64,6 +64,10 @@ pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::operator*(const double 
          res.setValue((*this)(i, j) * scalar, i, j);
 
    return res;
+}
+
+pmat::MatrixSquare pmat::MatrixUpperTriangular::operator*(const MatrixSquare &matrix) const {
+   return MatrixSquare::operator*(matrix);
 }
 
 void pmat::MatrixUpperTriangular::multiplyBy(const double &scalar) {

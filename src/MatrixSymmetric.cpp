@@ -1,13 +1,6 @@
 #include "MatrixSymmetric.h"
 #include <random>
 
-pmat::MatrixSymmetric::MatrixSymmetric(const MatrixSquare &matrix) {
-   this->initializeMembers(matrix.size(), matrix.size());
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         this->setValue(matrix(i, j), i, j);
-}
-
 double pmat::MatrixSymmetric::operator()(const unsigned &row, const unsigned &column) const {
    // TODO	validateIndex(rowIndex, columnIndex);
    return column > row ? this->vectorElement(column, row) : this->vectorElement(row, column);

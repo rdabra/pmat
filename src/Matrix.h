@@ -56,7 +56,7 @@ class Matrix : public pmat::Array {
           : _matrix{std::move(matrix._matrix)}, _rowSize{matrix.rowSize()},
             _columnSize{matrix.columnSize()}, _isTransposed{matrix._isTransposed} {}
       ~Matrix() override = default;
-      [[nodiscard]] inline unsigned length() const override { return _rowSize * _columnSize; }
+      [[nodiscard]] unsigned length() const override { return _rowSize * _columnSize; }
       [[nodiscard]] inline unsigned dimension() const override { return 2; }
       void resize(const unsigned &rowSize, const unsigned &columnSize);
       void clear() override;

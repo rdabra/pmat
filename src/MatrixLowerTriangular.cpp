@@ -3,13 +3,6 @@
 #include "utils.h"
 #include <random>
 
-pmat::MatrixLowerTriangular::MatrixLowerTriangular(const MatrixSquare &matrix) {
-   this->initializeMembers(matrix.size(), matrix.size());
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         this->setValue(matrix(i, j), i, j);
-}
-
 pmat::MatrixSquare pmat::MatrixLowerTriangular::toMatrixSquare() const {
    MatrixSquare res{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
@@ -72,6 +65,10 @@ pmat::MatrixLowerTriangular pmat::MatrixLowerTriangular::operator*(const double 
    return res;
 }
 
+pmat::MatrixSquare pmat::MatrixLowerTriangular::operator*(const MatrixSquare &matrix) const {
+   return MatrixSquare::operator*(matrix);
+}
+
 void pmat::MatrixLowerTriangular::multiplyBy(const double &scalar) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
@@ -93,7 +90,7 @@ pmat::MatrixSquare pmat::MatrixLowerTriangular::operator*(const MatrixTriangular
 pmat::MatrixLowerTriangular
 pmat::MatrixLowerTriangular::operator*(const MatrixLowerTriangular &matrix) const {
    // TODO O numero de colunas desta matriz deve ser igual ao numero de linhas da outra
-   MatrixUpperTriangular resp{this->size()};
+   MatrixLowerTriangular resp{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++) {
          double aux = pmat::utils::ZERO;

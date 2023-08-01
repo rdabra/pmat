@@ -22,10 +22,6 @@ class DPLU_MatrixSquare {
       void swapRowsBellow(MatrixSquare &matU, const unsigned &idxPivot);
       void nullifyElementBellow(MatrixSquare &matU, const unsigned &idxPivot);
       void calculate();
-      void findInverseByBackSubstitution(const MatrixTriangular &matrix,
-                                         MatrixTriangular &resp) const;
-      [[nodiscard]] pmat::Vector findSolutionByBackSubstitution(const MatrixTriangular &matrix,
-                                                                const Vector &rhs) const;
 
    public:
       DPLU_MatrixSquare(const MatrixSquare &matrix);

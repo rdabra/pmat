@@ -1,4 +1,5 @@
 #include "../src/DPLU_MatrixSquare.h"
+#include "../src/DPQR_MatrixSquare.h"
 #include "../src/DSAS_MatrixSquare.h"
 #include "../src/MatrixLowerTriangular.h"
 #include "../src/MatrixSkewSymmetric.h"
@@ -401,13 +402,8 @@ TEST(TestMatrixSquare, TestMisc) {
    MatrixSquare C;
    C = (std::move(T));
 
-   MatrixLowerTriangular Al{A};
-   MatrixUpperTriangular Au{A};
-
    EXPECT_TRUE(A == B);
    EXPECT_TRUE(A == C);
-   EXPECT_TRUE(Al == ALower);
-   EXPECT_TRUE(Au == AUpper);
 }
 
 TEST(TestMatrixSquare, TestPositiveDefinite) {
@@ -435,7 +431,7 @@ TEST(TestMatrixSquare, TestPositiveDefinite) {
    EXPECT_TRUE(dpu.isPositiveDefinite());
 }
 
-/* TEST(TestMatrixSquare, TestSymmetricAntiSym) {
+TEST(TestMatrixSquare, TestSymmetricAntiSym) {
    MatrixSquare A(4);
    A.setValue(1.0, 0, 0);
    A.setValue(2.0, 0, 1);
@@ -456,7 +452,7 @@ TEST(TestMatrixSquare, TestPositiveDefinite) {
    DSAS_MatrixSquare matSas = A.decomposeToSAS();
    EXPECT_TRUE(A == (matSas.matS() + matSas.matAS()));
 }
- */
+
 TEST(TestMatrixSquare, TestIsOrthogonal) {
    MatrixSquare A(4);
    A.setValue(1.0, 0, 0);
@@ -630,45 +626,45 @@ TEST(TestMatrixSquare, TestMultiplySubSuperMatrices) {
    EXPECT_TRUE(B.multiplyByBiggerMatrix(A, SubMatrixPos::upper) == resp2);
 }
 
-// TEST(TestMatrixSquare, TestDecompQR) {
-//    MatrixSquare A(3);
+TEST(TestMatrixSquare, TestDecompQR) {
+   MatrixSquare A(3);
 
-//    A.setValue(12.0, 0, 0);
-//    A.setValue(-51.0, 0, 1);
-//    A.setValue(4.0, 0, 2);
+   A.setValue(12.0, 0, 0);
+   A.setValue(-51.0, 0, 1);
+   A.setValue(4.0, 0, 2);
 
-//    A.setValue(6.0, 1, 0);
-//    A.setValue(167.0, 1, 1);
-//    A.setValue(-68.0, 1, 2);
+   A.setValue(6.0, 1, 0);
+   A.setValue(167.0, 1, 1);
+   A.setValue(-68.0, 1, 2);
 
-//    A.setValue(-4.0, 2, 0);
-//    A.setValue(24.0, 2, 1);
-//    A.setValue(-41.0, 2, 2);
+   A.setValue(-4.0, 2, 0);
+   A.setValue(24.0, 2, 1);
+   A.setValue(-41.0, 2, 2);
 
-//    D_PQR qr{A.getPQR()};
+   DPQR_MatrixSquare qr{A.decomposeToPQR()};
 
-//    MatrixSquare resp{(*qr.matQ) * (*qr.matR)};
+   MatrixSquare resp{qr.matQ() * qr.matR()};
 
-//    MatrixSquare invA{A.getInverse()};
+   MatrixSquare invA{qr.inverse()};
 
-//    MatrixSquare identity(A.getSize());
-//    identity.fillDiagonalWith(utils::ONE);
+   MatrixSquare identity(A.size());
+   identity.fillDiagonalWith(utils::ONE);
 
-//    MatrixSquare B(3);
+   MatrixSquare B(3);
 
-//    B.setValue(12.0, 0, 0);
-//    B.setValue(-51.0, 0, 1);
-//    B.setValue(4.0, 0, 2);
+   B.setValue(12.0, 0, 0);
+   B.setValue(-51.0, 0, 1);
+   B.setValue(4.0, 0, 2);
 
-//    B.setValue(24.0, 1, 0);
-//    B.setValue(-102.0, 1, 1);
-//    B.setValue(8.0, 1, 2);
+   B.setValue(24.0, 1, 0);
+   B.setValue(-102.0, 1, 1);
+   B.setValue(8.0, 1, 2);
 
-//    B.setValue(-4.0, 2, 0);
-//    B.setValue(24.0, 2, 1);
-//    B.setValue(-41.0, 2, 2);
+   B.setValue(-4.0, 2, 0);
+   B.setValue(24.0, 2, 1);
+   B.setValue(-41.0, 2, 2);
 
-//    EXPECT_TRUE(resp == A * (*qr.matP));
-//    EXPECT_TRUE(B.getRank() == 2);
-//    EXPECT_TRUE(identity == A * invA);
-// }
+   EXPECT_TRUE(resp == A * qr.matP());
+   EXPECT_TRUE(B.decomposeToPQR().rank() == 2);
+   EXPECT_TRUE(identity == A * invA);
+}

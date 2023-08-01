@@ -2,13 +2,6 @@
 #include "utils.h"
 #include <random>
 
-pmat::MatrixSkewSymmetric::MatrixSkewSymmetric(const MatrixSquare &matrix) {
-   this->initializeMembers(matrix.size(), matrix.size());
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         this->setValue(matrix(i, j), i, j);
-}
-
 double pmat::MatrixSkewSymmetric::operator()(const unsigned &row, const unsigned &column) const {
    // TODO	validateIndex(rowIndex, columnIndex);
    double aux = this->isTransposed() ? pmat::utils::MINUS_ONE : pmat::utils::ONE;
@@ -24,6 +17,10 @@ pmat::MatrixSkewSymmetric::operator+(const MatrixSkewSymmetric &matrix) const {
       for (unsigned j = 0; j <= i; j++)
          res.setValue((*this)(i, j) + matrix(i, j), i, j);
    return res;
+}
+
+pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator+(const MatrixSymmetry &matrix) const {
+   return MatrixSquare::operator+(matrix);
 }
 
 void pmat::MatrixSkewSymmetric::addBy(const MatrixSkewSymmetric &matrix) {

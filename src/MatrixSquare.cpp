@@ -1,5 +1,6 @@
 #include "MatrixSquare.h"
 #include "DPLU_MatrixSquare.h"
+#include "DPQR_MatrixSquare.h"
 #include "DSAS_MatrixSquare.h"
 #include "utils.h"
 
@@ -89,6 +90,12 @@ pmat::DPLU_MatrixSquare pmat::MatrixSquare::decomposeToPLU() const {
 
 pmat::DSAS_MatrixSquare pmat::MatrixSquare::decomposeToSAS() const {
    DSAS_MatrixSquare res{*this};
+
+   return res;
+}
+
+pmat::DPQR_MatrixSquare pmat::MatrixSquare::decomposeToPQR() const {
+   DPQR_MatrixSquare res{*this};
 
    return res;
 }

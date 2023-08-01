@@ -1,11 +1,129 @@
 #include "DPQR_MatrixSquare.h"
+#include "utils.h"
 
-DPQR_MatrixSquare::DPQR_MatrixSquare()
-{
+pmat::MatrixSquare
+pmat::DPQR_MatrixSquare::calculateHouseholderSubMatrix(const MatrixSquare &partialR,
+                                                       const unsigned idxPivot) const {
+   Vector u(partialR.size() - idxPivot);
+   double alpha{pmat::utils::ZERO};
+   for (unsigned i = idxPivot; i < partialR.size(); ++i) {
+      alpha += partialR(i, idxPivot) * partialR(i, idxPivot);
+      u.setValue(partialR(i, idxPivot), i - idxPivot);
+   }
 
+   // Using the opposite sign of the Frobenius norm
+   alpha = -pmat::utils::ONE * pmat::utils::signOf(partialR(idxPivot, idxPivot)) * sqrt(alpha);
+
+   u.setValue(u(0) - alpha, 0);
+
+   const double squareNormU = u.dotProduct(u);
+   MatrixSquare resp(u.size());
+   for (unsigned i = 0; i < resp.size(); ++i) {
+      if (pmat::utils::isZero(squareNormU))
+         resp.setValue(pmat::utils::ONE, i, i);
+      else
+         for (unsigned j = 0; j < resp.size(); ++j) {
+            if (i == j)
+               resp.setValue(pmat::utils::ONE - pmat::utils::TWO * u(i) * u(j) / squareNormU, i, j);
+            else
+               resp.setValue(-pmat::utils::TWO * u(i) * u(j) / squareNormU, i, j);
+         }
+   }
+
+   return resp;
 }
 
-DPQR_MatrixSquare::~DPQR_MatrixSquare()
-{
+void pmat::DPQR_MatrixSquare::swapPivotColumn(MatrixSquare &partialR, const unsigned &idxPivot) {
+   double normMax{pmat::utils::ZERO};
+   unsigned jMax{idxPivot};
 
+   for (unsigned j = idxPivot; j < partialR.size(); ++j) {
+      double normAux{pmat::utils::ZERO};
+      for (unsigned i = 0; i < partialR.size(); ++i)
+         normAux += partialR(i, j) * partialR(i, j);
+      if (normAux > normMax) {
+         normMax = normAux;
+         jMax = j;
+      }
+   }
+
+   if (jMax != idxPivot) {
+      partialR.swapColumns(jMax, idxPivot);
+      _matP.swapColumns(jMax, idxPivot);
+      _swappedColumns.emplace_back(jMax, idxPivot);
+   }
+}
+
+void pmat::DPQR_MatrixSquare::calculate() {
+   if (!_calculated) {
+      MatrixSquare A(*_matrix);
+      this->swapPivotColumn(A, 0);
+      MatrixSquare matQAux(this->calculateHouseholderSubMatrix(A, 0));
+      MatrixSquare matR(matQAux * A);
+      for (unsigned idxPivot = 1; idxPivot < _matrix->size() - 1; ++idxPivot) {
+         this->swapPivotColumn(matR, idxPivot);
+         MatrixSquare matHouseholder = this->calculateHouseholderSubMatrix(matR, idxPivot);
+         matQAux = matHouseholder.multiplyByBiggerMatrix(matQAux, SubMatrixPos::lower);
+         matR = matHouseholder.multiplyByBiggerMatrix(matR, SubMatrixPos::lower);
+      }
+      for (unsigned i = 0; i < _matrix->size(); ++i) {
+         if (!pmat::utils::isZero(matR(i, i)))
+            _rank++;
+         for (unsigned j = 0; j < _matrix->size(); ++j) {
+            _matQ.setValue(matQAux(j, i), i, j);
+            if (j >= i)
+               _matR.setValue(matR(i, j), i, j);
+         }
+      }
+
+      _calculated = true;
+   }
+}
+
+const pmat::MatrixSquare &pmat::DPQR_MatrixSquare::matP() {
+   this->calculate();
+   return _matP;
+}
+
+const pmat::MatrixSquare &pmat::DPQR_MatrixSquare::matQ() {
+   this->calculate();
+   return _matQ;
+}
+
+const pmat::MatrixUpperTriangular &pmat::DPQR_MatrixSquare::matR() {
+   this->calculate();
+   return _matR;
+}
+
+const unsigned &pmat::DPQR_MatrixSquare::rank() {
+   this->calculate();
+   return _rank;
+}
+
+pmat::MatrixSquare pmat::DPQR_MatrixSquare::inverse() {
+
+   MatrixUpperTriangular invR(_matrix->size());
+   MatrixTriangular::findInverseByBackSubstitution(_matR, invR);
+
+   _matQ.transpose();
+
+   MatrixSquare resp{invR * _matQ};
+
+   _matQ.transpose();
+
+   /**
+    * Recovering adequate positions by swapping rows in reverse order of the swapped columns
+    */
+   for (unsigned i = 1; i <= _swappedColumns.size(); ++i) {
+      auto &swappedColumn = _swappedColumns[_swappedColumns.size() - i];
+      resp.swapRows(swappedColumn.first, swappedColumn.second);
+   }
+
+   return resp;
+}
+
+pmat::DPQR_MatrixSquare::DPQR_MatrixSquare(const MatrixSquare &matrix)
+    : _matrix{&matrix}, _matP{matrix.size()}, _matQ{matrix.size()}, _matR{matrix.size()} {
+   for (unsigned j = 0; j < matrix.size(); j++)
+      _matP.setValue(pmat::utils::ONE, j, j);
 }
