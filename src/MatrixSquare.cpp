@@ -1,5 +1,6 @@
 #include "MatrixSquare.h"
 #include "DPLU_MatrixSquare.h"
+#include "DSAS_MatrixSquare.h"
 #include "utils.h"
 
 pmat::MatrixSquare::MatrixSquare(Matrix &&matrix) {
@@ -82,6 +83,12 @@ void pmat::MatrixSquare::fillDiagonalWith(const double &value) {
 
 pmat::DPLU_MatrixSquare pmat::MatrixSquare::decomposeToPLU() const {
    DPLU_MatrixSquare res{*this};
+
+   return res;
+}
+
+pmat::DSAS_MatrixSquare pmat::MatrixSquare::decomposeToSAS() const {
+   DSAS_MatrixSquare res{*this};
 
    return res;
 }

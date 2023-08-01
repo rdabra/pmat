@@ -1,14 +1,14 @@
 #ifndef MATRIXSQUARE_H
 #define MATRIXSQUARE_H
-
-#include <memory>
 #pragma once
 
 #include "Matrix.h"
+#include <memory>
 
 namespace pmat {
 
 class DPLU_MatrixSquare;
+class DSAS_MatrixSquare;
 
 enum class SubMatrixPos { lower, upper };
 
@@ -33,6 +33,7 @@ class MatrixSquare : public Matrix {
       [[nodiscard]] virtual double trace() const;
       virtual void fillDiagonalWith(const double &value);
       [[nodiscard]] DPLU_MatrixSquare decomposeToPLU() const;
+      [[nodiscard]] DSAS_MatrixSquare decomposeToSAS() const;
 };
 
 } // namespace pmat

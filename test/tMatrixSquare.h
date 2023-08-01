@@ -1,9 +1,10 @@
-#include "../src/DPLU_MatrixSquare.h"     // In order to define the class completely
-#include "../src/MatrixLowerTriangular.h" // In order to define the class completely
-#include "../src/MatrixSkewSymmetric.h"   // In order to define the class completely
+#include "../src/DPLU_MatrixSquare.h"
+#include "../src/DSAS_MatrixSquare.h"
+#include "../src/MatrixLowerTriangular.h"
+#include "../src/MatrixSkewSymmetric.h"
 #include "../src/MatrixSquare.h"
-#include "../src/MatrixSymmetric.h"       // In order to define the class completely
-#include "../src/MatrixUpperTriangular.h" // In order to define the class completely
+#include "../src/MatrixSymmetric.h"
+#include "../src/MatrixUpperTriangular.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
 
@@ -155,63 +156,60 @@ TEST(TestMatrixSquare, TestDecompPLU) {
    MatrixSquare PB((mats1.matP()) * B);
    MatrixSquare LU1((mats1.matL()) * (mats1.matU()));
 
-   DPLU_MatrixSquare mats2 = A.decomposeToPLU();
+   DPLU_MatrixSquare mats2{A.decomposeToPLU()};
+   mats2.setStrictLUMode();
 
    MatrixSquare LU2((mats2.matL()) * (mats2.matU()));
+
+   DPLU_MatrixSquare mats3 = C.decomposeToPLU();
+   mats3.setStrictLUMode();
 
    EXPECT_TRUE(PA == LU);
    EXPECT_TRUE(PB == LU1);
    EXPECT_TRUE(A == LU2);
-   EXPECT_FALSE(C.decomposeToPLU().isStrictLUDecomposable());
+   EXPECT_FALSE(mats3.isStrictLUDecomposable());
 }
 
-// TEST(TestMatrixSquare, TestInverse) {
-//    MatrixSquare A(4);
+TEST(TestMatrixSquare, TestInverse) {
 
-//    A.setValue(1.0, 0, 0);
-//    A.setValue(2.0, 0, 1);
-//    A.setValue(3.0, 0, 2);
-//    A.setValue(4.0, 0, 3);
+   MatrixSquare A(4);
+   A.setValue(1.0, 0, 0);
+   A.setValue(2.0, 0, 1);
+   A.setValue(3.0, 0, 2);
+   A.setValue(4.0, 0, 3);
+   A.setValue(1.0, 1, 0);
+   A.setValue(3.0, 1, 1);
+   A.setValue(2.0, 1, 2);
+   A.setValue(5.0, 1, 3);
+   A.setValue(2.0, 2, 0);
+   A.setValue(1.0, 2, 1);
+   A.setValue(6.0, 2, 2);
+   A.setValue(3.0, 2, 3);
+   A.setValue(3.0, 3, 0);
+   A.setValue(2.0, 3, 1);
+   A.setValue(1.0, 3, 2);
+   A.setValue(1.0, 3, 3);
 
-//    A.setValue(1.0, 1, 0);
-//    A.setValue(3.0, 1, 1);
-//    A.setValue(2.0, 1, 2);
-//    A.setValue(5.0, 1, 3);
+   MatrixSquare invA(4);
+   invA.setValue(12.0, 0, 0);
+   invA.setValue(-23.0 / 3.0, 0, 1);
+   invA.setValue(-11.0 / 3.0, 0, 2);
+   invA.setValue(4.0 / 3.0, 0, 3);
+   invA.setValue(-21.0, 1, 0);
+   invA.setValue(40.0 / 3.0, 1, 1);
+   invA.setValue(19.0 / 3.0, 1, 2);
+   invA.setValue(-5.0 / 3.0, 1, 3);
+   invA.setValue(-7.0, 2, 0);
+   invA.setValue(13.0 / 3.0, 2, 1);
+   invA.setValue(7.0 / 3.0, 2, 2);
+   invA.setValue(-2.0 / 3.0, 2, 3);
+   invA.setValue(13.0, 3, 0);
+   invA.setValue(-8.0, 3, 1);
+   invA.setValue(-4.0, 3, 2);
+   invA.setValue(1.0, 3, 3);
 
-//    A.setValue(2.0, 2, 0);
-//    A.setValue(1.0, 2, 1);
-//    A.setValue(6.0, 2, 2);
-//    A.setValue(3.0, 2, 3);
-
-//    A.setValue(3.0, 3, 0);
-//    A.setValue(2.0, 3, 1);
-//    A.setValue(1.0, 3, 2);
-//    A.setValue(1.0, 3, 3);
-
-//    MatrixSquare invA(4);
-
-//    invA.setValue(12.0, 0, 0);
-//    invA.setValue(-23.0 / 3.0, 0, 1);
-//    invA.setValue(-11.0 / 3.0, 0, 2);
-//    invA.setValue(4.0 / 3.0, 0, 3);
-
-//    invA.setValue(-21.0, 1, 0);
-//    invA.setValue(40.0 / 3.0, 1, 1);
-//    invA.setValue(19.0 / 3.0, 1, 2);
-//    invA.setValue(-5.0 / 3.0, 1, 3);
-
-//    invA.setValue(-7.0, 2, 0);
-//    invA.setValue(13.0 / 3.0, 2, 1);
-//    invA.setValue(7.0 / 3.0, 2, 2);
-//    invA.setValue(-2.0 / 3.0, 2, 3);
-
-//    invA.setValue(13.0, 3, 0);
-//    invA.setValue(-8.0, 3, 1);
-//    invA.setValue(-4.0, 3, 2);
-//    invA.setValue(1.0, 3, 3);
-
-//    EXPECT_TRUE(A.getInverse() == invA);
-// }
+   EXPECT_TRUE(A.decomposeToPLU().inverse() == invA);
+}
 
 TEST(TestMatrixSquare, TestPlus) {
    MatrixSquare z(4);
@@ -412,83 +410,75 @@ TEST(TestMatrixSquare, TestMisc) {
    EXPECT_TRUE(Au == AUpper);
 }
 
-// TEST(TestMatrixSquare, TestPositiveDefinite) {
-//    MatrixSquare z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(-1.0, 0, 1);
-//    z.setValue(2.0, 0, 2);
-//    z.setValue(0.0, 0, 3);
-//    z.setValue(-1.0, 1, 0);
-//    z.setValue(4.0, 1, 1);
-//    z.setValue(-1.0, 1, 2);
-//    z.setValue(1.0, 1, 3);
-//    z.setValue(2.0, 2, 0);
-//    z.setValue(-1.0, 2, 1);
-//    z.setValue(6.0, 2, 2);
-//    z.setValue(-2.0, 2, 3);
-//    z.setValue(0.0, 3, 0);
-//    z.setValue(1.0, 3, 1);
-//    z.setValue(-2.0, 3, 2);
-//    z.setValue(4.0, 3, 3);
+TEST(TestMatrixSquare, TestPositiveDefinite) {
+   MatrixSquare z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(-1.0, 0, 1);
+   z.setValue(2.0, 0, 2);
+   z.setValue(0.0, 0, 3);
+   z.setValue(-1.0, 1, 0);
+   z.setValue(4.0, 1, 1);
+   z.setValue(-1.0, 1, 2);
+   z.setValue(1.0, 1, 3);
+   z.setValue(2.0, 2, 0);
+   z.setValue(-1.0, 2, 1);
+   z.setValue(6.0, 2, 2);
+   z.setValue(-2.0, 2, 3);
+   z.setValue(0.0, 3, 0);
+   z.setValue(1.0, 3, 1);
+   z.setValue(-2.0, 3, 2);
+   z.setValue(4.0, 3, 3);
 
-//    EXPECT_TRUE(z.isPositiveDefinite());
-// }
+   DPLU_MatrixSquare dpu = z.decomposeToPLU();
+   dpu.setStrictLUMode();
 
-// TEST(TestMatrixSquare, TestSymmetricAntiSym) {
-//    MatrixSquare A(4);
+   EXPECT_TRUE(dpu.isPositiveDefinite());
+}
 
-//    A.setValue(1.0, 0, 0);
-//    A.setValue(2.0, 0, 1);
-//    A.setValue(3.0, 0, 2);
-//    A.setValue(4.0, 0, 3);
+/* TEST(TestMatrixSquare, TestSymmetricAntiSym) {
+   MatrixSquare A(4);
+   A.setValue(1.0, 0, 0);
+   A.setValue(2.0, 0, 1);
+   A.setValue(3.0, 0, 2);
+   A.setValue(4.0, 0, 3);
+   A.setValue(1.0, 1, 0);
+   A.setValue(3.0, 1, 1);
+   A.setValue(2.0, 1, 2);
+   A.setValue(5.0, 1, 3);
+   A.setValue(2.0, 2, 0);
+   A.setValue(1.0, 2, 1);
+   A.setValue(6.0, 2, 2);
+   A.setValue(3.0, 2, 3);
+   A.setValue(3.0, 3, 0);
+   A.setValue(2.0, 3, 1);
+   A.setValue(1.0, 3, 2);
+   A.setValue(1.0, 3, 3);
+   DSAS_MatrixSquare matSas = A.decomposeToSAS();
+   EXPECT_TRUE(A == (matSas.matS() + matSas.matAS()));
+}
+ */
+TEST(TestMatrixSquare, TestIsOrthogonal) {
+   MatrixSquare A(4);
+   A.setValue(1.0, 0, 0);
+   A.setValue(1.0, 0, 1);
+   A.setValue(1.0, 0, 2);
+   A.setValue(1.0, 0, 3);
+   A.setValue(1.0, 1, 0);
+   A.setValue(-1.0, 1, 1);
+   A.setValue(1.0, 1, 2);
+   A.setValue(-1.0, 1, 3);
+   A.setValue(1.0, 2, 0);
+   A.setValue(1.0, 2, 1);
+   A.setValue(-1.0, 2, 2);
+   A.setValue(-1.0, 2, 3);
+   A.setValue(1.0, 3, 0);
+   A.setValue(-1.0, 3, 1);
+   A.setValue(-1.0, 3, 2);
+   A.setValue(1.0, 3, 3);
+   MatrixSquare B(A * 0.5);
 
-//    A.setValue(1.0, 1, 0);
-//    A.setValue(3.0, 1, 1);
-//    A.setValue(2.0, 1, 2);
-//    A.setValue(5.0, 1, 3);
-
-//    A.setValue(2.0, 2, 0);
-//    A.setValue(1.0, 2, 1);
-//    A.setValue(6.0, 2, 2);
-//    A.setValue(3.0, 2, 3);
-
-//    A.setValue(3.0, 3, 0);
-//    A.setValue(2.0, 3, 1);
-//    A.setValue(1.0, 3, 2);
-//    A.setValue(1.0, 3, 3);
-
-//    D_SAS matSas = A.getSAS();
-
-//    EXPECT_TRUE(A == (*matSas.matS) + (*matSas.matAS));
-// }
-
-// TEST(TestMatrixSquare, TestIsOrthogonal) {
-//    MatrixSquare A(4);
-
-//    A.setValue(1.0, 0, 0);
-//    A.setValue(1.0, 0, 1);
-//    A.setValue(1.0, 0, 2);
-//    A.setValue(1.0, 0, 3);
-
-//    A.setValue(1.0, 1, 0);
-//    A.setValue(-1.0, 1, 1);
-//    A.setValue(1.0, 1, 2);
-//    A.setValue(-1.0, 1, 3);
-
-//    A.setValue(1.0, 2, 0);
-//    A.setValue(1.0, 2, 1);
-//    A.setValue(-1.0, 2, 2);
-//    A.setValue(-1.0, 2, 3);
-
-//    A.setValue(1.0, 3, 0);
-//    A.setValue(-1.0, 3, 1);
-//    A.setValue(-1.0, 3, 2);
-//    A.setValue(1.0, 3, 3);
-
-//    MatrixSquare B(A * 0.5);
-
-//    EXPECT_TRUE(B.isOrthogonal());
-// }
+   EXPECT_TRUE(B.decomposeToPLU().isOrthogonal());
+}
 
 // TEST(TestMatrixSquare, TestLinearSolve) {
 //    MatrixSquare A(4);

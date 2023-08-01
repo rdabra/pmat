@@ -195,12 +195,20 @@ void pmat::Matrix::swapRows(const unsigned &rowA, const unsigned &rowB, const un
           std::exchange(_matrix[this->vectorIndex(rowA, j)], _matrix[this->vectorIndex(rowB, j)]);
 }
 
+void pmat::Matrix::swapRows(const unsigned &rowA, const unsigned &rowB) {
+   this->swapRows(rowA, rowB, 0, this->columnSize() - 1);
+}
+
 void pmat::Matrix::swapColumns(const unsigned &columnA, const unsigned &columnB,
                                const unsigned &startRow, const unsigned &endRow) {
    // TODO compatibiliar os indices
    for (unsigned i = startRow; i <= endRow; i++)
       _matrix[this->vectorIndex(i, columnB)] = std::exchange(
           _matrix[this->vectorIndex(i, columnA)], _matrix[this->vectorIndex(i, columnB)]);
+}
+
+void pmat::Matrix::swapColumns(const unsigned &columnA, const unsigned &columnB) {
+   this->swapColumns(columnA, columnB, 0, this->rowSize() - 1);
 }
 
 void pmat::Matrix::transpose() {

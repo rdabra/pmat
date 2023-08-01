@@ -3,15 +3,15 @@
 #pragma once
 
 #include "MatrixLowerTriangular.h"
-#include "MatrixUpperTriangular.h"
-
 #include "MatrixSquare.h"
+#include "MatrixUpperTriangular.h"
 
 namespace pmat {
 
 class DPLU_MatrixSquare {
    private:
       const MatrixSquare *_matrix;
+      bool _strictLUMode{false};
       MatrixSquare _matP{};
       MatrixLowerTriangular _matL{};
       MatrixUpperTriangular _matU{};
@@ -29,6 +29,7 @@ class DPLU_MatrixSquare {
 
    public:
       DPLU_MatrixSquare(const MatrixSquare &matrix);
+      DPLU_MatrixSquare(const MatrixSquare &matrix, bool strictLUMode);
       DPLU_MatrixSquare(const DPLU_MatrixSquare &plu) = default;
       DPLU_MatrixSquare(DPLU_MatrixSquare &&plu) = default;
       DPLU_MatrixSquare &operator=(const DPLU_MatrixSquare &plu) = default;
@@ -44,6 +45,9 @@ class DPLU_MatrixSquare {
       MatrixSquare inverse();
       bool isPositiveDefinite();
       bool isOrthogonal();
+      Vector linearSolve(const Vector &rhs);
+      [[nodiscard]] bool isStrictLUMode() const { return _strictLUMode; }
+      void setStrictLUMode();
 };
 
 } // namespace pmat
