@@ -1,6 +1,6 @@
-#include "../src/DPLU_MatrixSquare.h"
-#include "../src/DPQR_MatrixSquare.h"
-#include "../src/DSAS_MatrixSquare.h"
+#include "../src/DecompositionPLU.h"
+#include "../src/DecompositionPQR.h"
+#include "../src/DecompositionSAS.h"
 #include "../src/MatrixLowerTriangular.h"
 #include "../src/MatrixSkewSymmetric.h"
 #include "../src/MatrixSquare.h"
@@ -86,9 +86,9 @@ TEST(TestMatrixSquare, TestDeterminant) {
 
    MatrixSquare C(3);
 
-   DPLU_MatrixSquare dA{A.decomposeToPLU()};
-   DPLU_MatrixSquare dB{B.decomposeToPLU()};
-   DPLU_MatrixSquare dC{C.decomposeToPLU()};
+   DecompositionPLU dA{A.decomposeToPLU()};
+   DecompositionPLU dB{B.decomposeToPLU()};
+   DecompositionPLU dC{C.decomposeToPLU()};
 
    EXPECT_TRUE(utils::areEqual(dA.determinant(), -3.0));
    EXPECT_TRUE(utils::areEqual(dB.determinant(), -6.0));
@@ -147,22 +147,22 @@ TEST(TestMatrixSquare, TestDecompPLU) {
    C.setValue(5.0, 2, 1);
    C.setValue(8.0, 2, 2);
 
-   DPLU_MatrixSquare mats = A.decomposeToPLU();
+   DecompositionPLU mats = A.decomposeToPLU();
 
    MatrixSquare PA((mats.matP()) * A);
    MatrixSquare LU((mats.matL()) * (mats.matU()));
 
-   DPLU_MatrixSquare mats1 = B.decomposeToPLU();
+   DecompositionPLU mats1 = B.decomposeToPLU();
 
    MatrixSquare PB((mats1.matP()) * B);
    MatrixSquare LU1((mats1.matL()) * (mats1.matU()));
 
-   DPLU_MatrixSquare mats2{A.decomposeToPLU()};
+   DecompositionPLU mats2{A.decomposeToPLU()};
    mats2.setStrictLUMode();
 
    MatrixSquare LU2((mats2.matL()) * (mats2.matU()));
 
-   DPLU_MatrixSquare mats3 = C.decomposeToPLU();
+   DecompositionPLU mats3 = C.decomposeToPLU();
    mats3.setStrictLUMode();
 
    EXPECT_TRUE(PA == LU);
@@ -425,7 +425,7 @@ TEST(TestMatrixSquare, TestPositiveDefinite) {
    z.setValue(-2.0, 3, 2);
    z.setValue(4.0, 3, 3);
 
-   DPLU_MatrixSquare dpu = z.decomposeToPLU();
+   DecompositionPLU dpu = z.decomposeToPLU();
    dpu.setStrictLUMode();
 
    EXPECT_TRUE(dpu.isPositiveDefinite());
@@ -449,7 +449,7 @@ TEST(TestMatrixSquare, TestSymmetricAntiSym) {
    A.setValue(2.0, 3, 1);
    A.setValue(1.0, 3, 2);
    A.setValue(1.0, 3, 3);
-   DSAS_MatrixSquare matSas = A.decomposeToSAS();
+   DecompositionSAS matSas = A.decomposeToSAS();
    EXPECT_TRUE(A == (matSas.matS() + matSas.matAS()));
 }
 
@@ -476,47 +476,47 @@ TEST(TestMatrixSquare, TestIsOrthogonal) {
    EXPECT_TRUE(B.decomposeToPLU().isOrthogonal());
 }
 
-// TEST(TestMatrixSquare, TestLinearSolve) {
-//    MatrixSquare A(4);
+TEST(TestMatrixSquare, TestLinearSolve) {
+   MatrixSquare A(4);
 
-//    A.setValue(1.0, 0, 0);
-//    A.setValue(2.0, 0, 1);
-//    A.setValue(3.0, 0, 2);
-//    A.setValue(4.0, 0, 3);
+   A.setValue(1.0, 0, 0);
+   A.setValue(2.0, 0, 1);
+   A.setValue(3.0, 0, 2);
+   A.setValue(4.0, 0, 3);
 
-//    A.setValue(1.0, 1, 0);
-//    A.setValue(3.0, 1, 1);
-//    A.setValue(2.0, 1, 2);
-//    A.setValue(5.0, 1, 3);
+   A.setValue(1.0, 1, 0);
+   A.setValue(3.0, 1, 1);
+   A.setValue(2.0, 1, 2);
+   A.setValue(5.0, 1, 3);
 
-//    A.setValue(2.0, 2, 0);
-//    A.setValue(1.0, 2, 1);
-//    A.setValue(6.0, 2, 2);
-//    A.setValue(3.0, 2, 3);
+   A.setValue(2.0, 2, 0);
+   A.setValue(1.0, 2, 1);
+   A.setValue(6.0, 2, 2);
+   A.setValue(3.0, 2, 3);
 
-//    A.setValue(3.0, 3, 0);
-//    A.setValue(2.0, 3, 1);
-//    A.setValue(1.0, 3, 2);
-//    A.setValue(1.0, 3, 3);
+   A.setValue(3.0, 3, 0);
+   A.setValue(2.0, 3, 1);
+   A.setValue(1.0, 3, 2);
+   A.setValue(1.0, 3, 3);
 
-//    Vector b(4);
+   Vector b(4);
 
-//    b.setValue(1.0, 0);
-//    b.setValue(2.0, 1);
-//    b.setValue(3.0, 2);
-//    b.setValue(1.0, 3);
+   b.setValue(1.0, 0);
+   b.setValue(2.0, 1);
+   b.setValue(3.0, 2);
+   b.setValue(1.0, 3);
 
-//    const Vector x(A.linearSolve(b));
+   const Vector x(A.decomposeToPLU().linearSolve(b));
 
-//    Vector resp(4);
+   Vector resp(4);
 
-//    resp.setValue(-13.0, 0);
-//    resp.setValue(23.0, 1);
-//    resp.setValue(8.0, 2);
-//    resp.setValue(-14.0, 3);
+   resp.setValue(-13.0, 0);
+   resp.setValue(23.0, 1);
+   resp.setValue(8.0, 2);
+   resp.setValue(-14.0, 3);
 
-//    EXPECT_TRUE(x == resp);
-// }
+   EXPECT_TRUE(x == resp);
+}
 
 TEST(TestMatrixSquare, TestMultiplySubSuperMatrices) {
    MatrixSquare A(5);
@@ -641,7 +641,7 @@ TEST(TestMatrixSquare, TestDecompQR) {
    A.setValue(24.0, 2, 1);
    A.setValue(-41.0, 2, 2);
 
-   DPQR_MatrixSquare qr{A.decomposeToPQR()};
+   DecompositionPQR qr{A.decomposeToPQR()};
 
    MatrixSquare resp{qr.matQ() * qr.matR()};
 

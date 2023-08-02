@@ -7,9 +7,9 @@
 
 namespace pmat {
 
-class DPLU_MatrixSquare;
-class DSAS_MatrixSquare;
-class DPQR_MatrixSquare;
+class DecompositionPLU;
+class DecompositionSAS;
+class DecompositionPQR;
 
 enum class SubMatrixPos { lower, upper };
 
@@ -19,7 +19,7 @@ class MatrixSquare : public Matrix {
       MatrixSquare(MatrixSquare &&matrix) noexcept = default;
       MatrixSquare(Matrix &&matrix);
       explicit MatrixSquare(const unsigned &size) : Matrix{size, size} {}
-      MatrixSquare(const MatrixSquare &matrix) = default;
+      MatrixSquare(const MatrixSquare &matrix);
       ~MatrixSquare() override = default;
       MatrixSquare &operator=(const MatrixSquare &matrix) = default;
       MatrixSquare &operator=(MatrixSquare &&matrix) noexcept = default;
@@ -33,9 +33,9 @@ class MatrixSquare : public Matrix {
       Vector operator*(const Vector &vector) const override { return Matrix::operator*(vector); }
       [[nodiscard]] virtual double trace() const;
       virtual void fillDiagonalWith(const double &value);
-      [[nodiscard]] DPLU_MatrixSquare decomposeToPLU() const;
-      [[nodiscard]] DSAS_MatrixSquare decomposeToSAS() const;
-      [[nodiscard]] DPQR_MatrixSquare decomposeToPQR() const;
+      [[nodiscard]] DecompositionPLU decomposeToPLU() const;
+      [[nodiscard]] DecompositionSAS decomposeToSAS() const;
+      [[nodiscard]] DecompositionPQR decomposeToPQR() const;
 };
 
 } // namespace pmat

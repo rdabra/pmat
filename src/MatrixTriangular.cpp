@@ -1,6 +1,10 @@
 #include "MatrixTriangular.h"
 #include "utils.h"
 
+pmat::MatrixTriangular::MatrixTriangular(const MatrixTriangular &matrix) {
+   this->copyMembers(matrix);
+}
+
 pmat::MatrixSquare pmat::MatrixTriangular::operator*(const MatrixTriangular &matrix) const {
    return MatrixSquare{};
 }
@@ -41,6 +45,31 @@ pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByColumns(const unsigned &c
    }
 
    return resp;
+}
+
+double pmat::MatrixTriangular::determinant() {
+   double resp = pmat::utils::ONE;
+   for (unsigned i = 0; i < this->size(); i++)
+      resp *= (*this)(i, i);
+
+   return resp;
+}
+
+bool pmat::MatrixTriangular::isInvertible() {
+   for (unsigned i = 0; i < this->size(); i++)
+      if (pmat::utils::isZero((*this)(i, i)))
+         return false;
+
+   return true;
+}
+
+pmat::Vector pmat::MatrixTriangular::linearSolve(const Vector &rhs) {
+   if (rhs.size() != this->size())
+      throw std::logic_error(messages::RHS_NOT_COMP);
+   if (!this->isInvertible())
+      throw std::logic_error(messages::MATRIX_SINGULAR);
+
+   return MatrixTriangular::findSolutionByBackSubstitution(*this, rhs);
 }
 
 void pmat::MatrixTriangular::findInverseByBackSubstitution(const MatrixTriangular &matrix,

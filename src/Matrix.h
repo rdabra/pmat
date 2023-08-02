@@ -36,11 +36,19 @@ class Matrix : public pmat::Array {
          matrix.~Matrix();
       }
 
-      void initializeMembers(unsigned rowSize, unsigned columnSize) {
+      void initializeMembers(unsigned rowSize, unsigned columnSize, bool isTransposed) {
          _matrix.clear();
          _rowSize = rowSize;
          _columnSize = columnSize;
+         _isTransposed = isTransposed;
          _matrix.resize(this->length());
+      }
+
+      void copyMembers(const Matrix &matrix) {
+         _matrix = matrix._matrix;
+         _rowSize = matrix.rowSize();
+         _columnSize = matrix.columnSize();
+         _isTransposed = matrix.isTransposed();
       }
 
       [[nodiscard]] bool isTransposed() const { return _isTransposed; }

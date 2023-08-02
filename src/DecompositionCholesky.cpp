@@ -1,0 +1,101 @@
+#include "DecompositionCholesky.h"
+#include "MatrixSymmetric.h"
+#include "utils.h"
+
+void pmat::DecompositionCholesky::calculate() {
+   if (!_calculated) {
+      for (unsigned i = 0; i < _matrix->size(); ++i) {
+         double diag = (*_matrix)(i, i);
+         for (unsigned k = 0; k < i; ++k)
+            diag -= (_factor)(i, k) * (_factor)(i, k);
+         if (pmat::utils::isZero(diag) || diag < pmat::utils::ZERO) {
+            throw std::logic_error(messages::MATRIX_NOT_L);
+         }
+         _factor.setValue(std::sqrt(diag), i, i);
+         for (unsigned j = i + 1; j < _matrix->size(); ++j) {
+            double aux = (*_matrix)(i, j);
+            for (unsigned k = 0; k < i; ++k)
+               aux -= (_factor)(i, k) * (_factor)(j, k);
+            _factor.setValue(aux / (_factor)(i, i), j, i);
+         }
+      }
+      _calculated = true;
+   }
+}
+
+pmat::DecompositionCholesky::DecompositionCholesky(const MatrixSymmetric &matrix)
+    : _matrix{&matrix}, _factor{matrix.size()}, _plu{matrix.decomposeToPLU()} {
+}
+
+const pmat::MatrixLowerTriangular &pmat::DecompositionCholesky::choleskyFactor() {
+   this->calculate();
+   return _factor;
+}
+
+double pmat::DecompositionCholesky::determinant() {
+   if (this->isPositiveDefinite()) {
+      const double resp = _factor.determinant();
+      return resp * resp;
+   }
+
+   return _plu.determinant();
+}
+
+bool pmat::DecompositionCholesky::isInvertible() {
+   if (this->isPositiveDefinite())
+      for (unsigned i = 0; i < _matrix->size(); i++)
+         if (pmat::utils::isZero(_factor(i, i)))
+            return false;
+
+   return _plu.isInvertible();
+}
+
+pmat::MatrixSquare pmat::DecompositionCholesky::inverse() {
+   if (this->isPositiveDefinite()) {
+      return _factor.getTranspose().inverse() * _factor.inverse();
+   }
+   return _plu.inverse();
+}
+
+pmat::Vector pmat::DecompositionCholesky::linearSolve(const Vector &rhs) {
+   if (rhs.size() != _matrix->size())
+      throw std::logic_error(messages::RHS_NOT_COMP);
+
+   if (this->isPositiveDefinite()) {
+
+      if (!this->isInvertible())
+         throw std::logic_error(messages::MATRIX_SINGULAR);
+
+      const Vector resp1(_factor.linearSolve(rhs));
+
+      return _factor.getTranspose().linearSolve(resp1);
+   }
+
+   return _plu.linearSolve(rhs);
+}
+
+/**
+ * @brief Informs if this matrix is positive definite
+ * @details A symmetric matrix is considered to be positive definite if it is Cholesky decomposable
+ * @see pmat::DecompositionCholesky::getCholeskyFactor
+ * @see "Matrix Computations", Golub & Van Loan, ISBN  9789380250755, p. 164.
+ * @return True if this matrix is positive definite
+ */
+bool pmat::DecompositionCholesky::isPositiveDefinite() {
+   try {
+      this->calculate();
+      return true;
+   } catch (...) {
+      return false;
+   }
+}
+
+pmat::MatrixSymmetric pmat::DecompositionCholesky::inverseAsSymmetric() {
+   MatrixSymmetric res{_matrix->size()};
+   MatrixSquare aux{this->inverse()};
+   for (unsigned i = 0; i < _matrix->size(); ++i)
+      for (unsigned j = 0; j <= i; ++j)
+         res.setValue(aux(i, j), i, j);
+
+   return res;
+}

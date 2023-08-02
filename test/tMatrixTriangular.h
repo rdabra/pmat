@@ -1,3 +1,4 @@
+#include "../src/DecompositionPLU.h"
 #include "../src/MatrixLowerTriangular.h"
 #include "../src/MatrixUpperTriangular.h"
 #include "../src/utils.h"
@@ -452,41 +453,41 @@ TEST(TestMatrixTriangular, TestFrobenius) {
    EXPECT_TRUE(utils::areEqual(v.getFrobeniusNorm(), frobV));
 }
 
-// TEST(TestMatrixTriangular, TestLUDecomp) {
+TEST(TestMatrixTriangular, TestLUDecomp) {
 
-//    MatrixUpperTriangular v(4);
-//    v.setValue(1.0, 3, 3);
-//    v.setValue(4.0, 2, 2);
-//    v.setValue(5.0, 2, 3);
-//    v.setValue(7.0, 1, 1);
-//    v.setValue(8.0, 1, 2);
-//    v.setValue(9.0, 1, 3);
-//    v.setValue(10.0, 0, 0);
-//    v.setValue(11.0, 0, 1);
-//    v.setValue(12.0, 0, 2);
-//    v.setValue(13.0, 0, 3);
+   MatrixUpperTriangular v(4);
+   v.setValue(1.0, 3, 3);
+   v.setValue(4.0, 2, 2);
+   v.setValue(5.0, 2, 3);
+   v.setValue(7.0, 1, 1);
+   v.setValue(8.0, 1, 2);
+   v.setValue(9.0, 1, 3);
+   v.setValue(10.0, 0, 0);
+   v.setValue(11.0, 0, 1);
+   v.setValue(12.0, 0, 2);
+   v.setValue(13.0, 0, 3);
 
-//    MatrixLowerTriangular l((*v.getPLU().matL));
-//    MatrixUpperTriangular u((*v.getPLU().matU));
+   MatrixLowerTriangular l((v.decomposeToPLU().matL()));
+   MatrixUpperTriangular u((v.decomposeToPLU().matU()));
 
-//    EXPECT_TRUE(l * u == v);
-// }
+   EXPECT_TRUE(l * u == v);
+}
 
-// TEST(TestMatrixTriangular, TestDeterminant) {
-//    MatrixLowerTriangular z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(4.0, 1, 0);
-//    z.setValue(5.0, 1, 1);
-//    z.setValue(7.0, 2, 0);
-//    z.setValue(8.0, 2, 1);
-//    z.setValue(9.0, 2, 2);
-//    z.setValue(10.0, 3, 0);
-//    z.setValue(11.0, 3, 1);
-//    z.setValue(12.0, 3, 2);
-//    z.setValue(13.0, 3, 3);
+TEST(TestMatrixTriangular, TestDeterminant) {
+   MatrixLowerTriangular z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(4.0, 1, 0);
+   z.setValue(5.0, 1, 1);
+   z.setValue(7.0, 2, 0);
+   z.setValue(8.0, 2, 1);
+   z.setValue(9.0, 2, 2);
+   z.setValue(10.0, 3, 0);
+   z.setValue(11.0, 3, 1);
+   z.setValue(12.0, 3, 2);
+   z.setValue(13.0, 3, 3);
 
-//    EXPECT_TRUE(utils::areEqual(z.getDeterminant(), 585.0));
-// }
+   EXPECT_TRUE(utils::areEqual(z.determinant(), 585.0));
+}
 
 TEST(TestMatrixTriangular, TestTranspose) {
    MatrixLowerTriangular z(4);
@@ -518,34 +519,34 @@ TEST(TestMatrixTriangular, TestTranspose) {
    EXPECT_TRUE(zz == zt);
 }
 
-// TEST(TestMatrixTriangular, TestInverse) {
-//    MatrixLowerTriangular z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(4.0, 1, 0);
-//    z.setValue(5.0, 1, 1);
-//    z.setValue(7.0, 2, 0);
-//    z.setValue(8.0, 2, 1);
-//    z.setValue(9.0, 2, 2);
-//    z.setValue(10.0, 3, 0);
-//    z.setValue(11.0, 3, 1);
-//    z.setValue(12.0, 3, 2);
-//    z.setValue(13.0, 3, 3);
+TEST(TestMatrixTriangular, TestInverse) {
+   MatrixLowerTriangular z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(4.0, 1, 0);
+   z.setValue(5.0, 1, 1);
+   z.setValue(7.0, 2, 0);
+   z.setValue(8.0, 2, 1);
+   z.setValue(9.0, 2, 2);
+   z.setValue(10.0, 3, 0);
+   z.setValue(11.0, 3, 1);
+   z.setValue(12.0, 3, 2);
+   z.setValue(13.0, 3, 3);
 
-//    MatrixLowerTriangular zz(4);
-//    zz.setValue(1.0, 0, 0);
-//    zz.setValue(4.0, 1, 0);
-//    zz.setValue(5.0, 1, 1);
-//    zz.setValue(7.0, 2, 0);
-//    zz.setValue(8.0, 2, 1);
-//    zz.setValue(0.0, 2, 2);
-//    zz.setValue(10.0, 3, 0);
-//    zz.setValue(11.0, 3, 1);
-//    zz.setValue(12.0, 3, 2);
-//    zz.setValue(13.0, 3, 3);
+   MatrixLowerTriangular zz(4);
+   zz.setValue(1.0, 0, 0);
+   zz.setValue(4.0, 1, 0);
+   zz.setValue(5.0, 1, 1);
+   zz.setValue(7.0, 2, 0);
+   zz.setValue(8.0, 2, 1);
+   zz.setValue(0.0, 2, 2);
+   zz.setValue(10.0, 3, 0);
+   zz.setValue(11.0, 3, 1);
+   zz.setValue(12.0, 3, 2);
+   zz.setValue(13.0, 3, 3);
 
-//    EXPECT_TRUE(z.isInvertible());
-//    EXPECT_FALSE(zz.isInvertible());
-// }
+   EXPECT_TRUE(z.isInvertible());
+   EXPECT_FALSE(zz.isInvertible());
+}
 
 TEST(TestMatrixTriangular, TestSwaps) {
    MatrixLowerTriangular z(4);

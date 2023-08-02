@@ -1,5 +1,5 @@
-#ifndef DPLU_MATRIXSQUARE_H
-#define DPLU_MATRIXSQUARE_H
+#ifndef DecompositionPLU_H
+#define DecompositionPLU_H
 #pragma once
 
 #include "MatrixLowerTriangular.h"
@@ -8,7 +8,7 @@
 
 namespace pmat {
 
-class DPLU_MatrixSquare {
+class DecompositionPLU {
    private:
       const MatrixSquare *_matrix;
       bool _strictLUMode{false};
@@ -24,17 +24,18 @@ class DPLU_MatrixSquare {
       void calculate();
 
    public:
-      DPLU_MatrixSquare(const MatrixSquare &matrix);
-      DPLU_MatrixSquare(const MatrixSquare &matrix, bool strictLUMode);
-      DPLU_MatrixSquare(const DPLU_MatrixSquare &plu) = default;
-      DPLU_MatrixSquare(DPLU_MatrixSquare &&plu) = default;
-      DPLU_MatrixSquare &operator=(const DPLU_MatrixSquare &plu) = default;
-      DPLU_MatrixSquare &operator=(DPLU_MatrixSquare &&plu) = default;
-      ~DPLU_MatrixSquare() = default;
+      DecompositionPLU(const MatrixSquare &matrix);
+      DecompositionPLU(const MatrixSquare &matrix, bool strictLUMode);
+      DecompositionPLU(const DecompositionPLU &plu) = default;
+      DecompositionPLU(DecompositionPLU &&plu) = default;
+      DecompositionPLU &operator=(const DecompositionPLU &plu) = default;
+      DecompositionPLU &operator=(DecompositionPLU &&plu) = default;
+      ~DecompositionPLU() = default;
       [[nodiscard]] const MatrixSquare &matP();
       [[nodiscard]] const MatrixLowerTriangular &matL();
       [[nodiscard]] const MatrixUpperTriangular &matU();
       [[nodiscard]] const std::vector<std::pair<unsigned, unsigned>> &swappedRows() const;
+
       [[nodiscard]] double determinant();
       bool isStrictLUDecomposable();
       bool isInvertible();
@@ -42,6 +43,7 @@ class DPLU_MatrixSquare {
       bool isPositiveDefinite();
       bool isOrthogonal();
       Vector linearSolve(const Vector &rhs);
+
       [[nodiscard]] bool isStrictLUMode() const { return _strictLUMode; }
       void setStrictLUMode();
 };

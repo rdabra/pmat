@@ -145,3 +145,11 @@ void pmat::MatrixUpperTriangular::fillRandomly(const double &min, const double &
       for (unsigned j = i; j < this->size(); j++)
          this->setValue(dist(rng), i, j);
 }
+
+pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::inverse() {
+   if (!this->isInvertible())
+      throw std::logic_error(messages::MATRIX_SINGULAR);
+   MatrixUpperTriangular resp(this->size());
+   this->findInverseByBackSubstitution(*this, resp);
+   return resp;
+}

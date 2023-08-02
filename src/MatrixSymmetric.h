@@ -6,13 +6,14 @@
 
 namespace pmat {
 
+class DecompositionCholesky;
+
 class MatrixSymmetric : public pmat::MatrixSymmetry {
 
    public:
       MatrixSymmetric() = default;
       explicit MatrixSymmetric(const unsigned &size) : MatrixSymmetry::MatrixSymmetry(size){};
-      MatrixSymmetric(const MatrixSymmetric &matrix)
-          : MatrixSymmetry::MatrixSymmetry{std::move(matrix)} {}
+      MatrixSymmetric(const MatrixSymmetric &matrix) = default;
       MatrixSymmetric(MatrixSymmetric &&matrix)
           : MatrixSymmetry::MatrixSymmetry{std::move(matrix)} {};
       MatrixSymmetric &operator=(const MatrixSymmetric &matrix) = default;
@@ -35,6 +36,7 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       void multiplyBy(const double &scalar) override;
       void transpose() override{};
       void fillRandomly(const double &min, const double &max) override;
+      DecompositionCholesky decomposeToCholesky();
 };
 
 } // namespace pmat

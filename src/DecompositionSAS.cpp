@@ -1,7 +1,7 @@
-#include "DSAS_MatrixSquare.h"
+#include "DecompositionSAS.h"
 #include "utils.h"
 
-void pmat::DSAS_MatrixSquare::calculate() {
+void pmat::DecompositionSAS::calculate() {
    if (!_calculated) {
       for (unsigned i = 0; i < _matrix->size(); ++i)
          for (unsigned j = 0; j <= i; ++j) {
@@ -12,16 +12,16 @@ void pmat::DSAS_MatrixSquare::calculate() {
    }
 }
 
-pmat::DSAS_MatrixSquare::DSAS_MatrixSquare(const MatrixSquare &matrix)
+pmat::DecompositionSAS::DecompositionSAS(const MatrixSquare &matrix)
     : _matrix{&matrix}, _matAS{matrix.size()}, _matS{matrix.size()} {
 }
 
-const pmat::MatrixSymmetric &pmat::DSAS_MatrixSquare::matS() {
+const pmat::MatrixSymmetric &pmat::DecompositionSAS::matS() {
    this->calculate();
    return _matS;
 }
 
-const pmat::MatrixSkewSymmetric &pmat::DSAS_MatrixSquare::matAS() {
+const pmat::MatrixSkewSymmetric &pmat::DecompositionSAS::matAS() {
    this->calculate();
    return _matAS;
 }

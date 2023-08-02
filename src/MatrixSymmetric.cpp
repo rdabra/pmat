@@ -1,4 +1,5 @@
 #include "MatrixSymmetric.h"
+#include "DecompositionCholesky.h"
 #include <random>
 
 double pmat::MatrixSymmetric::operator()(const unsigned &row, const unsigned &column) const {
@@ -59,4 +60,9 @@ void pmat::MatrixSymmetric::fillRandomly(const double &min, const double &max) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
          this->setValue(dist(rng), i, j);
+}
+
+pmat::DecompositionCholesky pmat::MatrixSymmetric::decomposeToCholesky() {
+   DecompositionCholesky res{*this};
+   return res;
 }

@@ -47,6 +47,7 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
                        const unsigned &endRow) override;
       void fillRandomly(const double &min, const double &max) override;
       [[nodiscard]] TriangType type() const override { return TriangType::UPPER; };
+      MatrixUpperTriangular inverse();
 };
 
 } // namespace pmat

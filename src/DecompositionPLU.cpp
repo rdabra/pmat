@@ -1,8 +1,8 @@
-#include "DPLU_MatrixSquare.h"
+#include "DecompositionPLU.h"
 #include "utils.h"
 #include <stdexcept>
 
-void pmat::DPLU_MatrixSquare::swapRowsBellow(MatrixSquare &matU, const unsigned &idxPivot) {
+void pmat::DecompositionPLU::swapRowsBellow(MatrixSquare &matU, const unsigned &idxPivot) {
    unsigned idxMax = idxPivot;
    double valMax = std::abs(matU(idxPivot, idxPivot));
    for (unsigned i = idxPivot + 1; i < matU.size(); i++)
@@ -21,7 +21,7 @@ void pmat::DPLU_MatrixSquare::swapRowsBellow(MatrixSquare &matU, const unsigned 
    }
 }
 
-void pmat::DPLU_MatrixSquare::nullifyElementBellow(MatrixSquare &matU, const unsigned &idxPivot) {
+void pmat::DecompositionPLU::nullifyElementBellow(MatrixSquare &matU, const unsigned &idxPivot) {
    for (unsigned i = idxPivot + 1; i < matU.size(); i++) {
       _matL.setValue(matU(i, idxPivot) / matU(idxPivot, idxPivot), i, idxPivot);
       for (unsigned j = idxPivot; j < matU.size(); j++)
@@ -29,7 +29,7 @@ void pmat::DPLU_MatrixSquare::nullifyElementBellow(MatrixSquare &matU, const uns
    }
 }
 
-void pmat::DPLU_MatrixSquare::calculate() {
+void pmat::DecompositionPLU::calculate() {
    if (!_calculated) {
       if (_strictLUMode) {
          MatrixSquare matU(*_matrix);
@@ -59,7 +59,7 @@ void pmat::DPLU_MatrixSquare::calculate() {
    }
 }
 
-pmat::DPLU_MatrixSquare::DPLU_MatrixSquare(const MatrixSquare &matrix)
+pmat::DecompositionPLU::DecompositionPLU(const MatrixSquare &matrix)
     : _matrix{&matrix}, _matP{matrix.size()}, _matL{matrix.size()}, _matU{matrix.size()} {
    for (unsigned j = 0; j < _matrix->size(); j++) {
       _matL.setValue(pmat::utils::ONE, j, j);
@@ -67,7 +67,7 @@ pmat::DPLU_MatrixSquare::DPLU_MatrixSquare(const MatrixSquare &matrix)
    }
 }
 
-pmat::DPLU_MatrixSquare::DPLU_MatrixSquare(const MatrixSquare &matrix, bool calculateStrictLU)
+pmat::DecompositionPLU::DecompositionPLU(const MatrixSquare &matrix, bool calculateStrictLU)
     : _matrix{&matrix}, _matP{matrix.size()}, _matL{matrix.size()}, _matU{matrix.size()},
       _strictLUMode{calculateStrictLU} {
    for (unsigned j = 0; j < _matrix->size(); j++) {
@@ -76,7 +76,22 @@ pmat::DPLU_MatrixSquare::DPLU_MatrixSquare(const MatrixSquare &matrix, bool calc
    }
 }
 
-double pmat::DPLU_MatrixSquare::determinant() {
+const pmat::MatrixSquare &pmat::DecompositionPLU::matP() {
+   this->calculate();
+   return _matP;
+}
+
+const pmat::MatrixLowerTriangular &pmat::DecompositionPLU::matL() {
+   this->calculate();
+   return _matL;
+}
+
+const pmat::MatrixUpperTriangular &pmat::DecompositionPLU::matU() {
+   this->calculate();
+   return _matU;
+}
+
+double pmat::DecompositionPLU::determinant() {
    this->calculate();
    double resp{pmat::utils::ONE};
    for (unsigned i = 0; i < _matrix->size(); i++)
@@ -87,7 +102,7 @@ double pmat::DPLU_MatrixSquare::determinant() {
    return resp;
 }
 
-bool pmat::DPLU_MatrixSquare::isStrictLUDecomposable() {
+bool pmat::DecompositionPLU::isStrictLUDecomposable() {
    if (_strictLUMode) {
       try {
          this->calculate();
@@ -100,7 +115,7 @@ bool pmat::DPLU_MatrixSquare::isStrictLUDecomposable() {
           "Calculation Mode is not Strict LU"); // TODO Calculation Mode is not Strict LU
 }
 
-bool pmat::DPLU_MatrixSquare::isInvertible() {
+bool pmat::DecompositionPLU::isInvertible() {
    this->calculate();
    for (unsigned i = 0; i < _matrix->size(); i++)
       if (utils::isZero(_matU(i, i)))
@@ -109,22 +124,7 @@ bool pmat::DPLU_MatrixSquare::isInvertible() {
    return true;
 }
 
-const pmat::MatrixSquare &pmat::DPLU_MatrixSquare::matP() {
-   this->calculate();
-   return _matP;
-}
-
-const pmat::MatrixLowerTriangular &pmat::DPLU_MatrixSquare::matL() {
-   this->calculate();
-   return _matL;
-}
-
-const pmat::MatrixUpperTriangular &pmat::DPLU_MatrixSquare::matU() {
-   this->calculate();
-   return _matU;
-}
-
-pmat::MatrixSquare pmat::DPLU_MatrixSquare::inverse() {
+pmat::MatrixSquare pmat::DecompositionPLU::inverse() {
    if (!this->isInvertible())
       throw std::logic_error(messages::MATRIX_SINGULAR);
 
@@ -143,7 +143,7 @@ pmat::MatrixSquare pmat::DPLU_MatrixSquare::inverse() {
    return resp;
 }
 
-bool pmat::DPLU_MatrixSquare::isPositiveDefinite() {
+bool pmat::DecompositionPLU::isPositiveDefinite() {
    if (this->isStrictLUDecomposable())
       for (unsigned i = 0; i < _matrix->size(); i++)
          if (_matU(i, i) <= pmat::utils::ZERO)
@@ -151,7 +151,7 @@ bool pmat::DPLU_MatrixSquare::isPositiveDefinite() {
    return true;
 }
 
-bool pmat::DPLU_MatrixSquare::isOrthogonal() {
+bool pmat::DecompositionPLU::isOrthogonal() {
    if (this->isInvertible()) {
       const MatrixSquare inv(this->inverse());
       for (unsigned i = 0; i < _matrix->size(); ++i)
@@ -163,11 +163,21 @@ bool pmat::DPLU_MatrixSquare::isOrthogonal() {
    return false;
 }
 
-pmat::Vector pmat::DPLU_MatrixSquare::linearSolve(const Vector &rhs) {
-   return Vector{}; // TODO Linear solve
+pmat::Vector pmat::DecompositionPLU::linearSolve(const Vector &rhs) {
+   if (rhs.size() != _matrix->size())
+      throw std::logic_error(messages::RHS_NOT_COMP);
+   if (!this->isInvertible())
+      throw std::logic_error(messages::MATRIX_SINGULAR);
+
+   Vector aux(rhs);
+   for (auto &swappedRow : _swappedRows)
+      aux.swapElements(swappedRow.first, swappedRow.second);
+   Vector resp1{MatrixTriangular::findSolutionByBackSubstitution(_matL, aux)};
+
+   return MatrixTriangular::findSolutionByBackSubstitution(_matU, resp1);
 }
 
-void pmat::DPLU_MatrixSquare::setStrictLUMode() {
+void pmat::DecompositionPLU::setStrictLUMode() {
    if (_calculated && !_strictLUMode) {
       _matP.resize(_matrix->size());
       _matL.resize(_matrix->size());

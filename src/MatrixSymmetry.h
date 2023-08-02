@@ -20,9 +20,9 @@ class MatrixSymmetry : public MatrixSquare {
 
    public:
       MatrixSymmetry() = default;
-      MatrixSymmetry(const MatrixSymmetry &matrix) = default;
+      MatrixSymmetry(const MatrixSymmetry &matrix);
       MatrixSymmetry(MatrixSymmetry &&matrix) = default;
-      explicit MatrixSymmetry(const unsigned &size) { this->initializeMembers(size, size); };
+      explicit MatrixSymmetry(const unsigned &size) { this->initializeMembers(size, size, false); };
       ~MatrixSymmetry() override = default;
       MatrixSymmetry &operator=(const MatrixSymmetry &) = default;
       MatrixSymmetry &operator=(MatrixSymmetry &&) = default;

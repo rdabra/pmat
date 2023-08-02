@@ -1,3 +1,5 @@
+#include "../src/DecompositionCholesky.h"
+#include "../src/DecompositionPLU.h"
 #include "../src/MatrixSymmetric.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
@@ -280,85 +282,87 @@ TEST(TestMatrixSymmetric, TestFrobenius) {
    EXPECT_TRUE(utils::areEqual(z.getFrobeniusNorm(), 35.55277767));
 }
 
-// TEST(TestMatrixSymmetric, TestPositiveDefinite) {
-//    MatrixSymmetric z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(-1.0, 1, 0);
-//    z.setValue(4.0, 1, 1);
-//    z.setValue(2.0, 2, 0);
-//    z.setValue(-1.0, 2, 1);
-//    z.setValue(6.0, 2, 2);
-//    z.setValue(0.0, 3, 0);
-//    z.setValue(1.0, 3, 1);
-//    z.setValue(-2.0, 3, 2);
-//    z.setValue(4.0, 3, 3);
+TEST(TestMatrixSymmetric, TestPositiveDefinite) {
+   MatrixSymmetric z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(-1.0, 1, 0);
+   z.setValue(4.0, 1, 1);
+   z.setValue(2.0, 2, 0);
+   z.setValue(-1.0, 2, 1);
+   z.setValue(6.0, 2, 2);
+   z.setValue(0.0, 3, 0);
+   z.setValue(1.0, 3, 1);
+   z.setValue(-2.0, 3, 2);
+   z.setValue(4.0, 3, 3);
 
-//    MatrixLowerTriangular chol(z.getCholeskyFactor());
-//    MatrixUpperTriangular cholt(chol.getTranspose());
+   DecompositionCholesky ch{z.decomposeToCholesky()};
 
-//    EXPECT_TRUE(z.isPositiveDefinite());
-//    EXPECT_TRUE((chol * cholt) == z);
-// }
+   MatrixLowerTriangular chol(ch.choleskyFactor());
+   MatrixUpperTriangular cholt(chol.getTranspose());
 
-// TEST(TestMatrixSymmetric, TestInverse) {
+   EXPECT_TRUE(ch.isPositiveDefinite());
+   EXPECT_TRUE((chol * cholt) == z);
+}
 
-//    MatrixSymmetric z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(-1.0, 1, 0);
-//    z.setValue(4.0, 1, 1);
-//    z.setValue(2.0, 2, 0);
-//    z.setValue(-1.0, 2, 1);
-//    z.setValue(6.0, 2, 2);
-//    z.setValue(0.0, 3, 0);
-//    z.setValue(1.0, 3, 1);
-//    z.setValue(-2.0, 3, 2);
-//    z.setValue(4.0, 3, 3);
+TEST(TestMatrixSymmetric, TestInverse) {
 
-//    MatrixSymmetric zinv(4);
-//    zinv.setValue(37.0, 0, 0);
-//    zinv.setValue(8.0, 1, 0);
-//    zinv.setValue(2.0, 1, 1);
-//    zinv.setValue(-14.0, 2, 0);
-//    zinv.setValue(-3.0, 2, 1);
-//    zinv.setValue(5.5, 2, 2);
-//    zinv.setValue(-9.0, 3, 0);
-//    zinv.setValue(-2.0, 3, 1);
-//    zinv.setValue(3.5, 3, 2);
-//    zinv.setValue(2.5, 3, 3);
+   MatrixSymmetric z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(-1.0, 1, 0);
+   z.setValue(4.0, 1, 1);
+   z.setValue(2.0, 2, 0);
+   z.setValue(-1.0, 2, 1);
+   z.setValue(6.0, 2, 2);
+   z.setValue(0.0, 3, 0);
+   z.setValue(1.0, 3, 1);
+   z.setValue(-2.0, 3, 2);
+   z.setValue(4.0, 3, 3);
 
-//    MatrixSymmetric zz(z.getInverseAsSymmetric());
+   MatrixSymmetric zinv(4);
+   zinv.setValue(37.0, 0, 0);
+   zinv.setValue(8.0, 1, 0);
+   zinv.setValue(2.0, 1, 1);
+   zinv.setValue(-14.0, 2, 0);
+   zinv.setValue(-3.0, 2, 1);
+   zinv.setValue(5.5, 2, 2);
+   zinv.setValue(-9.0, 3, 0);
+   zinv.setValue(-2.0, 3, 1);
+   zinv.setValue(3.5, 3, 2);
+   zinv.setValue(2.5, 3, 3);
 
-//    EXPECT_TRUE(zz == zinv);
-// }
+   MatrixSymmetric zz(z.decomposeToCholesky().inverseAsSymmetric());
 
-// TEST(TestMatrixSymmetric, TestDeterminant) {
-//    MatrixSymmetric z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(4.0, 1, 0);
-//    z.setValue(5.0, 1, 1);
-//    z.setValue(7.0, 2, 0);
-//    z.setValue(8.0, 2, 1);
-//    z.setValue(9.0, 2, 2);
-//    z.setValue(10.0, 3, 0);
-//    z.setValue(11.0, 3, 1);
-//    z.setValue(12.0, 3, 2);
-//    z.setValue(13.0, 3, 3);
+   EXPECT_TRUE(zz == zinv);
+}
 
-//    MatrixSymmetric b(4);
-//    b.setValue(1.0, 0, 0);
-//    b.setValue(-1.0, 1, 0);
-//    b.setValue(4.0, 1, 1);
-//    b.setValue(2.0, 2, 0);
-//    b.setValue(-1.0, 2, 1);
-//    b.setValue(6.0, 2, 2);
-//    b.setValue(0.0, 3, 0);
-//    b.setValue(1.0, 3, 1);
-//    b.setValue(-2.0, 3, 2);
-//    b.setValue(4.0, 3, 3);
+TEST(TestMatrixSymmetric, TestDeterminant) {
+   MatrixSymmetric z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(4.0, 1, 0);
+   z.setValue(5.0, 1, 1);
+   z.setValue(7.0, 2, 0);
+   z.setValue(8.0, 2, 1);
+   z.setValue(9.0, 2, 2);
+   z.setValue(10.0, 3, 0);
+   z.setValue(11.0, 3, 1);
+   z.setValue(12.0, 3, 2);
+   z.setValue(13.0, 3, 3);
 
-//    EXPECT_TRUE(utils::areEqual(z.getDeterminant(), -116.0));
-//    EXPECT_TRUE(utils::areEqual(b.getDeterminant(), 2.0));
-// }
+   MatrixSymmetric b(4);
+   b.setValue(1.0, 0, 0);
+   b.setValue(-1.0, 1, 0);
+   b.setValue(4.0, 1, 1);
+   b.setValue(2.0, 2, 0);
+   b.setValue(-1.0, 2, 1);
+   b.setValue(6.0, 2, 2);
+   b.setValue(0.0, 3, 0);
+   b.setValue(1.0, 3, 1);
+   b.setValue(-2.0, 3, 2);
+   b.setValue(4.0, 3, 3);
+
+   EXPECT_TRUE(utils::areEqual(z.decomposeToCholesky().determinant(), -116.0));
+   EXPECT_TRUE(utils::areEqual(b.decomposeToCholesky().determinant(), 2.0));
+}
 
 TEST(TestMatrixSymmetric, TestTranspose) {
    MatrixSymmetric z(4);
@@ -432,34 +436,36 @@ TEST(TestMatrixSymmetric, TestMisc) {
    EXPECT_TRUE(v == resp1);
 }
 
-// TEST(TestMatrixSymmetric, TestLinearSolve) {
-//    MatrixSymmetric z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(-1.0, 1, 0);
-//    z.setValue(4.0, 1, 1);
-//    z.setValue(2.0, 2, 0);
-//    z.setValue(-1.0, 2, 1);
-//    z.setValue(6.0, 2, 2);
-//    z.setValue(0.0, 3, 0);
-//    z.setValue(1.0, 3, 1);
-//    z.setValue(-2.0, 3, 2);
-//    z.setValue(4.0, 3, 3);
+TEST(TestMatrixSymmetric, TestLinearSolve) {
+   MatrixSymmetric z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(-1.0, 1, 0);
+   z.setValue(4.0, 1, 1);
+   z.setValue(2.0, 2, 0);
+   z.setValue(-1.0, 2, 1);
+   z.setValue(6.0, 2, 2);
+   z.setValue(0.0, 3, 0);
+   z.setValue(1.0, 3, 1);
+   z.setValue(-2.0, 3, 2);
+   z.setValue(4.0, 3, 3);
 
-//    Vector b(4);
+   Vector b(4);
 
-//    b.setValue(1.0, 0);
-//    b.setValue(3.0, 1);
-//    b.setValue(2.0, 2);
-//    b.setValue(1.0, 3);
+   b.setValue(1.0, 0);
+   b.setValue(3.0, 1);
+   b.setValue(2.0, 2);
+   b.setValue(1.0, 3);
 
-//    const Vector x(z.linearSolve(b));
+   DecompositionPLU dplu = z.decomposeToPLU();
 
-//    Vector resp(4);
+   const Vector x(dplu.linearSolve(b));
 
-//    resp.setValue(24.0, 0);
-//    resp.setValue(6.0, 1);
-//    resp.setValue(-8.5, 2);
-//    resp.setValue(-5.5, 3);
+   Vector resp(4);
 
-//    EXPECT_TRUE(x == resp);
-// }
+   resp.setValue(24.0, 0);
+   resp.setValue(6.0, 1);
+   resp.setValue(-8.5, 2);
+   resp.setValue(-5.5, 3);
+
+   EXPECT_TRUE(x == resp);
+}

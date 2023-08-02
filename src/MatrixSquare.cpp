@@ -1,7 +1,7 @@
 #include "MatrixSquare.h"
-#include "DPLU_MatrixSquare.h"
-#include "DPQR_MatrixSquare.h"
-#include "DSAS_MatrixSquare.h"
+#include "DecompositionPLU.h"
+#include "DecompositionPQR.h"
+#include "DecompositionSAS.h"
 #include "utils.h"
 
 pmat::MatrixSquare::MatrixSquare(Matrix &&matrix) {
@@ -10,12 +10,19 @@ pmat::MatrixSquare::MatrixSquare(Matrix &&matrix) {
    } // TODO else throw alguma excecao
 }
 
+pmat::MatrixSquare::MatrixSquare(const MatrixSquare &matrix) {
+   this->initializeMembers(matrix.size(), matrix.size(), matrix.isTransposed());
+   for (unsigned i = 0; i < matrix.size(); ++i)
+      for (unsigned j = 0; j < matrix.size(); ++j)
+         this->setValue(matrix(i, j), i, j);
+}
+
 unsigned pmat::MatrixSquare::size() const {
    return this->rowSize();
 }
 
 void pmat::MatrixSquare::resize(const unsigned &size) {
-   this->initializeMembers(size, size);
+   this->initializeMembers(size, size, false);
 }
 
 pmat::MatrixSquare pmat::MatrixSquare::operator+(const MatrixSquare &matrix) const {
@@ -82,20 +89,20 @@ void pmat::MatrixSquare::fillDiagonalWith(const double &value) {
       this->setValue(value, i, i);
 }
 
-pmat::DPLU_MatrixSquare pmat::MatrixSquare::decomposeToPLU() const {
-   DPLU_MatrixSquare res{*this};
+pmat::DecompositionPLU pmat::MatrixSquare::decomposeToPLU() const {
+   DecompositionPLU res{*this};
 
    return res;
 }
 
-pmat::DSAS_MatrixSquare pmat::MatrixSquare::decomposeToSAS() const {
-   DSAS_MatrixSquare res{*this};
+pmat::DecompositionSAS pmat::MatrixSquare::decomposeToSAS() const {
+   DecompositionSAS res{*this};
 
    return res;
 }
 
-pmat::DPQR_MatrixSquare pmat::MatrixSquare::decomposeToPQR() const {
-   DPQR_MatrixSquare res{*this};
+pmat::DecompositionPQR pmat::MatrixSquare::decomposeToPQR() const {
+   DecompositionPQR res{*this};
 
    return res;
 }

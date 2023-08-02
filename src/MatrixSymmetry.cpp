@@ -1,5 +1,9 @@
 #include "MatrixSymmetry.h"
 
+pmat::MatrixSymmetry::MatrixSymmetry(const MatrixSymmetry &matrix) {
+   this->copyMembers(matrix);
+}
+
 pmat::MatrixSquare pmat::MatrixSymmetry::operator+(const MatrixSquare &matrix) const {
    return MatrixSquare::operator+(matrix);
 }

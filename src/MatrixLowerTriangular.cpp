@@ -133,3 +133,10 @@ void pmat::MatrixLowerTriangular::fillRandomly(const double &min, const double &
       for (unsigned j = 0; j <= i; j++)
          this->setValue(dist(rng), i, j);
 }
+
+pmat::MatrixLowerTriangular pmat::MatrixLowerTriangular::inverse() {
+   MatrixLowerTriangular resp(this->size());
+   this->findInverseByBackSubstitution(*this, resp);
+
+   return resp;
+}

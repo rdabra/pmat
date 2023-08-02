@@ -1,9 +1,10 @@
-#include "DPQR_MatrixSquare.h"
+#include "DecompositionPQR.h"
+#include "DecompositionPLU.h"
 #include "utils.h"
 
 pmat::MatrixSquare
-pmat::DPQR_MatrixSquare::calculateHouseholderSubMatrix(const MatrixSquare &partialR,
-                                                       const unsigned idxPivot) const {
+pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partialR,
+                                                      const unsigned idxPivot) const {
    Vector u(partialR.size() - idxPivot);
    double alpha{pmat::utils::ZERO};
    for (unsigned i = idxPivot; i < partialR.size(); ++i) {
@@ -33,7 +34,7 @@ pmat::DPQR_MatrixSquare::calculateHouseholderSubMatrix(const MatrixSquare &parti
    return resp;
 }
 
-void pmat::DPQR_MatrixSquare::swapPivotColumn(MatrixSquare &partialR, const unsigned &idxPivot) {
+void pmat::DecompositionPQR::swapPivotColumn(MatrixSquare &partialR, const unsigned &idxPivot) {
    double normMax{pmat::utils::ZERO};
    unsigned jMax{idxPivot};
 
@@ -54,7 +55,7 @@ void pmat::DPQR_MatrixSquare::swapPivotColumn(MatrixSquare &partialR, const unsi
    }
 }
 
-void pmat::DPQR_MatrixSquare::calculate() {
+void pmat::DecompositionPQR::calculate() {
    if (!_calculated) {
       MatrixSquare A(*_matrix);
       this->swapPivotColumn(A, 0);
@@ -80,35 +81,32 @@ void pmat::DPQR_MatrixSquare::calculate() {
    }
 }
 
-const pmat::MatrixSquare &pmat::DPQR_MatrixSquare::matP() {
+const pmat::MatrixSquare &pmat::DecompositionPQR::matP() {
    this->calculate();
    return _matP;
 }
 
-const pmat::MatrixSquare &pmat::DPQR_MatrixSquare::matQ() {
+const pmat::MatrixSquare &pmat::DecompositionPQR::matQ() {
    this->calculate();
    return _matQ;
 }
 
-const pmat::MatrixUpperTriangular &pmat::DPQR_MatrixSquare::matR() {
+const pmat::MatrixUpperTriangular &pmat::DecompositionPQR::matR() {
    this->calculate();
    return _matR;
 }
 
-const unsigned &pmat::DPQR_MatrixSquare::rank() {
+const unsigned &pmat::DecompositionPQR::rank() {
    this->calculate();
    return _rank;
 }
 
-pmat::MatrixSquare pmat::DPQR_MatrixSquare::inverse() {
-
+pmat::MatrixSquare pmat::DecompositionPQR::inverse() {
    MatrixUpperTriangular invR(_matrix->size());
    MatrixTriangular::findInverseByBackSubstitution(_matR, invR);
 
    _matQ.transpose();
-
    MatrixSquare resp{invR * _matQ};
-
    _matQ.transpose();
 
    /**
@@ -122,7 +120,7 @@ pmat::MatrixSquare pmat::DPQR_MatrixSquare::inverse() {
    return resp;
 }
 
-pmat::DPQR_MatrixSquare::DPQR_MatrixSquare(const MatrixSquare &matrix)
+pmat::DecompositionPQR::DecompositionPQR(const MatrixSquare &matrix)
     : _matrix{&matrix}, _matP{matrix.size()}, _matQ{matrix.size()}, _matR{matrix.size()} {
    for (unsigned j = 0; j < matrix.size(); j++)
       _matP.setValue(pmat::utils::ONE, j, j);

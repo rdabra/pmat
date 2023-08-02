@@ -7,7 +7,7 @@
 #include <vector>
 
 pmat::Matrix::Matrix(const unsigned &rowSize, const unsigned &columnSize) {
-   this->initializeMembers(rowSize, columnSize);
+   this->initializeMembers(rowSize, columnSize, false);
 }
 
 pmat::Matrix::Matrix(const std::string &fileName) {
@@ -31,7 +31,7 @@ pmat::Matrix::Matrix(const std::string &fileName) {
 }
 
 void pmat::Matrix::resize(const unsigned &rowSize, const unsigned &columnSize) {
-   this->initializeMembers(rowSize, columnSize);
+   this->initializeMembers(rowSize, columnSize, false);
 }
 
 void pmat::Matrix::clear() {

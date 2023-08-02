@@ -1,5 +1,5 @@
-#ifndef DPQR_MATRIXSQUARE_H
-#define DPQR_MATRIXSQUARE_H
+#ifndef DecompositionPQR_H
+#define DecompositionPQR_H
 #pragma once
 
 #include "MatrixSquare.h"
@@ -7,7 +7,7 @@
 
 namespace pmat {
 
-class DPQR_MatrixSquare {
+class DecompositionPQR {
    private:
       const MatrixSquare *_matrix;
       MatrixSquare _matP;
@@ -24,12 +24,12 @@ class DPQR_MatrixSquare {
       void calculate();
 
    public:
-      DPQR_MatrixSquare(const MatrixSquare &matrix);
-      DPQR_MatrixSquare(const DPQR_MatrixSquare &pqr) = default;
-      DPQR_MatrixSquare(DPQR_MatrixSquare &&pqr) = default;
-      DPQR_MatrixSquare &operator=(const DPQR_MatrixSquare &pqr) = default;
-      DPQR_MatrixSquare &operator=(DPQR_MatrixSquare &&pqr) = default;
-      ~DPQR_MatrixSquare() = default;
+      DecompositionPQR(const MatrixSquare &matrix);
+      DecompositionPQR(const DecompositionPQR &pqr) = default;
+      DecompositionPQR(DecompositionPQR &&pqr) = default;
+      DecompositionPQR &operator=(const DecompositionPQR &pqr) = default;
+      DecompositionPQR &operator=(DecompositionPQR &&pqr) = default;
+      ~DecompositionPQR() = default;
       const MatrixSquare &matP();
       const MatrixSquare &matQ();
       const MatrixUpperTriangular &matR();
