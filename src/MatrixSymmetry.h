@@ -14,9 +14,7 @@ class MatrixSymmetry : public MatrixSquare {
                        const unsigned &endRow) override{};
 
    protected:
-      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override {
-         return (i * (i + 1)) / 2 + j;
-      }
+      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override;
 
    public:
       MatrixSymmetry() = default;
@@ -26,15 +24,9 @@ class MatrixSymmetry : public MatrixSquare {
       ~MatrixSymmetry() override = default;
       MatrixSymmetry &operator=(const MatrixSymmetry &) = default;
       MatrixSymmetry &operator=(MatrixSymmetry &&) = default;
-      [[nodiscard]] unsigned length() const override {
-         return (this->size() * this->size() + this->size()) / 2;
-      }
+      [[nodiscard]] unsigned length() const override;
       double operator()(const unsigned &row, const unsigned &column) const override = 0;
       void transpose() override = 0;
-      MatrixSquare operator+(const MatrixSquare &matrix) const;
-      MatrixSquare operator-(const MatrixSquare &matrix) const;
-      [[nodiscard]] MatrixSquare toMatrixSquare() const;
-      Matrix operator*(const Matrix &matrix) const override;
       void fillRandomly(const double &min, const double &max) override = 0;
 };
 

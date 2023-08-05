@@ -252,6 +252,21 @@ TEST(TestMatrixSymmetric, TestTimes) {
    resp1.setValue(24.0, 3, 2);
    resp1.setValue(26.0, 3, 3);
 
+   pmat::Vector vet{4};
+   vet.setValue(2.0, 0);
+   vet.setValue(8.0, 1);
+   vet.setValue(10.0, 2);
+   vet.setValue(14.0, 3);
+
+   pmat::Vector respv{4};
+   respv.setValue(244.0, 0);
+   respv.setValue(282.0, 1);
+   respv.setValue(336.0, 2);
+   respv.setValue(410.0, 3);
+
+   pmat::Matrix x{4, 4};
+   Matrix rrr{z * x};
+
    MatrixSquare r1(4);
    r1 = z * v;
    MatrixSquare r2(z * v);
@@ -264,6 +279,7 @@ TEST(TestMatrixSymmetric, TestTimes) {
    EXPECT_TRUE(resp == r2);
    EXPECT_TRUE(z * 2.0 == resp1);
    EXPECT_TRUE(r3 == resp1);
+   EXPECT_TRUE(z * vet == respv);
 }
 
 TEST(TestMatrixSymmetric, TestFrobenius) {
@@ -456,9 +472,9 @@ TEST(TestMatrixSymmetric, TestLinearSolve) {
    b.setValue(2.0, 2);
    b.setValue(1.0, 3);
 
-   DecompositionPLU dplu = z.decomposeToPLU();
+   DecompositionCholesky dch = z.decomposeToCholesky();
 
-   const Vector x(dplu.linearSolve(b));
+   const Vector x(dch.linearSolve(b));
 
    Vector resp(4);
 

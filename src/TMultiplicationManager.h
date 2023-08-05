@@ -1,5 +1,6 @@
 #ifndef TOPERATIONMANAGER_H
 #define TOPERATIONMANAGER_H
+#include <memory>
 #include <mutex>
 #pragma once
 
@@ -17,7 +18,7 @@ class TMultiplicationManager {
       std::mutex mtx1, mtx2;
       unsigned _lastRow{0};
       unsigned _lastColumn{0};
-      std::vector<TMultiplicationPerformer> _performers{};
+      std::vector<std::shared_ptr<TMultiplicationPerformer>> _performers{};
 
    public:
       TMultiplicationManager(const Matrix &operandFirst, const Matrix &operandSecond,

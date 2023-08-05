@@ -10,9 +10,7 @@ namespace pmat {
 class MatrixUpperTriangular : public pmat::MatrixTriangular {
 
    protected:
-      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override {
-         return (j * (j + 1)) / 2 + i;
-      }
+      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override;
 
    public:
       MatrixUpperTriangular() = default;
@@ -32,12 +30,9 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
       MatrixUpperTriangular operator*(const double &scalar) const;
       MatrixSquare operator*(const MatrixSquare &matrix) const;
       void multiplyBy(const double &scalar) override;
-      [[nodiscard]] MatrixSquare toMatrixSquare() const override;
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
-      Vector operator*(const Vector &vector) const override {
-         return MatrixSquare::operator*(vector);
-      }
+      Vector operator*(const Vector &vector) const override;
       MatrixUpperTriangular operator*(const MatrixUpperTriangular &matrix) const;
       MatrixSquare operator*(const MatrixTriangular &matrix) const;
       [[nodiscard]] MatrixLowerTriangular getTranspose() const;

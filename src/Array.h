@@ -8,8 +8,6 @@ namespace pmat {
 
 class Array {
 
-   protected:
-      // TODO criar um método abstrato para ler dados de arquivo
    public:
       Array() = default;
       Array(const Array &array) = default;

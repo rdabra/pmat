@@ -3,22 +3,21 @@
 #include "utils.h"
 #include <random>
 
-pmat::MatrixSquare pmat::MatrixLowerTriangular::toMatrixSquare() const {
-   MatrixSquare res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
-         res.setValue((*this)(i, j), i, j);
-
-   return res;
+unsigned pmat::MatrixLowerTriangular::vectorIndex(const unsigned &i, const unsigned &j) const {
+   return (i * (i + 1)) / 2 + j;
 }
 
 double pmat::MatrixLowerTriangular::operator()(const unsigned &row, const unsigned &column) const {
-   // TODO	validateIndex(rowIndex, columnIndex);
+   if (row >= this->size() || column >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
    return column > row ? pmat::utils::ZERO : this->vectorElement(row, column);
 }
 
 double pmat::MatrixLowerTriangular::dotProduct(const Matrix &matrix) const {
-   // TODO this->validateOperands(matrix);
+   if (matrix.rowSize() != this->size() || matrix.columnSize() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    double resp = 0.0;
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
@@ -89,7 +88,9 @@ pmat::MatrixSquare pmat::MatrixLowerTriangular::operator*(const MatrixTriangular
 
 pmat::MatrixLowerTriangular
 pmat::MatrixLowerTriangular::operator*(const MatrixLowerTriangular &matrix) const {
-   // TODO O numero de colunas desta matriz deve ser igual ao numero de linhas da outra
+   if (matrix.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    MatrixLowerTriangular resp{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++) {
@@ -100,6 +101,10 @@ pmat::MatrixLowerTriangular::operator*(const MatrixLowerTriangular &matrix) cons
       }
 
    return resp;
+}
+
+pmat::Vector pmat::MatrixLowerTriangular::operator*(const Vector &vector) const {
+   return MatrixSquare::operator*(vector);
 }
 
 pmat::MatrixUpperTriangular pmat::MatrixLowerTriangular::getTranspose() const {
@@ -113,15 +118,16 @@ pmat::MatrixUpperTriangular pmat::MatrixLowerTriangular::getTranspose() const {
 void pmat::MatrixLowerTriangular::swapRows(const unsigned &rowA, const unsigned &rowB,
                                            const unsigned &startColumn, const unsigned &endColumn) {
 
-   // TODO if (endColumn > rowIndexA || endColumn > rowIndexB)
-   // 	throw std::out_of_range(messages::INDEX_OUT);
+   if (endColumn > rowA || endColumn > rowB)
+      throw std::out_of_range(messages::INDEX_OUT);
+
    Matrix::swapRows(rowA, rowB, startColumn, endColumn);
 }
 
 void pmat::MatrixLowerTriangular::swapColumns(const unsigned &colA, const unsigned &colB,
                                               const unsigned &startRow, const unsigned &endRow) {
-   // TODO if (columnIndexA > startRow || columnIndexB > startRow)
-   // 	throw std::out_of_range(messages::INDEX_OUT);
+   if (colA > startRow || colB > startRow)
+      throw std::out_of_range(messages::INDEX_OUT);
 
    Matrix::swapColumns(colA, colB, startRow, endRow);
 }

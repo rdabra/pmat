@@ -9,8 +9,6 @@
 
 namespace pmat {
 
-// TODO Tirar os data members do protected e colocar no private
-
 class Matrix : public pmat::Array {
    private:
       std::vector<double> _matrix{};
@@ -18,39 +16,12 @@ class Matrix : public pmat::Array {
       unsigned _rowSize{0}, _columnSize{0};
 
    protected:
-      [[nodiscard]] virtual inline unsigned vectorIndex(const unsigned &row,
-                                                        const unsigned &column) const {
-         return _isTransposed ? row + column * _rowSize : column + row * _columnSize;
-      }
+      [[nodiscard]] virtual unsigned vectorIndex(const unsigned &row, const unsigned &column) const;
+      [[nodiscard]] double vectorElement(const unsigned &row, const unsigned &column) const;
+      void moveToThis(Matrix &&matrix);
 
-      [[nodiscard]] double vectorElement(const unsigned &row, const unsigned &column) const {
-         return _matrix[this->vectorIndex(row, column)];
-      }
-
-      void moveToThis(Matrix &&matrix) {
-         _rowSize = matrix.rowSize();
-         _columnSize = matrix.columnSize();
-         _isTransposed = matrix._isTransposed;
-         _matrix.clear();
-         _matrix = std::move(matrix._matrix);
-         matrix.~Matrix();
-      }
-
-      void initializeMembers(unsigned rowSize, unsigned columnSize, bool isTransposed) {
-         _matrix.clear();
-         _rowSize = rowSize;
-         _columnSize = columnSize;
-         _isTransposed = isTransposed;
-         _matrix.resize(this->length());
-      }
-
-      void copyMembers(const Matrix &matrix) {
-         _matrix = matrix._matrix;
-         _rowSize = matrix.rowSize();
-         _columnSize = matrix.columnSize();
-         _isTransposed = matrix.isTransposed();
-      }
-
+      void initializeMembers(unsigned rowSize, unsigned columnSize, bool isTransposed);
+      void copyMembers(const Matrix &matrix);
       [[nodiscard]] bool isTransposed() const { return _isTransposed; }
 
    public:

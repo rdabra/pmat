@@ -21,7 +21,7 @@ class TMultiplicationPerformer {
       TMultiplicationPerformer(TMultiplicationPerformer &&) = default;
       TMultiplicationPerformer &operator=(const TMultiplicationPerformer &) = default;
       TMultiplicationPerformer &operator=(TMultiplicationPerformer &&) = default;
-      ~TMultiplicationPerformer();
+      ~TMultiplicationPerformer() = default;
 
       void start();
       void setRowColumn(const unsigned &row, const unsigned &column);

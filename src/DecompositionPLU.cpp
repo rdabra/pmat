@@ -111,8 +111,7 @@ bool pmat::DecompositionPLU::isStrictLUDecomposable() {
       }
       return true;
    } else
-      throw std::logic_error(
-          "Calculation Mode is not Strict LU"); // TODO Calculation Mode is not Strict LU
+      throw std::logic_error(pmat::messages::DECOMP_NOT_LU);
 }
 
 bool pmat::DecompositionPLU::isInvertible() {

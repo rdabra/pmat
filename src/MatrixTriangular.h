@@ -26,12 +26,9 @@ class MatrixTriangular : public pmat::MatrixSquare {
       ~MatrixTriangular() override = default;
       MatrixTriangular &operator=(const MatrixTriangular &) = default;
       MatrixTriangular &operator=(MatrixTriangular &&) = default;
-      [[nodiscard]] inline unsigned length() const override {
-         return (this->size() * this->size() + this->size()) / 2;
-      }
+      [[nodiscard]] unsigned length() const override;
       double operator()(const unsigned &row, const unsigned &column) const override = 0;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override = 0;
-      [[nodiscard]] virtual MatrixSquare toMatrixSquare() const = 0;
       MatrixSquare operator*(const MatrixTriangular &matrix) const;
       [[nodiscard]] MatrixSquare getSwappedByRows(const unsigned &rowIndexA,
                                                   const unsigned &rowIndexB) const;

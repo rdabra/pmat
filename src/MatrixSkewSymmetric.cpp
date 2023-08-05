@@ -38,6 +38,10 @@ pmat::MatrixSkewSymmetric::operator-(const MatrixSkewSymmetric &matrix) const {
    return res;
 }
 
+pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator-(const MatrixSymmetry &matrix) const {
+   return MatrixSquare::operator-(matrix);
+}
+
 void pmat::MatrixSkewSymmetric::subtractBy(const MatrixSkewSymmetric &matrix) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
@@ -54,6 +58,14 @@ pmat::MatrixSkewSymmetric pmat::MatrixSkewSymmetric::operator*(const double &sca
 
 pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator*(const MatrixSkewSymmetric &matrix) const {
    return MatrixSquare::operator*(matrix);
+}
+
+pmat::Vector pmat::MatrixSkewSymmetric::operator*(const Vector &vector) const {
+   return MatrixSquare::operator*(vector);
+}
+
+pmat::Matrix pmat::MatrixSkewSymmetric::operator*(const Matrix &matrix) const {
+   return Matrix::operator*(matrix);
 }
 
 void pmat::MatrixSkewSymmetric::multiplyBy(const double &scalar) {

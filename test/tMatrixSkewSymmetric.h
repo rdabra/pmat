@@ -1,4 +1,6 @@
+#include "../src/DecompositionPLU.h"
 #include "../src/MatrixSkewSymmetric.h"
+#include "../src/MatrixSymmetric.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
 
@@ -122,9 +124,13 @@ TEST(TestMatrixSkewSymmetric, TestPlus) {
    MatrixSkewSymmetric r2(z + v);
    z.addBy(v);
 
+   MatrixSymmetric s{4};
+   MatrixSquare rr{s + z};
+
    EXPECT_TRUE(resp == r1);
    EXPECT_TRUE(resp1 == r2);
    EXPECT_TRUE(resp == z);
+   EXPECT_TRUE(rr == z);
 }
 
 TEST(TestMatrixSkewSymmetric, TestMinus) {
@@ -187,9 +193,13 @@ TEST(TestMatrixSkewSymmetric, TestMinus) {
    MatrixSkewSymmetric r2(z - v);
    z.subtractBy(v);
 
+   MatrixSymmetric s{4};
+   MatrixSquare rr{z - s};
+
    EXPECT_TRUE(resp == r1);
    EXPECT_TRUE(resp1 == r2);
    EXPECT_TRUE(resp == z);
+   EXPECT_TRUE(rr == z);
 }
 
 TEST(TestMatrixSkewSymmetric, TestTimes) {
@@ -292,21 +302,21 @@ TEST(TestMatrixSkewSymmetric, TestFrobenius) {
    EXPECT_TRUE(utils::areEqual(z.getFrobeniusNorm(), 35.55277767));
 }
 
-// TEST(TestMatrixSkewSymmetric, TestDeterminant) {
-//    MatrixSkewSymmetric z(4);
-//    z.setValue(1.0, 0, 0);
-//    z.setValue(4.0, 1, 0);
-//    z.setValue(5.0, 1, 1);
-//    z.setValue(7.0, 2, 0);
-//    z.setValue(8.0, 2, 1);
-//    z.setValue(9.0, 2, 2);
-//    z.setValue(10.0, 3, 0);
-//    z.setValue(11.0, 3, 1);
-//    z.setValue(12.0, 3, 2);
-//    z.setValue(13.0, 3, 3);
+TEST(TestMatrixSkewSymmetric, TestDeterminant) {
+   MatrixSkewSymmetric z(4);
+   z.setValue(1.0, 0, 0);
+   z.setValue(4.0, 1, 0);
+   z.setValue(5.0, 1, 1);
+   z.setValue(7.0, 2, 0);
+   z.setValue(8.0, 2, 1);
+   z.setValue(9.0, 2, 2);
+   z.setValue(10.0, 3, 0);
+   z.setValue(11.0, 3, 1);
+   z.setValue(12.0, 3, 2);
+   z.setValue(13.0, 3, 3);
 
-//    EXPECT_TRUE(utils::areEqual(z.getDeterminant(), 15384.0000000000));
-// }
+   EXPECT_TRUE(utils::areEqual(z.decomposeToPLU().determinant(), 15384.0000000000));
+}
 
 TEST(TestMatrixSkewSymmetric, TestTranspose) {
    MatrixSkewSymmetric z(4);
@@ -371,6 +381,20 @@ TEST(TestMatrixSkewSymmetric, TestMisc) {
    resp1.setValue(0.0, 1, 0);
    resp1.setValue(0.0, 1, 1);
 
+   pmat::Vector vet{4};
+   vet.setValue(2.0, 0);
+   vet.setValue(8.0, 1);
+   vet.setValue(10.0, 2);
+   vet.setValue(14.0, 3);
+
+   pmat::Vector respv{4};
+   respv.setValue(-240.0, 0);
+   respv.setValue(-186.0, 1);
+   respv.setValue(0.0, 2);
+   respv.setValue(410.0, 3);
+
+   Vector vv{z * vet};
+
    MatrixSkewSymmetric a;
    a = (std::move(z));
 
@@ -378,4 +402,5 @@ TEST(TestMatrixSkewSymmetric, TestMisc) {
 
    EXPECT_TRUE(a == resp);
    EXPECT_TRUE(v == resp1);
+   EXPECT_TRUE(vv == respv);
 }

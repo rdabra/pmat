@@ -15,6 +15,10 @@ pmat::MatrixSymmetric pmat::MatrixSymmetric::operator+(const MatrixSymmetric &ma
    return res;
 }
 
+pmat::MatrixSquare pmat::MatrixSymmetric::operator+(const MatrixSymmetry &matrix) const {
+   return MatrixSquare::operator+(matrix);
+}
+
 void pmat::MatrixSymmetric::addBy(const MatrixSymmetric &matrix) {
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = 0; j <= i; j++)
@@ -27,6 +31,10 @@ pmat::MatrixSymmetric pmat::MatrixSymmetric::operator-(const MatrixSymmetric &ma
       for (unsigned j = 0; j <= i; j++)
          res.setValue((*this)(i, j) - matrix(i, j), i, j);
    return res;
+}
+
+pmat::MatrixSquare pmat::MatrixSymmetric::operator-(const MatrixSymmetry &matrix) const {
+   return MatrixSquare::operator-(matrix);
 }
 
 void pmat::MatrixSymmetric::subtractBy(const MatrixSymmetric &matrix) {
@@ -45,6 +53,14 @@ pmat::MatrixSymmetric pmat::MatrixSymmetric::operator*(const double &scalar) con
 
 pmat::MatrixSquare pmat::MatrixSymmetric::operator*(const MatrixSymmetric &matrix) const {
    return MatrixSquare::operator*(matrix);
+}
+
+pmat::Matrix pmat::MatrixSymmetric::operator*(const Matrix &matrix) const {
+   return Matrix::operator*(matrix);
+}
+
+pmat::Vector pmat::MatrixSymmetric::operator*(const Vector &vector) const {
+   return MatrixSquare::operator*(vector);
 }
 
 void pmat::MatrixSymmetric::multiplyBy(const double &scalar) {

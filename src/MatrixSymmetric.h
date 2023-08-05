@@ -21,17 +21,15 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       ~MatrixSymmetric() override = default;
       double operator()(const unsigned &row, const unsigned &column) const override;
       MatrixSymmetric operator+(const MatrixSymmetric &matrix) const;
-      MatrixSquare operator+(const MatrixSymmetry &matrix) const {
-         return MatrixSquare::operator+(matrix);
-      }
+      MatrixSquare operator+(const MatrixSymmetry &matrix) const;
       virtual void addBy(const MatrixSymmetric &matrix);
       MatrixSymmetric operator-(const MatrixSymmetric &matrix) const;
+      MatrixSquare operator-(const MatrixSymmetry &matrix) const;
       virtual void subtractBy(const MatrixSymmetric &matrix);
       MatrixSymmetric operator*(const double &scalar) const;
       MatrixSquare operator*(const MatrixSymmetric &matrix) const;
-      Vector operator*(const Vector &vector) const override {
-         return MatrixSquare::operator*(vector);
-      }
+      Matrix operator*(const Matrix &matrix) const override;
+      Vector operator*(const Vector &vector) const override;
 
       void multiplyBy(const double &scalar) override;
       void transpose() override{};

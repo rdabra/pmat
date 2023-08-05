@@ -30,7 +30,7 @@ class MatrixSquare : public Matrix {
       MatrixSquare operator*(const MatrixSquare &matrix) const;
       virtual MatrixSquare multiplyByBiggerMatrix(const MatrixSquare &matrix, SubMatrixPos pos);
       MatrixSquare operator*(const double &scalar) const;
-      Vector operator*(const Vector &vector) const override { return Matrix::operator*(vector); }
+      Vector operator*(const Vector &vector) const override;
       [[nodiscard]] virtual double trace() const;
       virtual void fillDiagonalWith(const double &value);
       [[nodiscard]] DecompositionPLU decomposeToPLU() const;

@@ -5,6 +5,10 @@ pmat::MatrixTriangular::MatrixTriangular(const MatrixTriangular &matrix) {
    this->copyMembers(matrix);
 }
 
+unsigned pmat::MatrixTriangular::length() const {
+   return (this->size() * this->size() + this->size()) / 2;
+}
+
 pmat::MatrixSquare pmat::MatrixTriangular::operator*(const MatrixTriangular &matrix) const {
    return MatrixSquare{};
 }

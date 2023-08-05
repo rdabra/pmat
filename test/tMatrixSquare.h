@@ -157,8 +157,7 @@ TEST(TestMatrixSquare, TestDecompPLU) {
    MatrixSquare PB((mats1.matP()) * B);
    MatrixSquare LU1((mats1.matL()) * (mats1.matU()));
 
-   DecompositionPLU mats2{A.decomposeToPLU()};
-   mats2.setStrictLUMode();
+   DecompositionPLU mats2{A, true};
 
    MatrixSquare LU2((mats2.matL()) * (mats2.matU()));
 

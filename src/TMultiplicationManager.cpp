@@ -1,5 +1,6 @@
 #include "TMultiplicationManager.h"
 #include <future>
+#include <memory>
 #include <mutex>
 
 void pmat::TMultiplicationManager::setResultValue(const double &value, const unsigned &row,
@@ -11,7 +12,7 @@ void pmat::TMultiplicationManager::setResultValue(const double &value, const uns
 bool pmat::TMultiplicationManager::getNextRowColumn(unsigned id) {
    std::lock_guard<std::mutex> lg(mtx2);
    if (_lastRow < _operandFirst->rowSize()) {
-      _performers[id].setRowColumn(_lastRow, _lastColumn);
+      _performers[id]->setRowColumn(_lastRow, _lastColumn);
       if (_lastColumn < _operandSecond->columnSize() - 1) {
          _lastColumn++;
       } else {
@@ -27,10 +28,10 @@ bool pmat::TMultiplicationManager::getNextRowColumn(unsigned id) {
 void pmat::TMultiplicationManager::multiply(int nThreads) {
    std::vector<std::future<void>> futures;
    for (unsigned i{0}; i < nThreads; i++) {
-      _performers.emplace_back(i, *this);
-      futures.emplace_back(
-          std::async(std::launch::async, &TMultiplicationPerformer::start, &_performers.back()));
+      _performers.emplace_back(std::make_shared<TMultiplicationPerformer>(i, *this));
+      futures.emplace_back(std::async(&TMultiplicationPerformer::start, _performers.back()));
    }
-   for (auto &ftr : futures)
-      ftr.wait();
+   //   for (auto &ftr : futures)
+   for (unsigned i{0}; i < nThreads; i++)
+      futures[i].wait();
 }

@@ -10,9 +10,7 @@ class MatrixUpperTriangular;
 
 class MatrixLowerTriangular : public pmat::MatrixTriangular {
    protected:
-      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override {
-         return (i * (i + 1)) / 2 + j;
-      }
+      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override;
 
    public:
       MatrixLowerTriangular() = default;
@@ -25,7 +23,6 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       MatrixLowerTriangular &operator=(const MatrixLowerTriangular &matrix) = default;
       MatrixLowerTriangular &operator=(MatrixLowerTriangular &&matrix) = default;
       ~MatrixLowerTriangular() override = default;
-      [[nodiscard]] MatrixSquare toMatrixSquare() const override;
       double operator()(const unsigned &row, const unsigned &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixLowerTriangular operator+(const MatrixLowerTriangular &matrix) const;
@@ -39,10 +36,7 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       MatrixSquare operator-(const MatrixSquare &matrix) const;
       MatrixSquare operator*(const MatrixTriangular &matrix) const;
       MatrixLowerTriangular operator*(const MatrixLowerTriangular &matrix) const;
-      Vector operator*(const Vector &vector) const override {
-         return MatrixSquare::operator*(vector);
-      }
-
+      Vector operator*(const Vector &vector) const override;
       [[nodiscard]] MatrixUpperTriangular getTranspose() const;
       void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
                     const unsigned &endColumn) override;

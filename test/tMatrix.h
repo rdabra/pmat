@@ -1,4 +1,5 @@
 #include "../src/Matrix.h"
+#include "../src/TMultiplicationManager.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
 
@@ -254,9 +255,10 @@ TEST(TestMatrix, TestTimes) {
    Matrix x2(z * v);
 
    // TODO testar multiplicacao paralela
-   // Matrix respp(4, 4);
-   // WorkManagerProdMatrix manag(z, v, respp, 5);
-   // manag.startWork();
+   Matrix respp(4, 4);
+
+   TMultiplicationManager manag{z, v, respp};
+   manag.multiply(5);
 
    Matrix x3(4, 3);
    x3 = z * 2.0;
@@ -265,7 +267,7 @@ TEST(TestMatrix, TestTimes) {
 
    EXPECT_TRUE(resp == x1);
    EXPECT_TRUE(resp == x2);
-   //   EXPECT_TRUE(resp == respp);
+   EXPECT_TRUE(resp == respp);
    EXPECT_TRUE(resp2 == x3);
    EXPECT_TRUE(resp2 == x4);
    EXPECT_TRUE(resp2 == z);

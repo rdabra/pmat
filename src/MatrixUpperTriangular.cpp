@@ -2,13 +2,10 @@
 #include "utils.h"
 #include <random>
 
-/* pmat::MatrixUpperTriangular::MatrixUpperTriangular(const MatrixSquare &matrix) {
-   this->initializeMembers(matrix.size(), matrix.size());
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
-         this->setValue(matrix(i, j), i, j);
+unsigned pmat::MatrixUpperTriangular::vectorIndex(const unsigned &i, const unsigned &j) const {
+   return (j * (j + 1)) / 2 + i;
 }
- */
+
 double pmat::MatrixUpperTriangular::operator()(const unsigned &row, const unsigned &column) const {
    // TODO validateIndex(rowIndex, columnIndex);
 
@@ -76,21 +73,16 @@ void pmat::MatrixUpperTriangular::multiplyBy(const double &scalar) {
          this->setValue((*this)(i, j) * scalar, i, j);
 }
 
-pmat::MatrixSquare pmat::MatrixUpperTriangular::toMatrixSquare() const {
-   MatrixSquare res(this->size());
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
-         res.setValue((*this)(i, j), i, j);
-
-   return res;
-}
-
 pmat::MatrixSquare pmat::MatrixUpperTriangular::operator+(const MatrixSquare &matrix) const {
    return MatrixSquare::operator+(matrix);
 }
 
 pmat::MatrixSquare pmat::MatrixUpperTriangular::operator-(const MatrixSquare &matrix) const {
    return MatrixSquare::operator-(matrix);
+}
+
+pmat::Vector pmat::MatrixUpperTriangular::operator*(const Vector &vector) const {
+   return MatrixSquare::operator*(vector);
 }
 
 pmat::MatrixUpperTriangular
