@@ -1,9 +1,13 @@
 #include "MatrixSkewSymmetric.h"
+#include "Messages.h"
 #include "utils.h"
 #include <random>
+#include <stdexcept>
 
 double pmat::MatrixSkewSymmetric::operator()(const unsigned &row, const unsigned &column) const {
-   // TODO	validateIndex(rowIndex, columnIndex);
+   if (row >= this->rowSize() || column >= this->columnSize())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
    double aux = this->isTransposed() ? pmat::utils::MINUS_ONE : pmat::utils::ONE;
    double val = column > row ? pmat::utils::MINUS_ONE * this->vectorElement(column, row)
                              : this->vectorElement(row, column);
@@ -78,7 +82,7 @@ void pmat::MatrixSkewSymmetric::transpose() {
    Matrix::transpose();
 }
 
-void pmat::MatrixSkewSymmetric::fillRandomly(const double &min, const double &max) {
+void pmat::MatrixSkewSymmetric::fillWithRandomValues(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 

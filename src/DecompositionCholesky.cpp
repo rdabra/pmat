@@ -1,6 +1,8 @@
 #include "DecompositionCholesky.h"
 #include "MatrixSymmetric.h"
 #include "utils.h"
+#include <cmath>
+#include <stdexcept>
 
 void pmat::DecompositionCholesky::calculate() {
    if (!_calculated) {
@@ -59,7 +61,7 @@ pmat::MatrixSquare pmat::DecompositionCholesky::inverse() {
 
 pmat::Vector pmat::DecompositionCholesky::linearSolve(const Vector &rhs) {
    if (rhs.size() != _matrix->size())
-      throw std::logic_error(messages::RHS_NOT_COMP);
+      throw std::invalid_argument(messages::NONCOMPT_SIZE_ARG);
 
    if (this->isPositiveDefinite()) {
 
@@ -74,13 +76,6 @@ pmat::Vector pmat::DecompositionCholesky::linearSolve(const Vector &rhs) {
    return _plu.linearSolve(rhs);
 }
 
-/**
- * @brief Informs if this matrix is positive definite
- * @details A symmetric matrix is considered to be positive definite if it is Cholesky decomposable
- * @see pmat::DecompositionCholesky::getCholeskyFactor
- * @see "Matrix Computations", Golub & Van Loan, ISBN  9789380250755, p. 164.
- * @return True if this matrix is positive definite
- */
 bool pmat::DecompositionCholesky::isPositiveDefinite() {
    try {
       this->calculate();

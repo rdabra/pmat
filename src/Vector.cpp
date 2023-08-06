@@ -1,7 +1,9 @@
 #include "Vector.h"
 #include "Matrix.h"
+#include "Messages.h"
 #include "utils.h"
 #include <random>
+#include <stdexcept>
 #include <utility>
 
 pmat::Vector::Vector(const Vector &vector) {
@@ -19,12 +21,16 @@ void pmat::Vector::emplaceBack(const double &value) {
 }
 
 void pmat::Vector::setValue(const double &value, const unsigned &index) {
-   // TODO Implementar pre condição
+   if (index >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
    _vector[index] = value;
 }
 
 const double &pmat::Vector::operator()(const unsigned &index) const {
-   // TODO Implementar pre condição
+   if (index >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
    return _vector[index];
 }
 
@@ -57,7 +63,9 @@ bool pmat::Vector::operator==(const Vector &vector) const {
 }
 
 pmat::Vector pmat::Vector::operator+(const Vector &vector) const {
-   // TODO Implementar pre condição
+   if (vector.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    pmat::Vector resp{};
    for (int i{0}; i < vector.length(); i++)
       resp.emplaceBack((*this)(i) + vector(i));
@@ -66,13 +74,17 @@ pmat::Vector pmat::Vector::operator+(const Vector &vector) const {
 }
 
 void pmat::Vector::addBy(const Vector &vector) {
-   // TODO Implementar pre condição
+   if (vector.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    for (int i{0}; i < vector.length(); i++)
       this->setValue((*this)(i) + vector(i), i);
 }
 
 pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
-   // TODO Implementar pre condição
+   if (vector.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    pmat::Vector resp{};
    for (int i{0}; i < vector.length(); i++)
       resp.emplaceBack((*this)(i)-vector(i));
@@ -81,7 +93,9 @@ pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
 }
 
 void pmat::Vector::subtractBy(const Vector &vector) {
-   // TODO Implementar pre condição
+   if (vector.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    for (int i{0}; i < vector.length(); i++)
       this->setValue((*this)(i)-vector(i), i);
 }
@@ -100,7 +114,9 @@ void pmat::Vector::multiplyBy(const double &scalar) {
 }
 
 double pmat::Vector::dotProduct(const Vector &vector) const {
-   // TODO Implementar pre condição
+   if (vector.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    double resp = pmat::utils::ZERO;
    for (unsigned i = 0; i < vector.length(); i++)
       resp += (*this)(i)*vector(i);
@@ -128,7 +144,7 @@ unsigned pmat::Vector::occurrences(const double &value) const {
    return res;
 }
 
-void pmat::Vector::fillRandomly(const double &min, const double &max) {
+void pmat::Vector::fillWithRandomValues(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 
@@ -137,7 +153,9 @@ void pmat::Vector::fillRandomly(const double &min, const double &max) {
 }
 
 void pmat::Vector::swapElements(const unsigned &elmIndexA, const unsigned &elmIndexB) {
-   // TODO Implementar pre condição
+   if (elmIndexA >= this->size() || elmIndexB >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
    _vector[elmIndexB] = std::exchange(_vector[elmIndexA], _vector[elmIndexB]);
 }
 

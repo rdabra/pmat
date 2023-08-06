@@ -1,9 +1,12 @@
 #include "MatrixSymmetric.h"
 #include "DecompositionCholesky.h"
 #include <random>
+#include <stdexcept>
 
 double pmat::MatrixSymmetric::operator()(const unsigned &row, const unsigned &column) const {
-   // TODO	validateIndex(rowIndex, columnIndex);
+   if (row >= this->size() || column >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
    return column > row ? this->vectorElement(column, row) : this->vectorElement(row, column);
 }
 
@@ -69,7 +72,7 @@ void pmat::MatrixSymmetric::multiplyBy(const double &scalar) {
          this->setValue((*this)(i, j) * scalar, i, j);
 }
 
-void pmat::MatrixSymmetric::fillRandomly(const double &min, const double &max) {
+void pmat::MatrixSymmetric::fillWithRandomValues(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 

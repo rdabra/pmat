@@ -1,5 +1,6 @@
 #include "MatrixTriangular.h"
 #include "utils.h"
+#include <stdexcept>
 
 pmat::MatrixTriangular::MatrixTriangular(const MatrixTriangular &matrix) {
    this->copyMembers(matrix);
@@ -15,8 +16,8 @@ pmat::MatrixSquare pmat::MatrixTriangular::operator*(const MatrixTriangular &mat
 
 pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByRows(const unsigned &rowIndexA,
                                                             const unsigned &rowIndexB) const {
-   // TODO this->validateIndex(rowIndexA, 0);
-   // this->validateIndex(rowIndexB, 0);
+   if (rowIndexA >= this->size() || rowIndexB >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    MatrixSquare resp(this->size());
    for (unsigned i = 0; i < this->size(); ++i) {
@@ -34,8 +35,9 @@ pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByRows(const unsigned &rowI
 
 pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByColumns(const unsigned &columnIndexA,
                                                                const unsigned &columnIndexB) const {
-   // TODO this->validateIndex(0, columnIndexA);
-   // this->validateIndex(0, columnIndexB);
+
+   if (columnIndexA >= this->size() || columnIndexB >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    MatrixSquare resp(this->size());
    for (unsigned j = 0; j < this->size(); ++j) {
@@ -69,7 +71,7 @@ bool pmat::MatrixTriangular::isInvertible() {
 
 pmat::Vector pmat::MatrixTriangular::linearSolve(const Vector &rhs) {
    if (rhs.size() != this->size())
-      throw std::logic_error(messages::RHS_NOT_COMP);
+      throw std::invalid_argument(messages::NONCOMPT_SIZE_ARG);
    if (!this->isInvertible())
       throw std::logic_error(messages::MATRIX_SINGULAR);
 

@@ -28,13 +28,49 @@ class MatrixSquare : public Matrix {
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
       MatrixSquare operator*(const MatrixSquare &matrix) const;
-      virtual MatrixSquare multiplyByBiggerMatrix(const MatrixSquare &matrix, SubMatrixPos pos);
       MatrixSquare operator*(const double &scalar) const;
       Vector operator*(const Vector &vector) const override;
-      [[nodiscard]] virtual double trace() const;
       virtual void fillDiagonalWith(const double &value);
+
+      /**
+       * @brief Calculates the multiplication of this matrix and the first parameter.
+       * @details Given matrices \f$ A\f$ with size \f$ n\f$ and \f$ B\f$ with size \f$ m>n\f$, this
+       * function performs \f$A'.B\f$ of size \f$ m\f$ where \f$ A' = [A \quad 0; \quad 0 \quad 1]
+       * \f$ or  \f$ A' = [1 \quad 0; \quad 0 \quad A] \f$.
+       *
+       * @param matrix The right operand, which must not be smaller
+       * @param pos Position of this matrix on the matrix \f$A'\f$
+       * @return The product of \f$A'\f$ and the parameter
+       * @exception invalid_argument Parameters are not compatible
+       */
+      virtual MatrixSquare multiplyByBiggerMatrix(const MatrixSquare &matrix, SubMatrixPos pos);
+
+      /**
+       * @brief Calculates the trace of this matrix
+       *
+       * @return double Trace of this matrix
+       */
+      [[nodiscard]] virtual double trace() const;
+
+      /**
+       * @brief Returns a calculator for the PLU Decomposition of this matrix
+       *
+       * @return DecompositionPLU PLU calculator
+       */
       [[nodiscard]] DecompositionPLU decomposeToPLU() const;
+
+      /**
+       * @brief Returns a calculator for the SAS Decomposition of this matrix
+       *
+       * @return DecompositionSAS SAS calculator
+       */
       [[nodiscard]] DecompositionSAS decomposeToSAS() const;
+
+      /**
+       * @brief Returns a calculator for the PQR Decomposition of this matrix
+       *
+       * @return DecompositionPQR PQR calculator
+       */
       [[nodiscard]] DecompositionPQR decomposeToPQR() const;
 };
 

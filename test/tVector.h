@@ -2,6 +2,7 @@
 #include "../src/Vector.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
+#include <cmath>
 
 using namespace pmat;
 
@@ -279,7 +280,7 @@ TEST(TestVector, TestMisc) {
 
    Vector v1{};
    v1.resize(5);
-   v1.fillRandomly(-2.0, 10.0);
+   v1.fillWithRandomValues(-2.0, 10.0);
 
    Matrix co{7, 1};
    co.setValue(2.0, 0, 0);

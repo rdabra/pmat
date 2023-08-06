@@ -74,6 +74,27 @@
             "eraseGcovR"
          ],
          "problemMatcher": []
+      },
+      {
+         "label": "eraseDoxygen",
+         "type": "shell",
+         "command": "del /q *.*",
+         "options": {
+            "cwd": "${workspaceFolder}/out/documentation/"
+         },
+         "problemMatcher": []
+      },
+      {
+         "label": "runDoxygen",
+         "type": "shell",
+         "command": "doxygen Doxyfile",
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "dependsOn": [
+            "eraseDoxygen"
+         ],
+         "problemMatcher": []
       }
    ]
 }

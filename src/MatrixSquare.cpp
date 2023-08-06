@@ -2,12 +2,15 @@
 #include "DecompositionPLU.h"
 #include "DecompositionPQR.h"
 #include "DecompositionSAS.h"
+#include "Messages.h"
 #include "utils.h"
+#include <stdexcept>
 
 pmat::MatrixSquare::MatrixSquare(Matrix &&matrix) {
    if (matrix.rowSize() == matrix.columnSize()) {
       this->moveToThis(std::move(matrix));
-   } // TODO else throw alguma excecao
+   } else
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 }
 
 pmat::MatrixSquare::MatrixSquare(const MatrixSquare &matrix) {
@@ -45,9 +48,8 @@ pmat::MatrixSquare pmat::MatrixSquare::operator*(const MatrixSquare &matrix) con
 
 pmat::MatrixSquare pmat::MatrixSquare::multiplyByBiggerMatrix(const MatrixSquare &matrix,
                                                               SubMatrixPos pos) {
-
-   // TODO	if (matrix.size() < this->size()) throw
-   // std::logic_error(messages::NONCOMPT_ARG);
+   if (matrix.size() <= this->size())
+      throw std::invalid_argument(messages::NONCOMPT_SIZE_ARG);
 
    MatrixSquare resp(matrix.size());
 

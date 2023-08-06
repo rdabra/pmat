@@ -30,10 +30,15 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       MatrixSquare operator*(const MatrixSymmetric &matrix) const;
       Matrix operator*(const Matrix &matrix) const override;
       Vector operator*(const Vector &vector) const override;
-
       void multiplyBy(const double &scalar) override;
       void transpose() override{};
-      void fillRandomly(const double &min, const double &max) override;
+      void fillWithRandomValues(const double &min, const double &max) override;
+
+      /**
+       * @brief Returns a calculator for the Cholesky Decomposition of this matrix
+       *
+       * @return DecompositionCholesky Cholesky calculator
+       */
       DecompositionCholesky decomposeToCholesky();
 };
 

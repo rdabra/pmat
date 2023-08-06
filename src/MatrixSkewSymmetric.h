@@ -30,10 +30,9 @@ class MatrixSkewSymmetric : public pmat::MatrixSymmetry {
       MatrixSquare operator*(const MatrixSkewSymmetric &matrix) const;
       Vector operator*(const Vector &vector) const override;
       Matrix operator*(const Matrix &matrix) const override;
-
       void multiplyBy(const double &scalar) override;
       void transpose() override;
-      void fillRandomly(const double &min, const double &max) override;
+      void fillWithRandomValues(const double &min, const double &max) override;
 };
 
 } // namespace pmat

@@ -27,7 +27,7 @@ class MatrixSymmetry : public MatrixSquare {
       [[nodiscard]] unsigned length() const override;
       double operator()(const unsigned &row, const unsigned &column) const override = 0;
       void transpose() override = 0;
-      void fillRandomly(const double &min, const double &max) override = 0;
+      void fillWithRandomValues(const double &min, const double &max) override = 0;
 };
 
 } // namespace pmat

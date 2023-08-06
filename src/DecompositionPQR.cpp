@@ -1,7 +1,15 @@
 #include "DecompositionPQR.h"
-#include "DecompositionPLU.h"
 #include "utils.h"
+#include <cmath>
+#include <stdexcept>
 
+/**
+ * @brief Calculates the Householder matrix by using the opposite sign of the column Frobenius norm
+ * @param partialR Partial \f$ R \f$ matrix
+ * @param idxPivot Column and row index from which the Householder matrix is calculated
+ * @return Householder matrix
+ * @see https://en.wikipedia.org/wiki/QR_decomposition
+ */
 pmat::MatrixSquare
 pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partialR,
                                                       const unsigned idxPivot) const {
@@ -13,7 +21,7 @@ pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partia
    }
 
    // Using the opposite sign of the Frobenius norm
-   alpha = -pmat::utils::ONE * pmat::utils::signOf(partialR(idxPivot, idxPivot)) * sqrt(alpha);
+   alpha = -pmat::utils::ONE * pmat::utils::signOf(partialR(idxPivot, idxPivot)) * std::sqrt(alpha);
 
    u.setValue(u(0) - alpha, 0);
 
@@ -101,7 +109,15 @@ const unsigned &pmat::DecompositionPQR::rank() {
    return _rank;
 }
 
+bool pmat::DecompositionPQR::isInvertible() {
+   this->calculate();
+   return _rank == _matrix->size();
+}
+
 pmat::MatrixSquare pmat::DecompositionPQR::inverse() {
+   if (!this->isInvertible())
+      throw std::logic_error(messages::MATRIX_SINGULAR);
+
    MatrixUpperTriangular invR(_matrix->size());
    MatrixTriangular::findInverseByBackSubstitution(_matR, invR);
 

@@ -164,7 +164,7 @@ bool pmat::DecompositionPLU::isOrthogonal() {
 
 pmat::Vector pmat::DecompositionPLU::linearSolve(const Vector &rhs) {
    if (rhs.size() != _matrix->size())
-      throw std::logic_error(messages::RHS_NOT_COMP);
+      throw std::invalid_argument(messages::NONCOMPT_SIZE_ARG);
    if (!this->isInvertible())
       throw std::logic_error(messages::MATRIX_SINGULAR);
 

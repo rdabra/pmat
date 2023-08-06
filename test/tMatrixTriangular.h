@@ -674,10 +674,10 @@ TEST(TestMatrixTriangular, TestMisc) {
    f = std::move(t1);
 
    MatrixLowerTriangular ee(5);
-   ee.fillRandomly(-1.0, 2.0);
+   ee.fillWithRandomValues(-1.0, 2.0);
 
    MatrixUpperTriangular eee(5);
-   eee.fillRandomly(-1.0, 2.0);
+   eee.fillWithRandomValues(-1.0, 2.0);
 
    EXPECT_TRUE(z == zz);
    EXPECT_TRUE(b == a);

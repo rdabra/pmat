@@ -25,7 +25,18 @@ class DecompositionSAS {
       DecompositionSAS &operator=(DecompositionSAS &&sas) = default;
       ~DecompositionSAS() = default;
 
+      /**
+       * @brief Calculates the symmetric part of the associated matrix
+       *
+       * @return const MatrixSymmetric& Symmetric part
+       */
       const MatrixSymmetric &matS();
+
+      /**
+       * @brief Calculates the skew-symmetric part of the associated matrix
+       *
+       * @return const MatrixSkewSymmetric& Skew-symmetric part
+       */
       const MatrixSkewSymmetric &matAS();
 };
 

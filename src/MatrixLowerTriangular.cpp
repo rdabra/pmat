@@ -2,6 +2,7 @@
 #include "MatrixUpperTriangular.h"
 #include "utils.h"
 #include <random>
+#include <stdexcept>
 
 unsigned pmat::MatrixLowerTriangular::vectorIndex(const unsigned &i, const unsigned &j) const {
    return (i * (i + 1)) / 2 + j;
@@ -131,7 +132,7 @@ void pmat::MatrixLowerTriangular::swapColumns(const unsigned &colA, const unsign
 
    Matrix::swapColumns(colA, colB, startRow, endRow);
 }
-void pmat::MatrixLowerTriangular::fillRandomly(const double &min, const double &max) {
+void pmat::MatrixLowerTriangular::fillWithRandomValues(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 
@@ -141,6 +142,9 @@ void pmat::MatrixLowerTriangular::fillRandomly(const double &min, const double &
 }
 
 pmat::MatrixLowerTriangular pmat::MatrixLowerTriangular::inverse() {
+   if (!this->isInvertible())
+      throw std::logic_error(messages::MATRIX_SINGULAR);
+
    MatrixLowerTriangular resp(this->size());
    this->findInverseByBackSubstitution(*this, resp);
 

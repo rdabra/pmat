@@ -2,6 +2,7 @@
 #include "../src/TMultiplicationManager.h"
 #include "../src/utils.h"
 #include "gtest/gtest.h"
+#include <cmath>
 
 using namespace pmat;
 
@@ -254,7 +255,6 @@ TEST(TestMatrix, TestTimes) {
    x1 = z * v;
    Matrix x2(z * v);
 
-   // TODO testar multiplicacao paralela
    Matrix respp(4, 4);
 
    TMultiplicationManager manag{z, v, respp};
@@ -499,7 +499,7 @@ TEST(TestMatrix, TestMisc) {
    f.swapRows(1, 3, 0, 2);
 
    Matrix e(5, 5);
-   e.fillRandomly(-1.0, 2.0);
+   e.fillWithRandomValues(-1.0, 2.0);
 
    Matrix k(1, 1);
    k.resize(3, 7);
@@ -541,8 +541,8 @@ TEST(TestMatrix, TestExtracts) {
    v2.emplaceBack(8.0);
    v2.emplaceBack(9.0);
 
-   EXPECT_TRUE(z.extractColumn(1) == v1);
-   EXPECT_TRUE(z.extractRow(2) == v2);
+   EXPECT_TRUE(z.columnToVector(1) == v1);
+   EXPECT_TRUE(z.rowToVector(2) == v2);
 }
 
 TEST(TestMatrix, TestFromFile) {

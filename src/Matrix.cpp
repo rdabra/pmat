@@ -288,7 +288,7 @@ double pmat::Matrix::getFrobeniusNorm() const {
    return sqrt(this->dotProduct(*this));
 }
 
-void pmat::Matrix::fillRandomly(const double &min, const double &max) {
+void pmat::Matrix::fillWithRandomValues(const double &min, const double &max) {
    // Type of random number distribution
    std::uniform_real_distribution<double> dist(min, max);
 
@@ -301,7 +301,7 @@ void pmat::Matrix::fillRandomly(const double &min, const double &max) {
          this->setValue(dist(rng), i, j);
 }
 
-pmat::Vector pmat::Matrix::extractRow(const unsigned &row) const {
+pmat::Vector pmat::Matrix::rowToVector(const unsigned &row) const {
    if (row >= this->rowSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -312,7 +312,7 @@ pmat::Vector pmat::Matrix::extractRow(const unsigned &row) const {
    return resp;
 }
 
-pmat::Vector pmat::Matrix::extractColumn(const unsigned &column) const {
+pmat::Vector pmat::Matrix::columnToVector(const unsigned &column) const {
    if (column >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 

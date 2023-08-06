@@ -1,19 +1,23 @@
 #include "MatrixUpperTriangular.h"
 #include "utils.h"
 #include <random>
+#include <stdexcept>
 
 unsigned pmat::MatrixUpperTriangular::vectorIndex(const unsigned &i, const unsigned &j) const {
    return (j * (j + 1)) / 2 + i;
 }
 
 double pmat::MatrixUpperTriangular::operator()(const unsigned &row, const unsigned &column) const {
-   // TODO validateIndex(rowIndex, columnIndex);
+   if (row >= this->size() || column >= this->size())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    return column < row ? pmat::utils::ZERO : this->vectorElement(row, column);
 }
 
 double pmat::MatrixUpperTriangular::dotProduct(const Matrix &matrix) const {
-   // TODO this->validateOperands(matrix);
+   if (matrix.rowSize() != this->size() || matrix.columnSize() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    double res = 0.0;
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = i; j < this->size(); j++)
@@ -87,7 +91,9 @@ pmat::Vector pmat::MatrixUpperTriangular::operator*(const Vector &vector) const 
 
 pmat::MatrixUpperTriangular
 pmat::MatrixUpperTriangular::operator*(const MatrixUpperTriangular &matrix) const {
-   // TODO O numero de colunas desta matriz deve ser igual ao numero de linhas da outra
+   if (matrix.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
    MatrixUpperTriangular resp{this->size()};
    for (unsigned i = 0; i < this->size(); i++)
       for (unsigned j = i; j < matrix.columnSize(); j++) {
@@ -115,21 +121,21 @@ pmat::MatrixLowerTriangular pmat::MatrixUpperTriangular::getTranspose() const {
 
 void pmat::MatrixUpperTriangular::swapRows(const unsigned &rowA, const unsigned &rowB,
                                            const unsigned &startColumn, const unsigned &endColumn) {
+   if (startColumn < rowA || startColumn < rowB)
+      throw std::out_of_range(messages::INDEX_OUT);
 
-   // TODO if (startColumn < rowIndexA || startColumn < rowIndexB)
-   //    throw std::out_of_range(messages::INDEX_OUT);
    Matrix::swapRows(rowA, rowB, startColumn, endColumn);
 }
 
 void pmat::MatrixUpperTriangular::swapColumns(const unsigned &colA, const unsigned &colB,
                                               const unsigned &startRow, const unsigned &endRow) {
-   // TODO if (endRow > colA || endRow > colB)
-   //    throw std::out_of_range(messages::INDEX_OUT);
+   if (endRow > colA || endRow > colB)
+      throw std::out_of_range(messages::INDEX_OUT);
 
    Matrix::swapColumns(colA, colB, startRow, endRow);
 }
 
-void pmat::MatrixUpperTriangular::fillRandomly(const double &min, const double &max) {
+void pmat::MatrixUpperTriangular::fillWithRandomValues(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 
@@ -141,7 +147,9 @@ void pmat::MatrixUpperTriangular::fillRandomly(const double &min, const double &
 pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::inverse() {
    if (!this->isInvertible())
       throw std::logic_error(messages::MATRIX_SINGULAR);
+
    MatrixUpperTriangular resp(this->size());
    this->findInverseByBackSubstitution(*this, resp);
+
    return resp;
 }
