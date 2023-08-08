@@ -543,7 +543,8 @@ TEST(TestMatrix, TestExtracts) {
 }
 
 TEST(TestMatrix, TestFromFile) {
-   Matrix z("C:/myWorks/programacao/projCpp/pmat/test/matest.txt");
+   // Matrix z("../../../../test/matest.txt"); // development environment  relative path
+   Matrix z("../../test/matest.txt"); // relative path
 
    Matrix res{4, 5};
    res.setValue(1.0, 0, 0);
