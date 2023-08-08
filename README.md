@@ -1,6 +1,6 @@
 # pmat: A Simple C++ Library for Matrix Operations
 
-This is the repository of the C++ source code of a static library for basic operations with matrices, including some matrix decompositions (PLU, PQR, etc.) which enable the solution of linear systems and the calculation of important quantities such as determinants, inverse matrices, rank and others. The library currently provides a multithreaded version for matrix multiplication aiming to implement in the near future more operations and quantities in their multithreaded versions.
+This is the repository of the C++ source code of a static library for basic operations with matrices, including some matrix decompositions (PLU, PQR, etc.) which enable the solution of linear systems and the calculation of important magnitudes such as determinants, inverse matrices, rank and others. The library currently provides a multithreaded version for matrix multiplication aiming to implement in the near future more operations and magnitudes in their multithreaded versions.
 
 This effort is also the Capstone Project (Option One) submitted by the author to his Udacity C++ Nanodegree Course as the final work to be evaluated.
 
@@ -59,11 +59,11 @@ The source code also compiled successfully in Linux and Windows environments by 
 
 ## Test coverage
 
-In order to enable the evaluation of the library, unit gtests were developed and their coverage were verified by  [gcovr](https://gcovr.com/en/stable/) outputted to [html](blablabla). 
+In order to enable the evaluation of the library, unit gtests were developed and their coverage were verified by  [gcovr](https://gcovr.com/en/stable/) outputted to [html](blablabla).
 
 ## Basic Build Instructions
 
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./test/pmat_test`.
+4. Run it: `/test/pmat_test.exe`.
