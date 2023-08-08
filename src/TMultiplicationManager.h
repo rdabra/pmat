@@ -22,8 +22,7 @@ class TMultiplicationManager {
 
    public:
       TMultiplicationManager(const Matrix &operandFirst, const Matrix &operandSecond,
-                             Matrix &result)
-          : _operandFirst{&operandFirst}, _operandSecond{&operandSecond}, _result{&result} {}
+                             Matrix &result);
       TMultiplicationManager(const TMultiplicationManager &) = delete;
       TMultiplicationManager(TMultiplicationManager &&) = delete;
       TMultiplicationManager &operator=(const TMultiplicationManager &) = delete;

@@ -255,10 +255,7 @@ TEST(TestMatrix, TestTimes) {
    x1 = z * v;
    Matrix x2(z * v);
 
-   Matrix respp(4, 4);
-
-   TMultiplicationManager manag{z, v, respp};
-   manag.multiply(5);
+   Matrix respp{z.multiply(v, 5)};
 
    Matrix x3(4, 3);
    x3 = z * 2.0;

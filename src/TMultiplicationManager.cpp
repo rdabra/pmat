@@ -1,7 +1,17 @@
 #include "TMultiplicationManager.h"
+#include "Messages.h"
 #include <future>
 #include <memory>
 #include <mutex>
+
+pmat::TMultiplicationManager::TMultiplicationManager(const Matrix &operandFirst,
+                                                     const Matrix &operandSecond, Matrix &result)
+    : _operandFirst{&operandFirst}, _operandSecond{&operandSecond}, _result{&result} {
+   if (operandSecond.rowSize() != operandFirst.columnSize() ||
+       operandSecond.columnSize() != result.columnSize() ||
+       operandFirst.rowSize() != result.rowSize())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+}
 
 void pmat::TMultiplicationManager::setResultValue(const double &value, const unsigned &row,
                                                   const unsigned &column) {
@@ -31,7 +41,6 @@ void pmat::TMultiplicationManager::multiply(int nThreads) {
       _performers.emplace_back(std::make_shared<TMultiplicationPerformer>(i, *this));
       futures.emplace_back(std::async(&TMultiplicationPerformer::start, _performers.back()));
    }
-   //   for (auto &ftr : futures)
-   for (unsigned i{0}; i < nThreads; i++)
-      futures[i].wait();
+   for (auto &ftr : futures)
+      ftr.wait();
 }

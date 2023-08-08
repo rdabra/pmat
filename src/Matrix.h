@@ -163,6 +163,15 @@ class Matrix : public pmat::Array {
       virtual void multiplyBy(const double &scalar);
 
       /**
+       * @brief Multiplies this matrix by the informed scalar using multiple threads
+       *
+       * @param matrix Right operand of the multiplication
+       * @param nThreads number of threads to be created
+       * @return Matrix Multiplication Result
+       */
+      Matrix multiply(const Matrix &matrix, unsigned nThreads);
+
+      /**
        * @brief Performs the Hadamard multiplication of this matrix and the informed matrix
        * @details The Hadamard multiplication \f(C\f) of matrices \f(A\f) and \f(B\f) is \f[ C_{ij}
        * = A_{ij}B_{ij}\f]

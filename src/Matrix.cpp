@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include "Messages.h"
+#include "TMultiplicationManager.h"
 #include "utils.h"
 #include <fstream>
 #include <locale>
@@ -221,6 +222,17 @@ pmat::Matrix pmat::Matrix::operator*(const double &scalar) const {
 void pmat::Matrix::multiplyBy(const double &scalar) {
    for (unsigned i = 0; i < this->length(); i++)
       _matrix[i] *= scalar;
+}
+
+pmat::Matrix pmat::Matrix::multiply(const Matrix &matrix, unsigned nThreads) {
+   if (matrix.rowSize() != this->columnSize())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   Matrix res{this->rowSize(), matrix.columnSize()};
+   TMultiplicationManager mgr{*this, matrix, res};
+   mgr.multiply(nThreads);
+
+   return res;
 }
 
 pmat::Matrix pmat::Matrix::multiplyHadamardBy(const Matrix &matrix) const {
