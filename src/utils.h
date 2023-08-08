@@ -5,21 +5,21 @@ namespace pmat {
 namespace utils {
 
 // Tolerance for relational operators with doubles
-static inline const double DIF_TOLERANCE = 0.0000000001;
+static const double DIF_TOLERANCE = 0.0000000001;
 
-static inline const double ZERO = 0.0000000000;
+static const double ZERO = 0.0000000000;
 
-static inline const double ONE = 1.0000000000;
+static const double ONE = 1.0000000000;
 
-static inline const double TWO = 2.0000000000;
+static const double TWO = 2.0000000000;
 
-static inline const double MINUS_ONE = -1.0000000000;
+static const double MINUS_ONE = -1.0000000000;
 
-static inline const double ONE_HALF = 0.5000000000;
+static const double ONE_HALF = 0.5000000000;
 
-static inline const unsigned NUM_THREADS = 5;
+static const unsigned NUM_THREADS = 5;
 
-static inline const double &max(const double &a, const double &b) {
+static const double &max(const double &a, const double &b) {
    return a > b ? a : b;
 };
 
