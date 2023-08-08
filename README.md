@@ -2,7 +2,7 @@
 
 This is the repository of the C++ source code of a static library for basic operations with matrices, including some matrix decompositions (PLU, PQR, etc.) which enable the solution of linear systems and the calculation of important quantities such as determinants, inverse matrices, rank and others. The library currently provides a multithreaded version for matrix multiplication aiming to implement in the near future more operations and quantities in their multithreaded versions.
 
-This effort is also the Capstone Project Option One submitted by the author to his Udacity C++ Nanodegree Course as the final work to be evaluated.
+This effort is also the Capstone Project (Option One) submitted by the author to his Udacity C++ Nanodegree Course as the final work to be evaluated.
 
 ## Rubric Points Implemented
 
