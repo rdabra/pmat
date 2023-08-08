@@ -59,7 +59,7 @@ The source code also compiled successfully in Linux and Windows environments by 
 
 ## Test coverage
 
-In order to enable the evaluation of the library, unit gtests were developed and their coverage were verified by  (gcovr)[https://gcovr.com/en/stable/] outputted to [html](blablabla). 
+In order to enable the evaluation of the library, unit gtests were developed and their coverage were verified by  [gcovr](https://gcovr.com/en/stable/) outputted to [html](blablabla). 
 
 ## Basic Build Instructions
 
