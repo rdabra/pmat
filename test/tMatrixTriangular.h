@@ -308,6 +308,30 @@ TEST(TestMatrixTriangular, TestTimes) {
    v.setValue(12.5, 0, 2);
    v.setValue(13.5, 0, 3);
 
+   MatrixUpperTriangular k(4);
+   k.setValue(10.5, 0, 0);
+   k.setValue(11.5, 0, 1);
+   k.setValue(12.5, 0, 2);
+   k.setValue(13.5, 0, 3);
+   k.setValue(7.5, 1, 1);
+   k.setValue(8.5, 1, 2);
+   k.setValue(9.5, 1, 3);
+   k.setValue(10.5, 2, 2);
+   k.setValue(11.5, 2, 3);
+   k.setValue(12.5, 3, 3);
+
+   MatrixUpperTriangular kx(4);
+   kx.setValue(5.5, 0, 0);
+   kx.setValue(6.5, 0, 1);
+   kx.setValue(7.5, 0, 2);
+   kx.setValue(9.5, 0, 3);
+   kx.setValue(8.5, 1, 1);
+   kx.setValue(3.5, 1, 2);
+   kx.setValue(4.5, 1, 3);
+   kx.setValue(1.5, 2, 2);
+   kx.setValue(12.5, 2, 3);
+   kx.setValue(2.5, 3, 3);
+
    Vector w(4);
    w.setValue(1.0, 0);
    w.setValue(2.0, 1);
@@ -368,6 +392,18 @@ TEST(TestMatrixTriangular, TestTimes) {
    resp3.setValue(18., 3, 2);
    resp3.setValue(19.5, 3, 3);
 
+   MatrixUpperTriangular resp5(4);
+   resp5.setValue(57.75, 0, 0);
+   resp5.setValue(166.0, 0, 1);
+   resp5.setValue(137.75, 0, 2);
+   resp5.setValue(341.5, 0, 3);
+   resp5.setValue(63.75, 1, 1);
+   resp5.setValue(39., 1, 2);
+   resp5.setValue(163.75, 1, 3);
+   resp5.setValue(15.75, 2, 2);
+   resp5.setValue(160., 2, 3);
+   resp5.setValue(31.25, 3, 3);
+
    Vector respVecLow(4);
    respVecLow.setValue(1.0, 0);
    respVecLow.setValue(14.0, 1);
@@ -418,6 +454,7 @@ TEST(TestMatrixTriangular, TestTimes) {
    EXPECT_TRUE(respVecUp == up);
    EXPECT_TRUE(resp6 == x6);
    EXPECT_TRUE(resp6 == v);
+   EXPECT_TRUE(resp5 == k * kx);
 }
 
 TEST(TestMatrixTriangular, TestFrobenius) {
@@ -716,6 +753,58 @@ TEST(TestMatrixTriangular, TestMisc2) {
    resp.setValue(24.0, 2, 3);
    resp.setValue(26.0, 3, 3);
 
+   MatrixUpperTriangular kx(4);
+   kx.setValue(5.5, 0, 0);
+   kx.setValue(6.5, 0, 1);
+   kx.setValue(7.5, 0, 2);
+   kx.setValue(9.5, 0, 3);
+   kx.setValue(8.5, 1, 1);
+   kx.setValue(3.5, 1, 2);
+   kx.setValue(4.5, 1, 3);
+   kx.setValue(1.5, 2, 2);
+   kx.setValue(12.5, 2, 3);
+   kx.setValue(2.5, 3, 3);
+
+   kx.swapRows(1, 2, 2, 3);
+
+   MatrixUpperTriangular resp1(4);
+   resp1.setValue(5.5, 0, 0);
+   resp1.setValue(6.5, 0, 1);
+   resp1.setValue(7.5, 0, 2);
+   resp1.setValue(9.5, 0, 3);
+   resp1.setValue(8.5, 1, 1);
+   resp1.setValue(1.5, 1, 2);
+   resp1.setValue(12.5, 1, 3);
+   resp1.setValue(3.5, 2, 2);
+   resp1.setValue(4.5, 2, 3);
+   resp1.setValue(2.5, 3, 3);
+
+   MatrixUpperTriangular kxx(4);
+   kxx.setValue(6.5, 0, 1);
+   kxx.setValue(7.5, 0, 2);
+   kxx.setValue(5.5, 0, 0);
+   kxx.setValue(9.5, 0, 3);
+   kxx.setValue(8.5, 1, 1);
+   kxx.setValue(3.5, 1, 2);
+   kxx.setValue(4.5, 1, 3);
+   kxx.setValue(1.5, 2, 2);
+   kxx.setValue(12.5, 2, 3);
+   kxx.setValue(2.5, 3, 3);
+
+   kxx.swapColumns(2, 3, 0, 2);
+
+   MatrixUpperTriangular resp2(4);
+   resp2.setValue(6.5, 0, 1);
+   resp2.setValue(9.5, 0, 2);
+   resp2.setValue(5.5, 0, 0);
+   resp2.setValue(7.5, 0, 3);
+   resp2.setValue(8.5, 1, 1);
+   resp2.setValue(4.5, 1, 2);
+   resp2.setValue(3.5, 1, 3);
+   resp2.setValue(12.5, 2, 2);
+   resp2.setValue(1.5, 2, 3);
+   resp2.setValue(2.5, 3, 3);
+
    MatrixUpperTriangular aux{z * 2.0};
    MatrixUpperTriangular zz(std::move(aux));
 
@@ -723,4 +812,6 @@ TEST(TestMatrixTriangular, TestMisc2) {
 
    EXPECT_TRUE(zz == resp);
    EXPECT_TRUE(z.size() == 3);
+   EXPECT_TRUE(kx == resp1);
+   EXPECT_TRUE(kxx == resp2);
 }

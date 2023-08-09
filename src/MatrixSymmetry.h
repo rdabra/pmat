@@ -8,6 +8,7 @@ namespace pmat {
 
 class MatrixSymmetry : public MatrixSquare {
    private:
+      // The following functions are not valid for matrices with symmetry
       void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
                     const unsigned &endColumn) override{};
       void swapColumns(const unsigned &columnA, const unsigned &columnB, const unsigned &startRow,
