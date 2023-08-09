@@ -46,7 +46,7 @@ The library pmat was developed in Windows 10 using the following gear.
 * Test library: [gtest](https://github.com/google/googletest/archive/refs/tags/v1.13.0.zip) 1.13.0 (downloaded automatically by cmake)
 * Package manager: [msys2](https://www.msys2.org/)
 
-The source code also compiled successfully in Linux and Windows environments by using cmake, make and gcc as described in the next section. For old versions of gcc (around 5.4), "-Wno-attributes" should be used for old versions.
+The source code also compiled successfully in Linux and Windows environments by using cmake, make and gcc as described in the next section. For old versions of gcc (around 5.4), "-Wno-attributes" should be used.
 
 ## Dependencies for Running Locally
 
