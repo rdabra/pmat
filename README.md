@@ -1,4 +1,4 @@
-# pmat: A Simple C++ Library for Matrix Operations
+![1691603447304](image/README/1691603447304.png)![1691603191710](image/README/1691603191710.png)# pmat: A Simple C++ Library for Matrix Operations
 
 This is the repository of the C++ source code of a static library for basic operations with matrices, including some matrix decompositions (PLU, PQR, etc.) which enable the solution of linear systems and the calculation of important magnitudes such as determinants, inverse matrices, rank and others. The library currently provides a multithreaded version for matrix multiplication aiming to implement in the near future more operations and magnitudes in their multithreaded versions.
 
@@ -6,29 +6,30 @@ This effort is also the Capstone Project (Option One) submitted by the author to
 
 ## Rubric Points Implemented
 
-| RUBRIC | POINT | EXAMPLE FILE | LINE NUMBER(S) |
-| ------ | ----- | ---- | -------------- |
-| Loops, Functions, I/O | The project demonstrates an understanding of C++ functions and control structures. | DecompositionPLU.cpp | 32-60 |
-| Loops, Functions, I/O | The project reads data from a file and process the data, or the program writes data to a file. | Matrix.cpp | 50-70 |
-| Object Oriented Programming | The project uses Object Oriented Programming techniques. | Matrix.h | 1-304 |
-| Object Oriented Programming | Classes use appropriate access specifiers for class members. | Matrix.h | 1-304 |
-| Object Oriented Programming | Class constructors utilize member initialization lists. | Matrix.h | 31-33 |
-| Object Oriented Programming | Classes abstract implementation details from their interfaces. | DecompositionPLU.h | 104-113 |
-| Object Oriented Programming | Classes abstract implementation details from their interfaces. | DecompositionPQR.h | 1-81 |
-| Object Oriented Programming | Classes follow an appropriate inheritance hierarchy. | MatrixTriangular.h | 12,29,31 |
-| Object Oriented Programming | Overloaded functions allow the same function to operate on different parameters. | Matrix.h | 212,222 |
-| Object Oriented Programming | Derived class functions override virtual base class functions. | Array.h, Matrix.h | 28(Array),38(Matrix) |
-| Memory Management | The project makes use of references in function declarations. | Matrix.h | 58 |
-| Memory Management | The project follows the Rule of 5. | MatrixUpperTriangular.h | 16-23 |
-| Memory Management | The project uses move semantics to move data, instead of copying it, where possible. | MatrixSquare.cpp | 11 |
-| Memory Management | The project uses smart pointers instead of raw pointers. | TMultiplicationManager.h | 21 |
-| Concurrency | The project uses multithreading. | TMultiplicationManager.cpp | 42 |
-| Concurrency | A promise and future is used in the project. | TMultiplicationManager.cpp | 39 |
-| Concurrency | A mutex or lock is used in the project. | TMultiplicationManager.cpp | 18,23 |
+| RUBRIC                      | POINT                                                                                          | EXAMPLE FILE               | LINE NUMBER(S)       |
+| --------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------- | -------------------- |
+| Loops, Functions, I/O       | The project demonstrates an understanding of C++ functions and control structures.             | DecompositionPLU.cpp       | 32-60                |
+| Loops, Functions, I/O       | The project reads data from a file and process the data, or the program writes data to a file. | Matrix.cpp                 | 50-70                |
+| Object Oriented Programming | The project uses Object Oriented Programming techniques.                                       | Matrix.h                   | 1-304                |
+| Object Oriented Programming | Classes use appropriate access specifiers for class members.                                   | Matrix.h                   | 1-304                |
+| Object Oriented Programming | Class constructors utilize member initialization lists.                                        | Matrix.h                   | 31-33                |
+| Object Oriented Programming | Classes abstract implementation details from their interfaces.                                 | DecompositionPLU.h         | 104-113              |
+| Object Oriented Programming | Classes abstract implementation details from their interfaces.                                 | DecompositionPQR.h         | 1-81                 |
+| Object Oriented Programming | Classes follow an appropriate inheritance hierarchy.                                           | MatrixTriangular.h         | 12,29,31             |
+| Object Oriented Programming | Overloaded functions allow the same function to operate on different parameters.               | Matrix.h                   | 212,222              |
+| Object Oriented Programming | Derived class functions override virtual base class functions.                                 | Array.h, Matrix.h          | 28(Array),38(Matrix) |
+| Memory Management           | The project makes use of references in function declarations.                                  | Matrix.h                   | 58                   |
+| Memory Management           | The project follows the Rule of 5.                                                             | MatrixUpperTriangular.h    | 16-23                |
+| Memory Management           | The project uses move semantics to move data, instead of copying it, where possible.           | MatrixSquare.cpp           | 11                   |
+| Memory Management           | The project uses smart pointers instead of raw pointers.                                       | TMultiplicationManager.h   | 21                   |
+| Concurrency                 | The project uses multithreading.                                                               | TMultiplicationManager.cpp | 42                   |
+| Concurrency                 | A promise and future is used in the project.                                                   | TMultiplicationManager.cpp | 39                   |
+| Concurrency                 | A mutex or lock is used in the project.                                                        | TMultiplicationManager.cpp | 18,23                |
 
 ## Documentation
 
 The content of documentation directory was generated by [doxygen](https://www.doxygen.nl/) outputted to html and pdf. In the html version, [MathJax](https://www.mathjax.org/) was used to draw the [Latex](https://www.latex-project.org/) commands. Additionally to the usual description of data, functions and classes, the generated documentation also presents class diagrams such as the following, in which the hierarchy of matrix classes is shown.
+
 <p align="center">
   <img src="image/README/1691602063656.png">
 </p>
@@ -62,7 +63,11 @@ The source code also compiled successfully in Linux and Windows environments by 
 
 ## Test coverage
 
-In order to enable the evaluation of the library, unit gtests were developed and their coverage were verified by  [gcovr](https://gcovr.com/en/stable/) outputted to [html](blablabla).
+In order to enable the evaluation of the library, unit gtests were developed and their coverage were verified by  [gcovr](https://gcovr.com/en/stable/) outputted to html in the coverage directory.
+
+<p align="center">
+  <img src="image/README/1691603447304.png">
+</p>
 
 ## Basic Build Instructions
 
