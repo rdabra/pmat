@@ -1,7 +1,6 @@
 #pragma once
 
 namespace pmat {
-
 namespace utils {
 
 // Tolerance for relational operators with doubles
