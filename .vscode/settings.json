@@ -5,5 +5,24 @@
       "frobenius",
       "Hadamard",
       "pmat"
-   ]
+   ],
+   "workbench.colorCustomizations": {
+      "[Visual Studio Dark]": {
+         "editor.background": "#1e1f22d3"
+      }
+   },
+   "editor.tokenColorCustomizations": {
+      "[Visual Studio Dark]": {
+         "textMateRules": [
+            {
+               "name": "Comment",
+               "scope": "punctuation.definition.comment.cpp,comment.line.double-slash.cpp,storage.type.class.doxygen.cpp,comment.block.documentation.cpp,punctuation.definition.comment.begin.documentation.cpp,punctuation.definition.comment.end.documentation.cpp",
+               "settings": {
+                  "fontStyle": "italic",
+                  "foreground": "#459872"
+               }
+            }
+         ]
+      },
+   }
 }
