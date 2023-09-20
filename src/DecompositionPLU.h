@@ -8,6 +8,11 @@
 
 namespace pmat {
 
+/**
+ * @brief Computes the LU or the PLU decomposition, where P is a permutation matrix, L is unit lower
+ * triangular, U is upper triangular
+ *
+ */
 class DecompositionPLU {
    private:
       const MatrixSquare *_matrix;

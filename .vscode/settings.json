@@ -16,7 +16,7 @@
          "textMateRules": [
             {
                "name": "Comment",
-               "scope": "punctuation.definition.comment.cpp,comment.line.double-slash.cpp,storage.type.class.doxygen.cpp,comment.block.documentation.cpp,punctuation.definition.comment.begin.documentation.cpp,punctuation.definition.comment.end.documentation.cpp",
+               "scope": "punctuation.definition.comment.cpp,comment.line.double-slash.cpp,comment.block.documentation.cpp,punctuation.definition.comment.begin.documentation.cpp,punctuation.definition.comment.end.documentation.cpp",
                "settings": {
                   "fontStyle": "italic",
                   "foreground": "#459872"
