@@ -7,8 +7,9 @@ TMultiplicationPerformer.cpp)
 
 #target_include_directories(pmatLib BEFORE PUBLIC ../src)
 
-add_executable(pmat_main pmat_main.cpp)
+set(PMAT_SOURCE .)
 
+add_executable(pmat_main pmat_main.cpp)
 
 target_link_libraries(
   pmat_main
