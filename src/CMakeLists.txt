@@ -5,7 +5,7 @@ MatrixLowerTriangular.cpp MatrixUpperTriangular.cpp MatrixSymmetry.cpp  MatrixSy
 DecompositionPLU.cpp DecompositionSAS.cpp DecompositionPQR.cpp DecompositionCholesky.cpp TMultiplicationManager.cpp 
 TMultiplicationPerformer.cpp)
 
-target_include_directories(pmatLib BEFORE PUBLIC ../src)
+#target_include_directories(pmatLib BEFORE PUBLIC ../src)
 
 add_executable(pmat_main pmat_main.cpp)
 

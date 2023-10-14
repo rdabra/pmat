@@ -13,6 +13,7 @@
 pmat::MatrixSquare
 pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partialR,
                                                       const unsigned idxPivot) const {
+
    Vector u(partialR.size() - idxPivot);
    double alpha{pmat::utils::ZERO};
    for (unsigned i = idxPivot; i < partialR.size(); ++i) {
