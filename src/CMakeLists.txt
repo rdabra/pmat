@@ -7,7 +7,7 @@ TMultiplicationPerformer.cpp)
 
 #target_include_directories(pmatLib BEFORE PUBLIC ../src)
 
-set(PMAT_SOURCE .)
+set(PMAT_SOURCE CMAKE_CURRENT_LIST_DIR)
 
 add_executable(pmat_main pmat_main.cpp)
 
