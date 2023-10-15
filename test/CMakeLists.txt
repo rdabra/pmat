@@ -30,7 +30,7 @@ target_link_libraries(
   GTest::gtest_main pmatLib 
 )
 
-target_include_directories(pmat_test BEFORE PUBLIC ${PMAT_SOURCE})
+target_include_directories(pmat_test BEFORE PUBLIC $ENV{PMAT_SRC})
 
 
 include(GoogleTest)
