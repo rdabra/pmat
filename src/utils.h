@@ -1,7 +1,6 @@
 #pragma once
 
-namespace pmat {
-namespace utils {
+namespace pmat::utils {
 
 // Tolerance for relational operators with doubles
 static const double DIF_TOLERANCE = 0.0000000001;
@@ -43,5 +42,4 @@ static inline double signOf(const double &a) {
    return a < 0 ? -ONE : ONE;
 }
 
-} // namespace utils
-} // namespace pmat
+} // namespace pmat::utils

@@ -4,6 +4,7 @@
 
 #include "MatrixSquare.h"
 #include "MatrixUpperTriangular.h"
+#include <vector>
 
 namespace pmat {
 

@@ -2,7 +2,7 @@
 #define ABSTRACTARRAY_H
 #pragma once
 
-#include <vector>
+#include <ostream>
 
 namespace pmat {
 
@@ -55,6 +55,8 @@ class Array {
        * @param max Maximum acceptable value
        */
       virtual void fillWithRandomValues(const double &min, const double &max) = 0;
+
+      [[nodiscard]] virtual std::string formattedString() const = 0;
 };
 
 } // namespace pmat

@@ -13,6 +13,10 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
             "CMAKE_CXX_FLAGS": "-O0 -coverage",
             "CMAKE_BUILD_TYPE": "Debug"
+         },
+         "environment": {
+            "BLITZ_INCLUDE": "d:/clibraries/clang64/include/blitz-master/",
+            "BLITZ_LIB": "d:/clibraries/clang64/lib/blitz-master/"
          }
       },
       {
@@ -27,6 +31,10 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
             "CMAKE_CXX_FLAGS": "",
             "CMAKE_BUILD_TYPE": "Debug"
+         },
+         "environment": {
+            "BLITZ_INCLUDE": "d:/clibraries/clang64/include/blitz-master/",
+            "BLITZ_LIB": "d:/clibraries/clang64/lib/blitz-master/"
          }
       },
       {
@@ -41,6 +49,10 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
             "CMAKE_CXX_FLAGS": "-O0 -coverage",
             "CMAKE_BUILD_TYPE": "Debug"
+         },
+         "environment": {
+            "BLITZ_INCLUDE": "d:/clibraries/mingw64/include/blitz-master/",
+            "BLITZ_LIB": "d:/clibraries/mingw64/lib/blitz-master/"
          }
       },
       {
@@ -55,6 +67,27 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
             "CMAKE_CXX_FLAGS": "",
             "CMAKE_BUILD_TYPE": "Debug"
+         },
+         "environment": {
+            "BLITZ_INCLUDE": "d:/clibraries/mingw64/include/blitz-master/",
+            "BLITZ_LIB": "d:/clibraries/mingw64/lib/blitz-master/"
+         }
+      },
+      {
+         "name": "releaseIntel",
+         "displayName": "Intel(release)",
+         "description": "Using compiler: icx.exe",
+         "generator": "Ninja",
+         "binaryDir": "${sourceDir}/out/build/${presetName}",
+         "cacheVariables": {
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+            "CMAKE_CXX_COMPILER": "d:/Programs/Intel/oneAPI/compiler/latest/windows/bin/icx.exe",
+            "CMAKE_CXX_FLAGS": "/Ox /EHsc",
+            "CMAKE_BUILD_TYPE": "Release"
+         },
+         "environment": {
+            "BLITZ_INCLUDE": "d:/clibraries/intel64/include/blitz-master/",
+            "BLITZ_LIB": "d:/clibraries/intel64/lib/blitz-master/"
          }
       }
    ],
@@ -72,6 +105,13 @@
          "displayName": "GCC(Debug)",
          "jobs": 8,
          "configurePreset": "debugGcc"
+      },
+      {
+         "name": "releaseIntel",
+         "description": "",
+         "displayName": "Intel(Release)",
+         "jobs": 8,
+         "configurePreset": "releaseIntel"
       }
    ],
    "testPresets": [

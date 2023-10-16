@@ -6,9 +6,7 @@
 #include <stdexcept>
 #include <utility>
 
-pmat::Vector::Vector(const Vector &vector) {
-   for (auto elm : vector._vector)
-      _vector.emplace_back(elm);
+pmat::Vector::Vector(const Vector &vector) : _vector{vector._vector} {
 }
 
 void pmat::Vector::resize(const unsigned &size) {
@@ -17,21 +15,21 @@ void pmat::Vector::resize(const unsigned &size) {
 }
 
 void pmat::Vector::emplaceBack(const double &value) {
-   _vector.emplace_back(value);
+   _vector.push_back(value);
 }
 
 void pmat::Vector::setValue(const double &value, const unsigned &index) {
    if (index >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
-   _vector[index] = value;
+   _vector.set(index, value);
 }
 
-const double &pmat::Vector::operator()(const unsigned &index) const {
+double pmat::Vector::operator()(const unsigned &index) const {
    if (index >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
-   return _vector[index];
+   return _vector(index);
 }
 
 pmat::Vector &pmat::Vector::operator=(const Vector &vector) {
@@ -156,28 +154,36 @@ void pmat::Vector::swapElements(const unsigned &elmIndexA, const unsigned &elmIn
    if (elmIndexA >= this->size() || elmIndexB >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
-   _vector[elmIndexB] = std::exchange(_vector[elmIndexA], _vector[elmIndexB]);
+   _vector.exchange(elmIndexA, elmIndexB);
 }
 
 void pmat::Vector::ascendingSort() {
-   std::sort(_vector.begin(), _vector.end());
+   _vector.ascendingSort();
 }
 
 void pmat::Vector::descendingSort() {
-   std::sort(_vector.begin(), _vector.end(),
-             [](double &left, double &right) -> bool { return left > right; });
+   _vector.descendingSort();
 }
 
 pmat::Matrix pmat::Vector::toColumnMatrix() const {
    Matrix res{this->length(), 1};
    for (unsigned i = 0; i < this->length(); i++)
-      res.setValue(_vector[i], i, 0);
+      res.setValue(_vector(i), i, 0);
    return res;
 }
 
 pmat::Matrix pmat::Vector::toRowMatrix() const {
    Matrix res{1, this->length()};
    for (unsigned i = 0; i < this->length(); i++)
-      res.setValue(_vector[i], 0, i);
+      res.setValue(_vector(i), 0, i);
+   return res;
+}
+
+std::string pmat::Vector::formattedString() const {
+   std::string res{"\n"};
+   for (unsigned i{0}; i < this->size(); i++)
+      res += std::to_string((*this)(i)) + " ";
+   res += "\n";
+
    return res;
 }

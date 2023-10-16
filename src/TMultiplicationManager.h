@@ -7,6 +7,8 @@
 #include "Matrix.h"
 #include "TMultiplicationPerformer.h"
 #include <utility>
+#include <vector>
+
 
 namespace pmat {
 

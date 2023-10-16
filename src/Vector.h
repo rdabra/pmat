@@ -3,9 +3,7 @@
 #pragma once
 
 #include "Array.h"
-#include <vector>
-
-// class Matrix;
+#include "Container1d.h"
 
 namespace pmat {
 
@@ -17,7 +15,7 @@ class Matrix;
  */
 class Vector : public Array {
    private:
-      std::vector<double> _vector{};
+      pmat::Container1d _vector{};
 
    public:
       Vector() = default;
@@ -59,7 +57,7 @@ class Vector : public Array {
        * @param index Position of the value to be informed
        * @return const double& Value at the informed position
        */
-      const double &operator()(const unsigned &index) const;
+      double operator()(const unsigned &index) const;
 
       Vector &operator=(const Vector &vector);
       Vector &operator=(Vector &&vector) noexcept;
@@ -173,6 +171,8 @@ class Vector : public Array {
        * @return Matrix Row matrix
        */
       [[nodiscard]] Matrix toRowMatrix() const;
+
+      [[nodiscard]] std::string formattedString() const override;
 };
 
 } // namespace pmat

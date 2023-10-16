@@ -1,6 +1,7 @@
 #include "MatrixTriangular.h"
 #include "utils.h"
 #include <stdexcept>
+#include <vector>
 
 pmat::MatrixTriangular::MatrixTriangular(const MatrixTriangular &matrix) {
    this->copyMembers(matrix);

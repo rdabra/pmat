@@ -8,7 +8,7 @@
    ],
    "workbench.colorCustomizations": {
       "[Visual Studio Dark]": {
-         "editor.background": "#1e1f22d3"
+         "editor.background": "#1D1D21"
       }
    },
    "editor.tokenColorCustomizations": {
@@ -21,8 +21,15 @@
                   "fontStyle": "italic",
                   "foreground": "#459872"
                }
+            },
+            {
+               "name": "Source",
+               "scope": "source.cpp,code.log",
+               "settings": {
+                  "foreground": "#B8BABF"
+               }
             }
          ]
-      },
+      }
    }
 }

@@ -3,15 +3,16 @@
 #pragma once
 
 #include "Array.h"
+#include "Container1d.h"
 #include "Vector.h"
-#include <algorithm>
 #include <string>
+
 
 namespace pmat {
 
 class Matrix : public pmat::Array {
    private:
-      std::vector<double> _matrix{};
+      Container1d _matrix{};
       bool _isTransposed{false};
       unsigned _rowSize{0}, _columnSize{0};
 
@@ -299,6 +300,8 @@ class Matrix : public pmat::Array {
        */
       [[nodiscard]] virtual unsigned occurrencesInColumn(const unsigned column,
                                                          const double &value) const;
+
+      [[nodiscard]] std::string formattedString() const override;
 };
 
 } // namespace pmat

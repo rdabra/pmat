@@ -3,11 +3,10 @@
 #include "TMultiplicationManager.h"
 #include "utils.h"
 #include <fstream>
-#include <locale>
 #include <random>
 #include <sstream>
 #include <stdexcept>
-#include <system_error>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -16,7 +15,7 @@ unsigned pmat::Matrix::vectorIndex(const unsigned &row, const unsigned &column) 
 }
 
 double pmat::Matrix::vectorElement(const unsigned &row, const unsigned &column) const {
-   return _matrix[this->vectorIndex(row, column)];
+   return _matrix(this->vectorIndex(row, column));
 }
 
 void pmat::Matrix::moveToThis(Matrix &&matrix) {
@@ -56,7 +55,7 @@ pmat::Matrix::Matrix(const std::string &fileName) {
          std::stringstream lineStream{line};
          std::string element;
          while (std::getline(lineStream, element, ','))
-            _matrix.emplace_back(std::stod(element));
+            _matrix.push_back(std::stod(element));
          i++;
       }
       f.close();
@@ -83,14 +82,14 @@ void pmat::Matrix::setValue(const double &value, const unsigned &row, const unsi
    if (row >= this->rowSize() || column >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
-   _matrix[this->vectorIndex(row, column)] = value;
+   _matrix.set(this->vectorIndex(row, column), value);
 }
 
 double pmat::Matrix::operator()(const unsigned &row, const unsigned &column) const {
    if (row >= this->rowSize() || column >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
-   return _matrix[this->vectorIndex(row, column)];
+   return _matrix(this->vectorIndex(row, column));
 }
 
 pmat::Matrix &pmat::Matrix::operator=(const Matrix &matrix) {
@@ -213,15 +212,15 @@ pmat::Matrix pmat::Matrix::operator*(const double &scalar) const {
    Matrix resp{};
    resp._columnSize = this->columnSize();
    resp._rowSize = this->rowSize();
-   for (unsigned i = 0; i < resp.length(); i++)
-      resp._matrix.emplace_back(scalar * _matrix[i]);
+   for (long i = 0; i < resp.length(); i++)
+      resp._matrix.push_back(scalar * _matrix(i));
 
    return resp;
 }
 
 void pmat::Matrix::multiplyBy(const double &scalar) {
-   for (unsigned i = 0; i < this->length(); i++)
-      _matrix[i] *= scalar;
+   for (long i = 0; i < this->length(); i++)
+      _matrix.set(i, _matrix(i) * scalar);
 }
 
 pmat::Matrix pmat::Matrix::multiply(const Matrix &matrix, unsigned nThreads) {
@@ -269,8 +268,7 @@ void pmat::Matrix::swapRows(const unsigned &rowA, const unsigned &rowB, const un
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    for (unsigned j = startColumn; j <= endColumn; j++)
-      _matrix[this->vectorIndex(rowB, j)] =
-          std::exchange(_matrix[this->vectorIndex(rowA, j)], _matrix[this->vectorIndex(rowB, j)]);
+      _matrix.exchange(this->vectorIndex(rowA, j), this->vectorIndex(rowB, j));
 }
 
 void pmat::Matrix::swapRows(const unsigned &rowA, const unsigned &rowB) {
@@ -283,8 +281,7 @@ void pmat::Matrix::swapColumns(const unsigned &columnA, const unsigned &columnB,
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    for (unsigned i = startRow; i <= endRow; i++)
-      _matrix[this->vectorIndex(i, columnB)] = std::exchange(
-          _matrix[this->vectorIndex(i, columnA)], _matrix[this->vectorIndex(i, columnB)]);
+      _matrix.exchange(this->vectorIndex(i, columnA), this->vectorIndex(i, columnB));
 }
 
 void pmat::Matrix::swapColumns(const unsigned &columnA, const unsigned &columnB) {
@@ -338,7 +335,7 @@ pmat::Vector pmat::Matrix::columnToVector(const unsigned &column) const {
 unsigned pmat::Matrix::occurrences(const double &value) const {
    unsigned res{0};
    for (unsigned i = 0; i < this->length(); i++)
-      if (pmat::utils::areEqual(_matrix[i], value))
+      if (pmat::utils::areEqual(_matrix(i), value))
          res++;
 
    return res;
@@ -364,6 +361,18 @@ unsigned pmat::Matrix::occurrencesInColumn(const unsigned column, const double &
    for (unsigned i = 0; i < this->rowSize(); i++)
       if (pmat::utils::areEqual((*this)(i, column), value))
          res++;
+
+   return res;
+}
+
+std::string pmat::Matrix::formattedString() const {
+   std::string res{"\n"};
+   for (unsigned i{0}; i < this->rowSize(); i++) {
+      for (unsigned j{0}; j < this->columnSize(); j++) {
+         res += std::to_string((*this)(i, j)) + " ";
+      }
+      res += "\n";
+   }
 
    return res;
 }

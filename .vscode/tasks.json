@@ -64,7 +64,7 @@
          "problemMatcher": []
       },
       {
-         "label": "runGcovr",
+         "label": "runGcovR",
          "type": "shell",
          "command": "gcovr --config gcovr.cfg",
          "options": {

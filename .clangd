@@ -1,5 +1,5 @@
 CompileFlags: # Para incluir headers que não estejam nos includes do msys4                      
- Add: [-xc++,-I,"c:/msys64/clang64/include/opencv4",-I,""]
+ Add: [-xc++,-I,"c:/msys64/clang64/include/opencv4",-I,"d:/clibraries/clang64/include/blitz-master/"]
 
 InlayHints: # Turning off parameter hints (boring)
   Designators: Yes
