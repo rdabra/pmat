@@ -15,8 +15,8 @@
             "CMAKE_BUILD_TYPE": "Debug"
          },
          "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/clang64/include/blitz-master/",
-            "BLITZ_LIB": "d:/clibraries/clang64/lib/blitz-master/"
+            "BLITZ_INCLUDE": "d:/clibraries/clang64/blitz/include/",
+            "BLITZ_LIB": "d:/clibraries/clang64/blitz/lib/"
          }
       },
       {
@@ -33,8 +33,8 @@
             "CMAKE_BUILD_TYPE": "Debug"
          },
          "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/clang64/include/blitz-master/",
-            "BLITZ_LIB": "d:/clibraries/clang64/lib/blitz-master/"
+            "BLITZ_INCLUDE": "d:/clibraries/clang64/blitz/include/",
+            "BLITZ_LIB": "d:/clibraries/clang64/blitz/lib/"
          }
       },
       {
@@ -51,8 +51,8 @@
             "CMAKE_BUILD_TYPE": "Debug"
          },
          "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/mingw64/include/blitz-master/",
-            "BLITZ_LIB": "d:/clibraries/mingw64/lib/blitz-master/"
+            "BLITZ_INCLUDE": "d:/clibraries/mingw64/blitz/include/",
+            "BLITZ_LIB": "d:/clibraries/mingw64/blitz/lib/"
          }
       },
       {
@@ -69,8 +69,8 @@
             "CMAKE_BUILD_TYPE": "Debug"
          },
          "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/mingw64/include/blitz-master/",
-            "BLITZ_LIB": "d:/clibraries/mingw64/lib/blitz-master/"
+            "BLITZ_INCLUDE": "d:/clibraries/mingw64/blitz/include/",
+            "BLITZ_LIB": "d:/clibraries/mingw64/blitz/lib/"
          }
       },
       {
@@ -86,8 +86,8 @@
             "CMAKE_BUILD_TYPE": "Release"
          },
          "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/intel64/include/blitz-master/",
-            "BLITZ_LIB": "d:/clibraries/intel64/lib/blitz-master/"
+            "BLITZ_INCLUDE": "d:/clibraries/intel64/blitz/include/",
+            "BLITZ_LIB": "d:/clibraries/intel64/blitz/lib/"
          }
       }
    ],

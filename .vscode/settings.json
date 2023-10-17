@@ -6,6 +6,15 @@
       "Hadamard",
       "pmat"
    ],
+   "terminal.integrated.profiles.windows": {
+      "MSYS2 UCRT": {
+         "path": "cmd.exe",
+         "args": [
+            "/c",
+            "C:\\msys64\\msys2_shell.cmd -defterm -here -no-start -ucrt64"
+         ]
+      }
+   },
    "workbench.colorCustomizations": {
       "[Visual Studio Dark]": {
          "editor.background": "#1D1D21"

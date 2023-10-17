@@ -1,5 +1,6 @@
 #include "Container1d.h"
 #include "utils.h"
+#include <algorithm>
 
 pmat::Container1d::Container1d(const Container1d &container)
     : _ptrVector{std::make_unique<blitz::Array<double, 1>>(container._ptrVector->size())} {

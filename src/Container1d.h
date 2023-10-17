@@ -1,6 +1,5 @@
 #ifndef CONTAINER1D_H
 #define CONTAINER1D_H
-#include <cstddef>
 #pragma once
 
 #include <blitz/array.h>
