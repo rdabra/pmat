@@ -401,6 +401,8 @@ TEST(TestMatrixSkewSymmetric, TestMisc) {
    v.resize(2);
 
    EXPECT_TRUE(a == resp);
+   std::cout << "v" << v.formattedString();
+   std::cout << "resp1" << resp.formattedString();
    EXPECT_TRUE(v == resp1);
    EXPECT_TRUE(vv == respv);
 }

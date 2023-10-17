@@ -6,16 +6,15 @@
 
 int main() {
 
-   double a[] = {1, 2, 3, 5};
+   std::vector<double> d{1, 2, 3, 4};
 
-   blitz::Array<double, 1> r(a, 4);
-   double *rr = r.data();
-   std::sort(rr, rr + 4, [](double &left, double &right) -> bool { return left > right; });
-   r = blitz::Array<double, 1>(rr, 4);
+   pmat::Container1d c1{d.data(), 4};
 
-   for (int i{0}; i < 4; i++) {
-      std::cout << r(i) << "\n";
-   }
+   pmat::Container1d c2{c1};
+
+   c2.set(1, 77);
+
+   std::cout << c1(1) << "\n";
 
    return 0;
 }
