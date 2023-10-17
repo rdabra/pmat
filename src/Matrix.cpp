@@ -55,7 +55,7 @@ pmat::Matrix::Matrix(const std::string &fileName) {
          std::stringstream lineStream{line};
          std::string element;
          while (std::getline(lineStream, element, ','))
-            _matrix.push_back(std::stod(element));
+            _matrix.pushBack(std::stod(element));
          i++;
       }
       f.close();
@@ -68,7 +68,7 @@ pmat::Matrix::Matrix(const std::string &fileName) {
       throw std::runtime_error(pmat::messages::FILE_NOT_OPEN);
 }
 
-void pmat::Matrix::resize(const unsigned &rowSize, const unsigned &columnSize) {
+void pmat::Matrix::clearAndResize(const unsigned &rowSize, const unsigned &columnSize) {
    this->initializeMembers(rowSize, columnSize, false);
 }
 
@@ -213,7 +213,7 @@ pmat::Matrix pmat::Matrix::operator*(const double &scalar) const {
    resp._columnSize = this->columnSize();
    resp._rowSize = this->rowSize();
    for (long i = 0; i < resp.length(); i++)
-      resp._matrix.push_back(scalar * _matrix(i));
+      resp._matrix.pushBack(scalar * _matrix(i));
 
    return resp;
 }
@@ -375,4 +375,7 @@ std::string pmat::Matrix::formattedString() const {
    }
 
    return res;
+}
+
+void pmat::Matrix::insertRow(const unsigned &pos, const double &value) {
 }

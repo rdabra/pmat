@@ -7,7 +7,6 @@
 #include "Vector.h"
 #include <string>
 
-
 namespace pmat {
 
 class Matrix : public pmat::Array {
@@ -40,14 +39,18 @@ class Matrix : public pmat::Array {
       [[nodiscard]] inline unsigned dimension() const override { return 2; }
 
       /**
+       * @brief Shrinks this matrix to size zero x zero
+       *
+       */
+      void clear() override;
+
+      /**
        * @brief Clears this matrix and sets a new size
        *
        * @param rowSize New row size
        * @param columnSize New column size
        */
-      void resize(const unsigned &rowSize, const unsigned &columnSize);
-
-      void clear() override;
+      void clearAndResize(const unsigned &rowSize, const unsigned &columnSize);
 
       /**
        * @brief Sets the informed value at the informed position
@@ -302,6 +305,15 @@ class Matrix : public pmat::Array {
                                                          const double &value) const;
 
       [[nodiscard]] std::string formattedString() const override;
+
+      /**
+       * @brief Inserts a row after the specified position and sets its elements with the specified
+       * value
+       *
+       * @param pos
+       * @param value
+       */
+      void insertRow(const unsigned &pos, const double &value);
 };
 
 } // namespace pmat

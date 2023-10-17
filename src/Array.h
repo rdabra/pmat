@@ -56,6 +56,11 @@ class Array {
        */
       virtual void fillWithRandomValues(const double &min, const double &max) = 0;
 
+      /**
+       * @brief Generates a string output of the elements of the array
+       *
+       * @return std::string
+       */
       [[nodiscard]] virtual std::string formattedString() const = 0;
 };
 
