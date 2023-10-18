@@ -95,7 +95,7 @@ class Container1d {
       void pushBack(const double &value);
 
       // TODO IMplementar esta funcao
-      void pushBack(const double &value, const unsigned &step);
+      // void pushBack(const unsigned &initialPosition, const unsigned &step, const double &value);
 
       /**
        * @brief Exchanges the values of indexA and indexB of the container
@@ -118,7 +118,8 @@ class Container1d {
       void descendingSort();
 
       // TODO Implementar esta funcao
-      void insertValuesBefore(const unsigned &position, const double &value, const unsigned &size);
+      // void insertValuesBefore(const unsigned &position, const double &value, const unsigned
+      // &size);
 };
 
 } // namespace pmat

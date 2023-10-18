@@ -499,7 +499,7 @@ TEST(TestMatrix, TestMisc) {
    e.fillWithRandomValues(-1.0, 2.0);
 
    Matrix k(1, 1);
-   k.resize(3, 7);
+   k.clearAndResize(3, 7);
 
    EXPECT_TRUE(a.dimension() == 2);
    EXPECT_TRUE(a == z);

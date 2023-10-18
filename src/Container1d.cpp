@@ -38,7 +38,7 @@ void pmat::Container1d::resize(const unsigned &size) {
          (*_ptrVector)(i) = utils::ZERO;
 }
 
-void pmat::Container1d::push_back(const double &value) {
+void pmat::Container1d::pushBack(const double &value) {
    // Caution: narrowing from unsigned to int
    auto size{_ptrVector->size()};
    _ptrVector->resizeAndPreserve(size + 1);

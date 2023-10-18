@@ -15,7 +15,7 @@ void pmat::Vector::resize(const unsigned &size) {
 }
 
 void pmat::Vector::emplaceBack(const double &value) {
-   _vector.push_back(value);
+   _vector.pushBack(value);
 }
 
 void pmat::Vector::setValue(const double &value, const unsigned &index) {
