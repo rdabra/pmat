@@ -78,6 +78,10 @@ pmat::MatrixSquare pmat::MatrixSquare::operator*(const double &scalar) const {
    return res;
 }
 
+pmat::Matrix pmat::MatrixSquare::operator*(const pmat::Matrix &matrix) const {
+   return pmat::Matrix::operator*(matrix);
+}
+
 pmat::Vector pmat::MatrixSquare::operator*(const Vector &vector) const {
    return Matrix::operator*(vector);
 }

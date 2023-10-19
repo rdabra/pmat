@@ -28,6 +28,7 @@ class Matrix : public pmat::Array {
       Matrix() = default;
       Matrix(const unsigned &rowSize, const unsigned &columnSize);
       Matrix(const std::string &fileName);
+      Matrix(std::vector<double> data, const unsigned &rowSize, const unsigned &columnSize);
       Matrix(const Matrix &matrix)
           : _matrix{matrix._matrix}, _rowSize{matrix.rowSize()}, _columnSize{matrix.columnSize()},
             _isTransposed{matrix._isTransposed} {};
@@ -35,6 +36,7 @@ class Matrix : public pmat::Array {
           : _matrix{std::move(matrix._matrix)}, _rowSize{matrix.rowSize()},
             _columnSize{matrix.columnSize()}, _isTransposed{matrix._isTransposed} {}
       ~Matrix() override = default;
+
       [[nodiscard]] unsigned length() const override { return _rowSize * _columnSize; }
       [[nodiscard]] inline unsigned dimension() const override { return 2; }
 

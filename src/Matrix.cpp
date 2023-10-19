@@ -19,12 +19,13 @@ double pmat::Matrix::vectorElement(const unsigned &row, const unsigned &column) 
 }
 
 void pmat::Matrix::moveToThis(Matrix &&matrix) {
-   _rowSize = matrix.rowSize();
-   _columnSize = matrix.columnSize();
-   _isTransposed = matrix._isTransposed;
+   Matrix &&aux = std::move(matrix);
+   _rowSize = aux.rowSize();
+   _columnSize = aux.columnSize();
+   _isTransposed = aux._isTransposed;
    _matrix.clear();
-   _matrix = std::move(matrix._matrix);
-   matrix.~Matrix();
+   _matrix = std::move(aux._matrix);
+   aux.~Matrix();
 }
 
 void pmat::Matrix::initializeMembers(unsigned rowSize, unsigned columnSize, bool isTransposed) {
@@ -66,6 +67,11 @@ pmat::Matrix::Matrix(const std::string &fileName) {
          throw std::runtime_error(pmat::messages::DATA_NOT_READ);
    } else
       throw std::runtime_error(pmat::messages::FILE_NOT_OPEN);
+}
+
+pmat::Matrix::Matrix(std::vector<double> data, const unsigned &rowSize, const unsigned &columnSize)
+    : _rowSize(rowSize), _columnSize(columnSize) {
+   _matrix = pmat::Container1d{data, this->length()};
 }
 
 void pmat::Matrix::clearAndResize(const unsigned &rowSize, const unsigned &columnSize) {

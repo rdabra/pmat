@@ -5,6 +5,7 @@
 #include <blitz/array.h>
 #include <memory>
 #include <utility>
+#include <vector>
 
 namespace pmat {
 
@@ -14,9 +15,9 @@ namespace pmat {
  */
 class Container1d {
    private:
+   public:
       std::unique_ptr<blitz::Array<double, 1>> _ptrVector;
 
-   public:
       Container1d() : _ptrVector{std::make_unique<blitz::Array<double, 1>>()} {};
       Container1d(const Container1d &container);
       Container1d(Container1d &&container) noexcept
@@ -47,8 +48,8 @@ class Container1d {
        * @param data Raw array of values
        * @param size Size of the raw array
        */
-      Container1d(double data[], const unsigned &size)
-          : _ptrVector{std::make_unique<blitz::Array<double, 1>>(data, size)} {};
+      Container1d(std::vector<double> data, const unsigned &size)
+          : _ptrVector{std::make_unique<blitz::Array<double, 1>>(data.data(), size)} {};
 
       /**
        * @brief Returns the value at the specified index
@@ -94,8 +95,15 @@ class Container1d {
        */
       void pushBack(const double &value);
 
-      // TODO IMplementar esta funcao
-      // void pushBack(const unsigned &initialPosition, const unsigned &step, const double &value);
+      /**
+       * @brief Include values after initial position jumping steps backwards until first element is
+       * reached
+       *
+       * @param initialPosition
+       * @param step
+       * @param value
+       */
+      void pushBack(const unsigned &initialPosition, const unsigned &step, const double &value);
 
       /**
        * @brief Exchanges the values of indexA and indexB of the container
@@ -118,8 +126,7 @@ class Container1d {
       void descendingSort();
 
       // TODO Implementar esta funcao
-      // void insertValuesBefore(const unsigned &position, const double &value, const unsigned
-      // &size);
+      void insertValues(const int &initialPosition, const double &value, const int &nRepetitions);
 };
 
 } // namespace pmat

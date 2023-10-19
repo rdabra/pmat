@@ -29,6 +29,8 @@ class MatrixSquare : public Matrix {
       MatrixSquare operator-(const MatrixSquare &matrix) const;
       MatrixSquare operator*(const MatrixSquare &matrix) const;
       MatrixSquare operator*(const double &scalar) const;
+      Matrix operator*(const Matrix &matrix) const override;
+
       Vector operator*(const Vector &vector) const override;
       virtual void fillDiagonalWith(const double &value);
 
