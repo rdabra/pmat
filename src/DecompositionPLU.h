@@ -21,12 +21,12 @@ class DecompositionPLU {
       MatrixSquare _matP{};
       MatrixLowerTriangular _matL{};
       MatrixUpperTriangular _matU{};
-      std::vector<std::pair<unsigned, unsigned>> _swappedRows;
+      std::vector<std::pair<int, int>> _swappedRows;
       bool _changeSignForDet{false};
       bool _calculated{false};
 
-      void swapRowsBellow(MatrixSquare &matU, const unsigned &idxPivot);
-      void nullifyElementBellow(MatrixSquare &matU, const unsigned &idxPivot);
+      void swapRowsBellow(MatrixSquare &matU, const int &idxPivot);
+      void nullifyElementBellow(MatrixSquare &matU, const int &idxPivot);
       void calculate();
 
    public:
@@ -70,9 +70,9 @@ class DecompositionPLU {
       /**
        * @brief Generates a list of the rows swapped in order to calculate de PLU decomposition
        *
-       * @return const std::vector<std::pair<unsigned, unsigned>>& List of swapped rows
+       * @return const std::vector<std::pair<int, int>>& List of swapped rows
        */
-      [[nodiscard]] const std::vector<std::pair<unsigned, unsigned>> &swappedRows() const;
+      [[nodiscard]] const std::vector<std::pair<int, int>> &swappedRows() const;
 
       /**
        * @brief Calculates the determinant

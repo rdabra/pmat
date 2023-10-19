@@ -14,31 +14,28 @@ class MatrixTriangular : public pmat::MatrixSquare {
       void transpose() override {}
 
    protected:
-      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override = 0;
+      [[nodiscard]] int vectorIndex(const int &i, const int &j) const override = 0;
 
    public:
       MatrixTriangular() = default;
       MatrixTriangular(const MatrixTriangular &matrix);
       MatrixTriangular(MatrixTriangular &&matrix) = default;
-      explicit MatrixTriangular(const unsigned &size) {
-         this->initializeMembers(size, size, false);
-      };
+      explicit MatrixTriangular(const int &size) { this->initializeMembers(size, size, false); };
       ~MatrixTriangular() override = default;
       MatrixTriangular &operator=(const MatrixTriangular &) = default;
       MatrixTriangular &operator=(MatrixTriangular &&) = default;
-      [[nodiscard]] unsigned length() const override;
-      double operator()(const unsigned &row, const unsigned &column) const override = 0;
+      [[nodiscard]] int length() const override;
+      double operator()(const int &row, const int &column) const override = 0;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override = 0;
       MatrixSquare operator*(const MatrixTriangular &matrix) const;
-      [[nodiscard]] MatrixSquare getSwappedByRows(const unsigned &rowIndexA,
-                                                  const unsigned &rowIndexB) const;
-      [[nodiscard]] MatrixSquare getSwappedByColumns(const unsigned &columnIndexA,
-                                                     const unsigned &columnIndexB) const;
+      [[nodiscard]] MatrixSquare getSwappedByRows(const int &rowIndexA, const int &rowIndexB) const;
+      [[nodiscard]] MatrixSquare getSwappedByColumns(const int &columnIndexA,
+                                                     const int &columnIndexB) const;
       void fillWithRandomValues(const double &min, const double &max) override = 0;
-      void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
-                    const unsigned &endColumn) override = 0;
-      void swapColumns(const unsigned &columnA, const unsigned &columnB, const unsigned &startRow,
-                       const unsigned &endRow) override = 0;
+      void swapRows(const int &rowA, const int &rowB, const int &startColumn,
+                    const int &endColumn) override = 0;
+      void swapColumns(const int &columnA, const int &columnB, const int &startRow,
+                       const int &endRow) override = 0;
       [[nodiscard]] virtual TriangType type() const = 0;
 
       /**

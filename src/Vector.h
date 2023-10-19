@@ -19,26 +19,26 @@ class Vector : public Array {
 
    public:
       Vector() = default;
-      Vector(unsigned size) : _vector(size, 0.){};
+      Vector(int size) : _vector(size, 0.){};
       Vector(const Vector &vector);
       Vector(Vector &&vector) noexcept : _vector{std::move(vector._vector)} {};
       ~Vector() override = default;
-      [[nodiscard]] unsigned length() const override { return _vector.size(); };
-      [[nodiscard]] unsigned dimension() const override { return 1; };
+      [[nodiscard]] int length() const override { return _vector.size(); };
+      [[nodiscard]] int dimension() const override { return 1; };
 
       /**
        * @brief Informs the size of vector dimension
        *
-       * @return unsigned Size of vector dimension
+       * @return int Size of vector dimension
        */
-      [[nodiscard]] unsigned size() const { return _vector.size(); }
+      [[nodiscard]] int size() const { return _vector.size(); }
 
       /**
        * @brief Clears this vector and sets a new size
        *
        * @param size New size
        */
-      void resize(const unsigned &size);
+      void resize(const int &size);
 
       void clear() override { _vector.clear(); };
       void emplaceBack(const double &value);
@@ -49,7 +49,7 @@ class Vector : public Array {
        * @param value Value to be set
        * @param index Position in vector
        */
-      void setValue(const double &value, const unsigned &index);
+      void setValue(const double &value, const int &index);
 
       /**
        * @brief Informs the value at the informed position
@@ -57,7 +57,7 @@ class Vector : public Array {
        * @param index Position of the value to be informed
        * @return const double& Value at the informed position
        */
-      double operator()(const unsigned &index) const;
+      double operator()(const int &index) const;
 
       Vector &operator=(const Vector &vector);
       Vector &operator=(Vector &&vector) noexcept;
@@ -134,7 +134,7 @@ class Vector : public Array {
        * @return Vector Unitary vector
        */
       [[nodiscard]] Vector getUnitaryVector() const;
-      [[nodiscard]] unsigned occurrences(const double &value) const override;
+      [[nodiscard]] int occurrences(const double &value) const override;
       void fillWithRandomValues(const double &min, const double &max) override;
 
       /**
@@ -144,7 +144,7 @@ class Vector : public Array {
        * @param elmIndexB Position B
        * @exception std::invalid_argument Index out of bounds
        */
-      void swapElements(const unsigned &elmIndexA, const unsigned &elmIndexB);
+      void swapElements(const int &elmIndexA, const int &elmIndexB);
 
       /**
        * @brief Sorts the values of this vector in ascending order

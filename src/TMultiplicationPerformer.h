@@ -9,13 +9,13 @@ class TMultiplicationManager;
 
 class TMultiplicationPerformer {
    private:
-      unsigned _id;
+      int _id;
       TMultiplicationManager *_manager{nullptr};
-      unsigned _row{0};
-      unsigned _column{0};
+      int _row{0};
+      int _column{0};
 
    public:
-      TMultiplicationPerformer(unsigned id, TMultiplicationManager &manager)
+      TMultiplicationPerformer(int id, TMultiplicationManager &manager)
           : _id{id}, _manager{&manager} {}
       TMultiplicationPerformer(const TMultiplicationPerformer &) = default;
       TMultiplicationPerformer(TMultiplicationPerformer &&) = default;
@@ -24,7 +24,7 @@ class TMultiplicationPerformer {
       ~TMultiplicationPerformer() = default;
 
       void start();
-      void setRowColumn(const unsigned &row, const unsigned &column);
+      void setRowColumn(const int &row, const int &column);
 };
 
 } // namespace pmat

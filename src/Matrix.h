@@ -13,22 +13,22 @@ class Matrix : public pmat::Array {
    private:
       Container1d _matrix{};
       bool _isTransposed{false};
-      unsigned _rowSize{0}, _columnSize{0};
+      int _rowSize{0}, _columnSize{0};
 
    protected:
-      [[nodiscard]] virtual unsigned vectorIndex(const unsigned &row, const unsigned &column) const;
-      [[nodiscard]] double vectorElement(const unsigned &row, const unsigned &column) const;
+      [[nodiscard]] virtual int vectorIndex(const int &row, const int &column) const;
+      [[nodiscard]] double vectorElement(const int &row, const int &column) const;
       void moveToThis(Matrix &&matrix);
 
-      void initializeMembers(unsigned rowSize, unsigned columnSize, bool isTransposed);
+      void initializeMembers(int rowSize, int columnSize, bool isTransposed);
       void copyMembers(const Matrix &matrix);
       [[nodiscard]] bool isTransposed() const { return _isTransposed; }
 
    public:
       Matrix() = default;
-      Matrix(const unsigned &rowSize, const unsigned &columnSize);
+      Matrix(const int &rowSize, const int &columnSize);
       Matrix(const std::string &fileName);
-      Matrix(std::vector<double> data, const unsigned &rowSize, const unsigned &columnSize);
+      Matrix(double data[], const int &rowSize, const int &columnSize);
       Matrix(const Matrix &matrix)
           : _matrix{matrix._matrix}, _rowSize{matrix.rowSize()}, _columnSize{matrix.columnSize()},
             _isTransposed{matrix._isTransposed} {};
@@ -37,8 +37,8 @@ class Matrix : public pmat::Array {
             _columnSize{matrix.columnSize()}, _isTransposed{matrix._isTransposed} {}
       ~Matrix() override = default;
 
-      [[nodiscard]] unsigned length() const override { return _rowSize * _columnSize; }
-      [[nodiscard]] inline unsigned dimension() const override { return 2; }
+      [[nodiscard]] int length() const override { return _rowSize * _columnSize; }
+      [[nodiscard]] inline int dimension() const override { return 2; }
 
       /**
        * @brief Shrinks this matrix to size zero x zero
@@ -52,7 +52,7 @@ class Matrix : public pmat::Array {
        * @param rowSize New row size
        * @param columnSize New column size
        */
-      void clearAndResize(const unsigned &rowSize, const unsigned &columnSize);
+      void clearAndResize(const int &rowSize, const int &columnSize);
 
       /**
        * @brief Sets the informed value at the informed position
@@ -61,7 +61,7 @@ class Matrix : public pmat::Array {
        * @param row Row position
        * @param column Column position
        */
-      virtual void setValue(const double &value, const unsigned &row, const unsigned &column);
+      virtual void setValue(const double &value, const int &row, const int &column);
 
       /**
        * @brief Informs the value at the informed position
@@ -70,21 +70,21 @@ class Matrix : public pmat::Array {
        * @param column Column position of the value to be informed
        * @return double Value at the informed position
        */
-      virtual double operator()(const unsigned &row, const unsigned &column) const;
+      virtual double operator()(const int &row, const int &column) const;
 
       /**
        * @brief Informs the size of matrix row dimension
        *
-       * @return unsigned Row size
+       * @return int Row size
        */
-      [[nodiscard]] inline unsigned rowSize() const { return _rowSize; }
+      [[nodiscard]] inline int rowSize() const { return _rowSize; }
 
       /**
        * @brief Informs the size of matrix column dimension
        *
-       * @return unsigned Row size
+       * @return int Row size
        */
-      [[nodiscard]] inline unsigned columnSize() const { return _columnSize; }
+      [[nodiscard]] inline int columnSize() const { return _columnSize; }
 
       Matrix &operator=(const Matrix &matrix);
       Matrix &operator=(Matrix &&matrix) noexcept;
@@ -175,7 +175,7 @@ class Matrix : public pmat::Array {
        * @param nThreads number of threads to be created
        * @return Matrix Multiplication Result
        */
-      Matrix multiply(const Matrix &matrix, unsigned nThreads);
+      Matrix multiply(const Matrix &matrix, int nThreads);
 
       /**
        * @brief Performs the Hadamard multiplication of this matrix and the informed matrix
@@ -195,7 +195,7 @@ class Matrix : public pmat::Array {
        * @param scalar Value to multiply the row
        * @exception std::invalid_argument Index out of bounds
        */
-      virtual void multiplyRowBy(const unsigned &row, const double &scalar);
+      virtual void multiplyRowBy(const int &row, const double &scalar);
 
       /**
        * @brief Multiplies all the elements of the informed column by the informed scalar
@@ -204,7 +204,7 @@ class Matrix : public pmat::Array {
        * @param scalar Value to multiply the row
        * @exception std::invalid_argument Index out of bounds
        */
-      virtual void multiplyColumnBy(const unsigned &column, const double &scalar);
+      virtual void multiplyColumnBy(const int &column, const double &scalar);
 
       /**
        * @brief Swaps the rows at the informed positions in a range of columns
@@ -215,8 +215,8 @@ class Matrix : public pmat::Array {
        * @param endColumn End column postion
        * @exception std::invalid_argument Index out of bounds
        */
-      virtual void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
-                            const unsigned &endColumn);
+      virtual void swapRows(const int &rowA, const int &rowB, const int &startColumn,
+                            const int &endColumn);
 
       /**
        * @brief Swaps the rows at the informed positions
@@ -225,7 +225,7 @@ class Matrix : public pmat::Array {
        * @param rowB Position B
        * @exception std::invalid_argument Index out of bounds
        */
-      virtual void swapRows(const unsigned &rowA, const unsigned &rowB);
+      virtual void swapRows(const int &rowA, const int &rowB);
 
       /**
        * @brief Swaps the columns at the informed positions in a range of rows
@@ -236,8 +236,8 @@ class Matrix : public pmat::Array {
        * @param endRow End row postion
        * @exception std::invalid_argument Index out of bounds
        */
-      virtual void swapColumns(const unsigned &columnA, const unsigned &columnB,
-                               const unsigned &startRow, const unsigned &endRow);
+      virtual void swapColumns(const int &columnA, const int &columnB, const int &startRow,
+                               const int &endRow);
 
       /**
        * @brief Swaps the columns at the informed positions
@@ -246,7 +246,7 @@ class Matrix : public pmat::Array {
        * @param columnB Position B
        * @exception std::invalid_argument Index out of bounds
        */
-      virtual void swapColumns(const unsigned &columnA, const unsigned &columnB);
+      virtual void swapColumns(const int &columnA, const int &columnB);
 
       /**
        * @brief Transposes this matrix
@@ -271,7 +271,7 @@ class Matrix : public pmat::Array {
        * @return Vector Informed row as a vector
        * @exception std::invalid_argument Index out of bounds
        */
-      [[nodiscard]] Vector rowToVector(const unsigned &row) const;
+      [[nodiscard]] Vector rowToVector(const int &row) const;
 
       /**
        * @brief Gets the informed column as a vector
@@ -280,31 +280,29 @@ class Matrix : public pmat::Array {
        * @return Vector Informed column as a vector
        * @exception std::invalid_argument Index out of bounds
        */
-      [[nodiscard]] Vector columnToVector(const unsigned &column) const;
+      [[nodiscard]] Vector columnToVector(const int &column) const;
 
-      [[nodiscard]] unsigned occurrences(const double &value) const override;
+      [[nodiscard]] int occurrences(const double &value) const override;
 
       /**
        * @brief Informs the number of occurrences of the informed value at the informed row
        *
        * @param row Row position
        * @param value Value to be searched
-       * @return unsigned Number of occurrences
+       * @return int Number of occurrences
        * @exception std::invalid_argument Index out of bounds
        */
-      [[nodiscard]] virtual unsigned occurrencesInRow(const unsigned row,
-                                                      const double &value) const;
+      [[nodiscard]] virtual int occurrencesInRow(const int row, const double &value) const;
 
       /**
        * @brief Informs the number of occurrences of the informed value at the informed column
        *
        * @param column Column position
        * @param value Value to be searched
-       * @return unsigned Number of occurrences
+       * @return int Number of occurrences
        * @exception std::invalid_argument Index out of bounds
        */
-      [[nodiscard]] virtual unsigned occurrencesInColumn(const unsigned column,
-                                                         const double &value) const;
+      [[nodiscard]] virtual int occurrencesInColumn(const int column, const double &value) const;
 
       [[nodiscard]] std::string formattedString() const override;
 
@@ -312,10 +310,13 @@ class Matrix : public pmat::Array {
        * @brief Inserts a row after the specified position and sets its elements with the specified
        * value
        *
-       * @param pos
+       * @param row If row is negative or greater than rowSize-1 then it is set to -1 or
+       * rowSize-1 respectively
        * @param value
        */
-      void insertRow(const unsigned &pos, const double &value);
+      void insertRow(const int &row, const double &value);
+
+      void insertColumn(const int &col, const double &value);
 };
 
 } // namespace pmat

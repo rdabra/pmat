@@ -14,13 +14,13 @@ class DecompositionPQR {
       MatrixSquare _matP;
       MatrixSquare _matQ;
       MatrixUpperTriangular _matR;
-      std::vector<std::pair<unsigned, unsigned>> _swappedColumns;
-      unsigned _rank{0};
+      std::vector<std::pair<int, int>> _swappedColumns;
+      int _rank{0};
       bool _calculated{false};
 
       [[nodiscard]] MatrixSquare calculateHouseholderSubMatrix(const MatrixSquare &partialR,
-                                                               const unsigned idxPivot) const;
-      void swapPivotColumn(MatrixSquare &partialR, const unsigned &idxPivot);
+                                                               const int idxPivot) const;
+      void swapPivotColumn(MatrixSquare &partialR, const int &idxPivot);
 
       void calculate();
 
@@ -57,9 +57,9 @@ class DecompositionPQR {
        * @brief Calculates the rank ot the associated matrix
        * @details The rank of a matrix is the maximum number of its linearly independent columns
        *
-       * @return const unsigned& Rank of the associated matrix
+       * @return const int& Rank of the associated matrix
        */
-      const unsigned &rank();
+      const int &rank();
 
       /**
        * @brief Verifies whether the associated matrix is invertible or not

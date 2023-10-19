@@ -11,7 +11,7 @@ class MatrixSkewSymmetric : public pmat::MatrixSymmetry {
 
    public:
       MatrixSkewSymmetric() = default;
-      explicit MatrixSkewSymmetric(const unsigned &size) : MatrixSymmetry::MatrixSymmetry(size){};
+      explicit MatrixSkewSymmetric(const int &size) : MatrixSymmetry::MatrixSymmetry(size){};
       MatrixSkewSymmetric(const MatrixSkewSymmetric &matrix)
           : MatrixSymmetry::MatrixSymmetry{std::move(matrix)} {}
       MatrixSkewSymmetric(MatrixSkewSymmetric &&matrix)
@@ -19,7 +19,7 @@ class MatrixSkewSymmetric : public pmat::MatrixSymmetry {
       MatrixSkewSymmetric &operator=(const MatrixSkewSymmetric &matrix) = default;
       MatrixSkewSymmetric &operator=(MatrixSkewSymmetric &&matrix) = default;
       ~MatrixSkewSymmetric() override = default;
-      double operator()(const unsigned &row, const unsigned &column) const override;
+      double operator()(const int &row, const int &column) const override;
       MatrixSkewSymmetric operator+(const MatrixSkewSymmetric &matrix) const;
       MatrixSquare operator+(const MatrixSymmetry &matrix) const;
       virtual void addBy(const MatrixSkewSymmetric &matrix);

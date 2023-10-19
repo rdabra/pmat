@@ -31,8 +31,7 @@ class Container1d {
        *
        * @param size Container size
        */
-      Container1d(const unsigned &size)
-          : _ptrVector{std::make_unique<blitz::Array<double, 1>>(size)} {};
+      Container1d(const int &size) : _ptrVector{std::make_unique<blitz::Array<double, 1>>(size)} {};
 
       /**
        * @brief Construct a new Container 1d object
@@ -40,7 +39,7 @@ class Container1d {
        * @param size Container size
        * @param value Value to be set for all elements
        */
-      Container1d(const unsigned &size, const double &value);
+      Container1d(const int &size, const double &value);
 
       /**
        * @brief Construct a new Container 1d object from a raw array of values
@@ -48,8 +47,8 @@ class Container1d {
        * @param data Raw array of values
        * @param size Size of the raw array
        */
-      Container1d(std::vector<double> data, const unsigned &size)
-          : _ptrVector{std::make_unique<blitz::Array<double, 1>>(data.data(), size)} {};
+      Container1d(double data[], const int &size)
+          : _ptrVector{std::make_unique<blitz::Array<double, 1>>(data, size)} {};
 
       /**
        * @brief Returns the value at the specified index
@@ -57,7 +56,7 @@ class Container1d {
        * @param index
        * @return double
        */
-      inline double operator()(const unsigned &index) const { return (*_ptrVector)(index); };
+      inline double operator()(const int &index) const { return (*_ptrVector)(index); };
 
       /**
        * @brief Sets the specified value at the specified index
@@ -65,14 +64,14 @@ class Container1d {
        * @param index
        * @param value
        */
-      inline void set(const unsigned &index, const double &value) { (*_ptrVector)(index) = value; };
+      inline void set(const int &index, const double &value) { (*_ptrVector)(index) = value; };
 
       /**
        * @brief Returns the size of the container
        *
-       * @return unsigned
+       * @return int
        */
-      [[nodiscard]] inline unsigned size() const { return _ptrVector->numElements(); };
+      [[nodiscard]] inline int size() const { return _ptrVector->numElements(); };
 
       /**
        * @brief Resize the container. If the new size is greater than the old size, the new elements
@@ -80,7 +79,7 @@ class Container1d {
        *
        * @param size
        */
-      void resize(const unsigned &size);
+      void resize(const int &size);
 
       /**
        * @brief Clears the container and sets its size to zero
@@ -103,7 +102,7 @@ class Container1d {
        * @param step
        * @param value
        */
-      void pushBack(const unsigned &initialPosition, const unsigned &step, const double &value);
+      void pushBack(const int &initialPosition, const int &step, const double &value);
 
       /**
        * @brief Exchanges the values of indexA and indexB of the container
@@ -111,7 +110,7 @@ class Container1d {
        * @param indexA
        * @param indexB
        */
-      void exchange(const unsigned &indexA, const unsigned &indexB);
+      void exchange(const int &indexA, const int &indexB);
 
       /**
        * @brief Sorts the container in ascending order

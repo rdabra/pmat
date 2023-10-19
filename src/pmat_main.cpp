@@ -4,6 +4,7 @@
 
 // #include <blitz/array.h>
 #include <cmath>
+#include <cstddef>
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -26,11 +27,19 @@ int main() {
 
    // std::cout << res.formattedString();
 
-   std::vector<double> data{1., 2., 3., 4.};
-   pmat::Container1d c{data, 4};
+   double data[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12.};
 
-   c.insertValues(1, 88, 4);
-   std::cout << *c._ptrVector << "\n";
+   // pmat::Matrix m{data, 3, 4};
+
+   // m.insertRow(1, 99);
+
+   // std::cout << m.formattedString();
+
+   pmat::Container1d x{data, 12};
+
+   x.pushBack(11, 4, 99);
+
+   std::cout << *x._ptrVector;
 
    return 0;
 }

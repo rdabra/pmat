@@ -6,17 +6,17 @@
 
 void pmat::DecompositionCholesky::calculate() {
    if (!_calculated) {
-      for (unsigned i = 0; i < _matrix->size(); ++i) {
+      for (int i = 0; i < _matrix->size(); ++i) {
          double diag = (*_matrix)(i, i);
-         for (unsigned k = 0; k < i; ++k)
+         for (int k = 0; k < i; ++k)
             diag -= (_factor)(i, k) * (_factor)(i, k);
          if (pmat::utils::isZero(diag) || diag < pmat::utils::ZERO) {
             throw std::logic_error(messages::MATRIX_NOT_L);
          }
          _factor.setValue(std::sqrt(diag), i, i);
-         for (unsigned j = i + 1; j < _matrix->size(); ++j) {
+         for (int j = i + 1; j < _matrix->size(); ++j) {
             double aux = (*_matrix)(i, j);
-            for (unsigned k = 0; k < i; ++k)
+            for (int k = 0; k < i; ++k)
                aux -= (_factor)(i, k) * (_factor)(j, k);
             _factor.setValue(aux / (_factor)(i, i), j, i);
          }
@@ -45,7 +45,7 @@ double pmat::DecompositionCholesky::determinant() {
 
 bool pmat::DecompositionCholesky::isInvertible() {
    if (this->isPositiveDefinite())
-      for (unsigned i = 0; i < _matrix->size(); i++)
+      for (int i = 0; i < _matrix->size(); i++)
          if (pmat::utils::isZero(_factor(i, i)))
             return false;
 
@@ -88,8 +88,8 @@ bool pmat::DecompositionCholesky::isPositiveDefinite() {
 pmat::MatrixSymmetric pmat::DecompositionCholesky::inverseAsSymmetric() {
    MatrixSymmetric res{_matrix->size()};
    MatrixSquare aux{this->inverse()};
-   for (unsigned i = 0; i < _matrix->size(); ++i)
-      for (unsigned j = 0; j <= i; ++j)
+   for (int i = 0; i < _matrix->size(); ++i)
+      for (int j = 0; j <= i; ++j)
          res.setValue(aux(i, j), i, j);
 
    return res;

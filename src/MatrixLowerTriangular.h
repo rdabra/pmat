@@ -10,12 +10,11 @@ class MatrixUpperTriangular;
 
 class MatrixLowerTriangular : public pmat::MatrixTriangular {
    protected:
-      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override;
+      [[nodiscard]] int vectorIndex(const int &i, const int &j) const override;
 
    public:
       MatrixLowerTriangular() = default;
-      explicit MatrixLowerTriangular(const unsigned &size)
-          : MatrixTriangular::MatrixTriangular(size){};
+      explicit MatrixLowerTriangular(const int &size) : MatrixTriangular::MatrixTriangular(size){};
       MatrixLowerTriangular(const MatrixLowerTriangular &matrix)
           : MatrixTriangular::MatrixTriangular{std::move(matrix)} {}
       MatrixLowerTriangular(MatrixLowerTriangular &&matrix)
@@ -23,7 +22,7 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       MatrixLowerTriangular &operator=(const MatrixLowerTriangular &matrix) = default;
       MatrixLowerTriangular &operator=(MatrixLowerTriangular &&matrix) = default;
       ~MatrixLowerTriangular() override = default;
-      double operator()(const unsigned &row, const unsigned &column) const override;
+      double operator()(const int &row, const int &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixLowerTriangular operator+(const MatrixLowerTriangular &matrix) const;
       virtual void addBy(const MatrixLowerTriangular &matrix);
@@ -45,10 +44,10 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
        */
       [[nodiscard]] MatrixUpperTriangular getTranspose() const;
 
-      void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
-                    const unsigned &endColumn) override;
-      void swapColumns(const unsigned &colA, const unsigned &colB, const unsigned &startRow,
-                       const unsigned &endRow) override;
+      void swapRows(const int &rowA, const int &rowB, const int &startColumn,
+                    const int &endColumn) override;
+      void swapColumns(const int &colA, const int &colB, const int &startRow,
+                       const int &endRow) override;
       void fillWithRandomValues(const double &min, const double &max) override;
 
       /**

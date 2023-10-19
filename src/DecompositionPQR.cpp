@@ -12,11 +12,11 @@
  */
 pmat::MatrixSquare
 pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partialR,
-                                                      const unsigned idxPivot) const {
+                                                      const int idxPivot) const {
 
    Vector u(partialR.size() - idxPivot);
    double alpha{pmat::utils::ZERO};
-   for (unsigned i = idxPivot; i < partialR.size(); ++i) {
+   for (int i = idxPivot; i < partialR.size(); ++i) {
       alpha += partialR(i, idxPivot) * partialR(i, idxPivot);
       u.setValue(partialR(i, idxPivot), i - idxPivot);
    }
@@ -28,11 +28,11 @@ pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partia
 
    const double squareNormU = u.dotProduct(u);
    MatrixSquare resp(u.size());
-   for (unsigned i = 0; i < resp.size(); ++i) {
+   for (int i = 0; i < resp.size(); ++i) {
       if (pmat::utils::isZero(squareNormU))
          resp.setValue(pmat::utils::ONE, i, i);
       else
-         for (unsigned j = 0; j < resp.size(); ++j) {
+         for (int j = 0; j < resp.size(); ++j) {
             if (i == j)
                resp.setValue(pmat::utils::ONE - pmat::utils::TWO * u(i) * u(j) / squareNormU, i, j);
             else
@@ -43,13 +43,13 @@ pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partia
    return resp;
 }
 
-void pmat::DecompositionPQR::swapPivotColumn(MatrixSquare &partialR, const unsigned &idxPivot) {
+void pmat::DecompositionPQR::swapPivotColumn(MatrixSquare &partialR, const int &idxPivot) {
    double normMax{pmat::utils::ZERO};
-   unsigned jMax{idxPivot};
+   int jMax{idxPivot};
 
-   for (unsigned j = idxPivot; j < partialR.size(); ++j) {
+   for (int j = idxPivot; j < partialR.size(); ++j) {
       double normAux{pmat::utils::ZERO};
-      for (unsigned i = 0; i < partialR.size(); ++i)
+      for (int i = 0; i < partialR.size(); ++i)
          normAux += partialR(i, j) * partialR(i, j);
       if (normAux > normMax) {
          normMax = normAux;
@@ -70,16 +70,16 @@ void pmat::DecompositionPQR::calculate() {
       this->swapPivotColumn(A, 0);
       MatrixSquare matQAux(this->calculateHouseholderSubMatrix(A, 0));
       MatrixSquare matR(matQAux * A);
-      for (unsigned idxPivot = 1; idxPivot < _matrix->size() - 1; ++idxPivot) {
+      for (int idxPivot = 1; idxPivot < _matrix->size() - 1; ++idxPivot) {
          this->swapPivotColumn(matR, idxPivot);
          MatrixSquare matHouseholder = this->calculateHouseholderSubMatrix(matR, idxPivot);
          matQAux = matHouseholder.multiplyByBiggerMatrix(matQAux, SubMatrixPos::lower);
          matR = matHouseholder.multiplyByBiggerMatrix(matR, SubMatrixPos::lower);
       }
-      for (unsigned i = 0; i < _matrix->size(); ++i) {
+      for (int i = 0; i < _matrix->size(); ++i) {
          if (!pmat::utils::isZero(matR(i, i)))
             _rank++;
-         for (unsigned j = 0; j < _matrix->size(); ++j) {
+         for (int j = 0; j < _matrix->size(); ++j) {
             _matQ.setValue(matQAux(j, i), i, j);
             if (j >= i)
                _matR.setValue(matR(i, j), i, j);
@@ -105,7 +105,7 @@ const pmat::MatrixUpperTriangular &pmat::DecompositionPQR::matR() {
    return _matR;
 }
 
-const unsigned &pmat::DecompositionPQR::rank() {
+const int &pmat::DecompositionPQR::rank() {
    this->calculate();
    return _rank;
 }
@@ -129,7 +129,7 @@ pmat::MatrixSquare pmat::DecompositionPQR::inverse() {
    /**
     * Recovering adequate positions by swapping rows in reverse order of the swapped columns
     */
-   for (unsigned i = 1; i <= _swappedColumns.size(); ++i) {
+   for (int i = 1; i <= _swappedColumns.size(); ++i) {
       auto &swappedColumn = _swappedColumns[_swappedColumns.size() - i];
       resp.swapRows(swappedColumn.first, swappedColumn.second);
    }
@@ -139,6 +139,6 @@ pmat::MatrixSquare pmat::DecompositionPQR::inverse() {
 
 pmat::DecompositionPQR::DecompositionPQR(const MatrixSquare &matrix)
     : _matrix{&matrix}, _matP{matrix.size()}, _matQ{matrix.size()}, _matR{matrix.size()} {
-   for (unsigned j = 0; j < matrix.size(); j++)
+   for (int j = 0; j < matrix.size(); j++)
       _matP.setValue(pmat::utils::ONE, j, j);
 }

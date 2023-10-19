@@ -15,7 +15,7 @@ static const double MINUS_ONE = -1.0000000000;
 
 static const double ONE_HALF = 0.5000000000;
 
-static const unsigned NUM_THREADS = 5;
+static const int NUM_THREADS = 5;
 
 static const double &max(const double &a, const double &b) {
    return a > b ? a : b;

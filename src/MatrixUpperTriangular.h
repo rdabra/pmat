@@ -10,18 +10,17 @@ namespace pmat {
 class MatrixUpperTriangular : public pmat::MatrixTriangular {
 
    protected:
-      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override;
+      [[nodiscard]] int vectorIndex(const int &i, const int &j) const override;
 
    public:
       MatrixUpperTriangular() = default;
       MatrixUpperTriangular(const MatrixUpperTriangular &matrix) = default;
       MatrixUpperTriangular(MatrixUpperTriangular &&matrix) = default;
-      explicit MatrixUpperTriangular(const unsigned &size)
-          : MatrixTriangular::MatrixTriangular(size){};
+      explicit MatrixUpperTriangular(const int &size) : MatrixTriangular::MatrixTriangular(size){};
       ~MatrixUpperTriangular() override = default;
       MatrixUpperTriangular &operator=(const MatrixUpperTriangular &matrix) = default;
       MatrixUpperTriangular &operator=(MatrixUpperTriangular &&matrix) = default;
-      double operator()(const unsigned &row, const unsigned &column) const override;
+      double operator()(const int &row, const int &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixUpperTriangular operator+(const MatrixUpperTriangular &matrix) const;
       virtual void addBy(const MatrixUpperTriangular &matrix);
@@ -43,10 +42,10 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
        */
       [[nodiscard]] MatrixLowerTriangular getTranspose() const;
 
-      void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
-                    const unsigned &endColumn) override;
-      void swapColumns(const unsigned &colA, const unsigned &colB, const unsigned &startRow,
-                       const unsigned &endRow) override;
+      void swapRows(const int &rowA, const int &rowB, const int &startColumn,
+                    const int &endColumn) override;
+      void swapColumns(const int &colA, const int &colB, const int &startRow,
+                       const int &endRow) override;
       void fillWithRandomValues(const double &min, const double &max) override;
 
       /**

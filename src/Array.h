@@ -23,16 +23,16 @@ class Array {
       /**
        * @brief Informs the number of elements
        *
-       * @return unsigned Number of elements
+       * @return int Number of elements
        */
-      [[nodiscard]] virtual unsigned length() const = 0;
+      [[nodiscard]] virtual int length() const = 0;
 
       /**
        * @brief Informs the dimension of the array
        *
-       * @return unsigned Dimension
+       * @return int Dimension
        */
-      [[nodiscard]] virtual unsigned dimension() const = 0;
+      [[nodiscard]] virtual int dimension() const = 0;
 
       /**
        * @brief Removes all elements and sets size zero
@@ -44,9 +44,9 @@ class Array {
        * @brief Informes the number of occurrences of a value in the array
        *
        * @param value Value to be searched
-       * @return unsigned Number of occurrences
+       * @return int Number of occurrences
        */
-      [[nodiscard]] virtual unsigned occurrences(const double &value) const = 0;
+      [[nodiscard]] virtual int occurrences(const double &value) const = 0;
 
       /**
        * @brief Fills the array with random values

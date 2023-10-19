@@ -9,24 +9,24 @@ namespace pmat {
 class MatrixSymmetry : public MatrixSquare {
    private:
       // The following functions are not valid for matrices with symmetry
-      void swapRows(const unsigned &rowA, const unsigned &rowB, const unsigned &startColumn,
-                    const unsigned &endColumn) override{};
-      void swapColumns(const unsigned &columnA, const unsigned &columnB, const unsigned &startRow,
-                       const unsigned &endRow) override{};
+      void swapRows(const int &rowA, const int &rowB, const int &startColumn,
+                    const int &endColumn) override{};
+      void swapColumns(const int &columnA, const int &columnB, const int &startRow,
+                       const int &endRow) override{};
 
    protected:
-      [[nodiscard]] unsigned vectorIndex(const unsigned &i, const unsigned &j) const override;
+      [[nodiscard]] int vectorIndex(const int &i, const int &j) const override;
 
    public:
       MatrixSymmetry() = default;
       MatrixSymmetry(const MatrixSymmetry &matrix);
       MatrixSymmetry(MatrixSymmetry &&matrix) = default;
-      explicit MatrixSymmetry(const unsigned &size) { this->initializeMembers(size, size, false); };
+      explicit MatrixSymmetry(const int &size) { this->initializeMembers(size, size, false); };
       ~MatrixSymmetry() override = default;
       MatrixSymmetry &operator=(const MatrixSymmetry &) = default;
       MatrixSymmetry &operator=(MatrixSymmetry &&) = default;
-      [[nodiscard]] unsigned length() const override;
-      double operator()(const unsigned &row, const unsigned &column) const override = 0;
+      [[nodiscard]] int length() const override;
+      double operator()(const int &row, const int &column) const override = 0;
       void transpose() override = 0;
       void fillWithRandomValues(const double &min, const double &max) override = 0;
 };

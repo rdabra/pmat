@@ -3,11 +3,11 @@
 #include <random>
 #include <stdexcept>
 
-unsigned pmat::MatrixUpperTriangular::vectorIndex(const unsigned &i, const unsigned &j) const {
+int pmat::MatrixUpperTriangular::vectorIndex(const int &i, const int &j) const {
    return (j * (j + 1)) / 2 + i;
 }
 
-double pmat::MatrixUpperTriangular::operator()(const unsigned &row, const unsigned &column) const {
+double pmat::MatrixUpperTriangular::operator()(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -19,8 +19,8 @@ double pmat::MatrixUpperTriangular::dotProduct(const Matrix &matrix) const {
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    double res = 0.0;
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          res += (*this)(i, j) * matrix(i, j);
 
    return res;
@@ -29,39 +29,39 @@ double pmat::MatrixUpperTriangular::dotProduct(const Matrix &matrix) const {
 pmat::MatrixUpperTriangular
 pmat::MatrixUpperTriangular::operator+(const MatrixUpperTriangular &matrix) const {
    MatrixUpperTriangular res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          res.setValue((*this)(i, j) + matrix(i, j), i, j);
 
    return res;
 }
 
 void pmat::MatrixUpperTriangular::addBy(const MatrixUpperTriangular &matrix) {
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          this->setValue((*this)(i, j) + matrix(i, j), i, j);
 }
 
 pmat::MatrixUpperTriangular
 pmat::MatrixUpperTriangular::operator-(const MatrixUpperTriangular &matrix) const {
    MatrixUpperTriangular res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          res.setValue((*this)(i, j) - matrix(i, j), i, j);
 
    return res;
 }
 
 void pmat::MatrixUpperTriangular::subtractBy(const MatrixUpperTriangular &matrix) {
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          this->setValue((*this)(i, j) - matrix(i, j), i, j);
 }
 
 pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::operator*(const double &scalar) const {
    MatrixUpperTriangular res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          res.setValue((*this)(i, j) * scalar, i, j);
 
    return res;
@@ -72,8 +72,8 @@ pmat::MatrixSquare pmat::MatrixUpperTriangular::operator*(const MatrixSquare &ma
 }
 
 void pmat::MatrixUpperTriangular::multiplyBy(const double &scalar) {
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          this->setValue((*this)(i, j) * scalar, i, j);
 }
 
@@ -95,10 +95,10 @@ pmat::MatrixUpperTriangular::operator*(const MatrixUpperTriangular &matrix) cons
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    MatrixUpperTriangular resp{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < matrix.columnSize(); j++) {
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < matrix.columnSize(); j++) {
          double aux = pmat::utils::ZERO;
-         for (unsigned k = i; k < this->columnSize(); k++)
+         for (int k = i; k < this->columnSize(); k++)
             aux += (*this)(i, k) * matrix(k, j);
          resp.setValue(aux, i, j);
       }
@@ -112,23 +112,23 @@ pmat::MatrixSquare pmat::MatrixUpperTriangular::operator*(const MatrixTriangular
 
 pmat::MatrixLowerTriangular pmat::MatrixUpperTriangular::getTranspose() const {
    MatrixLowerTriangular resp(this->size());
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          resp.setValue((*this)(j, i), i, j);
 
    return resp;
 }
 
-void pmat::MatrixUpperTriangular::swapRows(const unsigned &rowA, const unsigned &rowB,
-                                           const unsigned &startColumn, const unsigned &endColumn) {
+void pmat::MatrixUpperTriangular::swapRows(const int &rowA, const int &rowB, const int &startColumn,
+                                           const int &endColumn) {
    if (startColumn < rowA || startColumn < rowB)
       throw std::out_of_range(messages::INDEX_OUT);
 
    Matrix::swapRows(rowA, rowB, startColumn, endColumn);
 }
 
-void pmat::MatrixUpperTriangular::swapColumns(const unsigned &colA, const unsigned &colB,
-                                              const unsigned &startRow, const unsigned &endRow) {
+void pmat::MatrixUpperTriangular::swapColumns(const int &colA, const int &colB, const int &startRow,
+                                              const int &endRow) {
    if (endRow > colA || endRow > colB)
       throw std::out_of_range(messages::INDEX_OUT);
 
@@ -139,8 +139,8 @@ void pmat::MatrixUpperTriangular::fillWithRandomValues(const double &min, const 
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = i; j < this->size(); j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = i; j < this->size(); j++)
          this->setValue(dist(rng), i, j);
 }
 

@@ -18,13 +18,13 @@ class MatrixSquare : public Matrix {
       MatrixSquare() = default;
       MatrixSquare(MatrixSquare &&matrix) noexcept = default;
       MatrixSquare(Matrix &&matrix);
-      explicit MatrixSquare(const unsigned &size) : Matrix{size, size} {}
+      explicit MatrixSquare(const int &size) : Matrix{size, size} {}
       MatrixSquare(const MatrixSquare &matrix);
       ~MatrixSquare() override = default;
       MatrixSquare &operator=(const MatrixSquare &matrix) = default;
       MatrixSquare &operator=(MatrixSquare &&matrix) noexcept = default;
-      [[nodiscard]] unsigned size() const;
-      virtual void resize(const unsigned &size);
+      [[nodiscard]] int size() const;
+      virtual void resize(const int &size);
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
       MatrixSquare operator*(const MatrixSquare &matrix) const;

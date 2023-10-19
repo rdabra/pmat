@@ -3,7 +3,7 @@
 #include <random>
 #include <stdexcept>
 
-double pmat::MatrixSymmetric::operator()(const unsigned &row, const unsigned &column) const {
+double pmat::MatrixSymmetric::operator()(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -12,8 +12,8 @@ double pmat::MatrixSymmetric::operator()(const unsigned &row, const unsigned &co
 
 pmat::MatrixSymmetric pmat::MatrixSymmetric::operator+(const MatrixSymmetric &matrix) const {
    MatrixSymmetric res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          res.setValue((*this)(i, j) + matrix(i, j), i, j);
    return res;
 }
@@ -23,15 +23,15 @@ pmat::MatrixSquare pmat::MatrixSymmetric::operator+(const MatrixSymmetry &matrix
 }
 
 void pmat::MatrixSymmetric::addBy(const MatrixSymmetric &matrix) {
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          this->setValue((*this)(i, j) + matrix(i, j), i, j);
 }
 
 pmat::MatrixSymmetric pmat::MatrixSymmetric::operator-(const MatrixSymmetric &matrix) const {
    MatrixSymmetric res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          res.setValue((*this)(i, j) - matrix(i, j), i, j);
    return res;
 }
@@ -41,15 +41,15 @@ pmat::MatrixSquare pmat::MatrixSymmetric::operator-(const MatrixSymmetry &matrix
 }
 
 void pmat::MatrixSymmetric::subtractBy(const MatrixSymmetric &matrix) {
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          this->setValue((*this)(i, j) - matrix(i, j), i, j);
 }
 
 pmat::MatrixSymmetric pmat::MatrixSymmetric::operator*(const double &scalar) const {
    MatrixSymmetric res{this->size()};
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          res.setValue((*this)(i, j) * scalar, i, j);
    return res;
 }
@@ -67,8 +67,8 @@ pmat::Vector pmat::MatrixSymmetric::operator*(const Vector &vector) const {
 }
 
 void pmat::MatrixSymmetric::multiplyBy(const double &scalar) {
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          this->setValue((*this)(i, j) * scalar, i, j);
 }
 
@@ -76,8 +76,8 @@ void pmat::MatrixSymmetric::fillWithRandomValues(const double &min, const double
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 
-   for (unsigned i = 0; i < this->size(); i++)
-      for (unsigned j = 0; j <= i; j++)
+   for (int i = 0; i < this->size(); i++)
+      for (int j = 0; j <= i; j++)
          this->setValue(dist(rng), i, j);
 }
 

@@ -9,7 +9,7 @@
 pmat::Vector::Vector(const Vector &vector) : _vector{vector._vector} {
 }
 
-void pmat::Vector::resize(const unsigned &size) {
+void pmat::Vector::resize(const int &size) {
    _vector.clear();
    _vector.resize(size);
 }
@@ -18,14 +18,14 @@ void pmat::Vector::emplaceBack(const double &value) {
    _vector.pushBack(value);
 }
 
-void pmat::Vector::setValue(const double &value, const unsigned &index) {
+void pmat::Vector::setValue(const double &value, const int &index) {
    if (index >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    _vector.set(index, value);
 }
 
-double pmat::Vector::operator()(const unsigned &index) const {
+double pmat::Vector::operator()(const int &index) const {
    if (index >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -51,7 +51,7 @@ pmat::Vector &pmat::Vector::operator=(Vector &&vector) noexcept {
 bool pmat::Vector::operator==(const Vector &vector) const {
    bool resp = this->length() == vector.length();
    if (resp) {
-      for (unsigned i = 0; i < this->length(); i++) {
+      for (int i = 0; i < this->length(); i++) {
          resp = pmat::utils::areEqual((*this)(i), vector(i));
          if (!resp)
             break;
@@ -116,7 +116,7 @@ double pmat::Vector::dotProduct(const Vector &vector) const {
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    double resp = pmat::utils::ZERO;
-   for (unsigned i = 0; i < vector.length(); i++)
+   for (int i = 0; i < vector.length(); i++)
       resp += (*this)(i)*vector(i);
 
    return resp;
@@ -133,9 +133,9 @@ pmat::Vector pmat::Vector::getUnitaryVector() const {
    return resp;
 }
 
-unsigned pmat::Vector::occurrences(const double &value) const {
-   unsigned res{0};
-   for (unsigned i = 0; i < this->length(); i++)
+int pmat::Vector::occurrences(const double &value) const {
+   int res{0};
+   for (int i = 0; i < this->length(); i++)
       if (pmat::utils::areEqual((*this)(i), value))
          res++;
 
@@ -146,11 +146,11 @@ void pmat::Vector::fillWithRandomValues(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());
 
-   for (unsigned i = 0; i < this->length(); i++)
+   for (int i = 0; i < this->length(); i++)
       this->setValue(dist(rng), i);
 }
 
-void pmat::Vector::swapElements(const unsigned &elmIndexA, const unsigned &elmIndexB) {
+void pmat::Vector::swapElements(const int &elmIndexA, const int &elmIndexB) {
    if (elmIndexA >= this->size() || elmIndexB >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -167,21 +167,21 @@ void pmat::Vector::descendingSort() {
 
 pmat::Matrix pmat::Vector::toColumnMatrix() const {
    Matrix res{this->length(), 1};
-   for (unsigned i = 0; i < this->length(); i++)
+   for (int i = 0; i < this->length(); i++)
       res.setValue(_vector(i), i, 0);
    return res;
 }
 
 pmat::Matrix pmat::Vector::toRowMatrix() const {
    Matrix res{1, this->length()};
-   for (unsigned i = 0; i < this->length(); i++)
+   for (int i = 0; i < this->length(); i++)
       res.setValue(_vector(i), 0, i);
    return res;
 }
 
 std::string pmat::Vector::formattedString() const {
    std::string res{"\n"};
-   for (unsigned i{0}; i < this->size(); i++)
+   for (int i{0}; i < this->size(); i++)
       res += std::to_string((*this)(i)) + " ";
    res += "\n";
 

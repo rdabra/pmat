@@ -9,7 +9,6 @@
 #include <utility>
 #include <vector>
 
-
 namespace pmat {
 
 class TMultiplicationManager {
@@ -18,8 +17,8 @@ class TMultiplicationManager {
       const Matrix *_operandSecond{nullptr};
       Matrix *_result{nullptr};
       std::mutex mtx1, mtx2;
-      unsigned _lastRow{0};
-      unsigned _lastColumn{0};
+      int _lastRow{0};
+      int _lastColumn{0};
       std::vector<std::shared_ptr<TMultiplicationPerformer>> _performers{};
 
    public:
@@ -33,8 +32,8 @@ class TMultiplicationManager {
 
       [[nodiscard]] const Matrix &operandFirst() const { return *_operandFirst; }
       [[nodiscard]] const Matrix &operandSecond() const { return *_operandSecond; }
-      void setResultValue(const double &value, const unsigned &row, const unsigned &column);
-      bool getNextRowColumn(unsigned id);
+      void setResultValue(const double &value, const int &row, const int &column);
+      bool getNextRowColumn(int id);
       void multiply(int nThreads);
 };
 
