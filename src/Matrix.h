@@ -52,7 +52,7 @@ class Matrix : public pmat::Array {
        * @param rowSize New row size
        * @param columnSize New column size
        */
-      void clearAndResize(const int &rowSize, const int &columnSize);
+      virtual void clearAndResize(const int &rowSize, const int &columnSize);
 
       /**
        * @brief Sets the informed value at the informed position
@@ -310,13 +310,21 @@ class Matrix : public pmat::Array {
        * @brief Inserts a row after the specified position and sets its elements with the specified
        * value
        *
-       * @param row If row is negative or greater than rowSize-1 then it is set to -1 or
+       * @param row If row index is negative or greater than rowSize-1 then it is set to -1 or
        * rowSize-1 respectively
        * @param value
        */
-      void insertRow(const int &row, const double &value);
+      virtual void insertRow(const int &row, const double &value);
 
-      void insertColumn(const int &col, const double &value);
+      /**
+       * @brief Inserts a column after the specified position and sets its elements with the
+       * specified value
+       *
+       * @param col If column index is negative or greater than columnSize-1 then it is set to -1 or
+       * rowSize-1 respectively
+       * @param value
+       */
+      virtual void insertColumn(const int &col, const double &value);
 };
 
 } // namespace pmat

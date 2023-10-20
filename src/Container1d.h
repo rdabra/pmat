@@ -5,7 +5,6 @@
 #include <blitz/array.h>
 #include <memory>
 #include <utility>
-#include <vector>
 
 namespace pmat {
 
@@ -124,7 +123,14 @@ class Container1d {
        */
       void descendingSort();
 
-      // TODO Implementar esta funcao
+      /**
+       * @brief Insert contiguous repeated values after the specified initial position
+       *
+       * @param initialPosition If the initial position is negative then values are inserted
+       * starting from index zero
+       * @param value
+       * @param nRepetitions
+       */
       void insertValues(const int &initialPosition, const double &value, const int &nRepetitions);
 };
 

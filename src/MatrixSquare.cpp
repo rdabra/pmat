@@ -116,3 +116,12 @@ pmat::DecompositionPQR pmat::MatrixSquare::decomposeToPQR() const {
 
    return res;
 }
+
+void pmat::MatrixSquare::insertRowColumn(const int &pos, const double &value) {
+   Matrix::insertColumn(pos, value);
+   Matrix::insertRow(pos, value);
+}
+
+void pmat::MatrixSquare::clearAndResize(const int &size) {
+   Matrix::clearAndResize(size, size);
+}

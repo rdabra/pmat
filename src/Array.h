@@ -2,7 +2,7 @@
 #define ABSTRACTARRAY_H
 #pragma once
 
-#include <ostream>
+#include <string>
 
 namespace pmat {
 

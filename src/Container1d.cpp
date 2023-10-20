@@ -31,7 +31,6 @@ pmat::Container1d::Container1d(const int &size, const double &value)
 void pmat::Container1d::resize(const int &size) {
 
    int oldSize = this->size();
-   // Caution: narrowing from int to int
    _ptrVector->resizeAndPreserve(size);
 
    if (size > oldSize)
@@ -40,7 +39,6 @@ void pmat::Container1d::resize(const int &size) {
 }
 
 void pmat::Container1d::pushBack(const double &value) {
-   // Caution: narrowing from int to int
    auto size{_ptrVector->size()};
    _ptrVector->resizeAndPreserve(size + 1);
    (*_ptrVector)(size) = value;
@@ -48,19 +46,19 @@ void pmat::Container1d::pushBack(const double &value) {
 
 void pmat::Container1d::pushBack(const int &initialPosition, const int &step, const double &value) {
    int oldSize = this->size();
-   int inc = std::floor(oldSize / step);
+   int inc = initialPosition < oldSize - 1 ? 1 + ((initialPosition + 1) / step)
+                                           : ((initialPosition + 1) / step);
    int newSize = oldSize + inc;
    int i = oldSize - 1;
    int j = newSize - 1;
-   int k = initialPosition + inc;
-   int newStep = step + inc - 1;
+   int k = initialPosition;
    this->resize(newSize);
 
    int n{0};
    while (n < inc) {
-      if (k == j) {
+      if (k == i) {
          this->set(j--, value);
-         k -= newStep;
+         k -= step;
          n++;
       } else
          this->set(j--, (*this)(i--));
@@ -68,7 +66,6 @@ void pmat::Container1d::pushBack(const int &initialPosition, const int &step, co
 }
 
 void pmat::Container1d::exchange(const int &indexA, const int &indexB) {
-   // Caution: narrowing from int to int
    (*_ptrVector)(indexB) = std::exchange((*_ptrVector)(indexA), (*_ptrVector)(indexB));
 }
 

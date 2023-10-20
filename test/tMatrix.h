@@ -570,3 +570,21 @@ TEST(TestMatrix, TestFromFile) {
 
    EXPECT_TRUE(z == res);
 }
+
+TEST(TestMatrix, TestInserts) {
+   double data[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12.};
+   double dataresp[] = {1., 2., 3., 99., 4., 5., 6., 7., 99., 8., 9., 10., 11., 99., 12.};
+   pmat::Matrix m{data, 3, 4};
+   pmat::Matrix res{dataresp, 3, 5};
+
+   m.insertColumn(2, 99.);
+
+   pmat::Matrix m1{m};
+   double dataresp1[] = {1., 2., 3., 99., 4., 88., 88., 88., 88., 88.,
+                         5., 6., 7., 99., 8., 9.,  10., 11., 99., 12.};
+   pmat::Matrix res1{dataresp1, 4, 5};
+   m1.insertRow(0, 88.);
+
+   EXPECT_TRUE(m == res);
+   EXPECT_TRUE(m1 == res1);
+}

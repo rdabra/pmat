@@ -667,3 +667,15 @@ TEST(TestMatrixSquare, TestDecompQR) {
    EXPECT_TRUE(B.decomposeToPQR().rank() == 2);
    EXPECT_TRUE(identity == A * invA);
 }
+
+TEST(TestMatrixSquare, TestInserts) {
+   double data[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16.};
+   double dataresp[] = {1.,  2.,  3.,  99., 4.,  5.,  6.,  7.,  99., 8.,  9.,  10., 11.,
+                        99., 12., 99., 99., 99., 99., 99., 13., 14., 15., 99., 16.};
+   pmat::MatrixSquare m{data, 4};
+   pmat::MatrixSquare res{dataresp, 5};
+
+   m.insertRowColumn(2, 99.);
+
+   EXPECT_TRUE(m == res);
+}

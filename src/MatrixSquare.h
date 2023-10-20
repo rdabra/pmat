@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Matrix.h"
-#include <memory>
 
 namespace pmat {
 
@@ -14,6 +13,12 @@ class DecompositionPQR;
 enum class SubMatrixPos { lower, upper };
 
 class MatrixSquare : public Matrix {
+   private:
+      // Hiding from MatrixSquare user
+      void insertRow(const int &row, const double &value) override{};
+      void insertColumn(const int &col, const double &value) override{};
+      void clearAndResize(const int &rowSize, const int &columnSize) override{};
+
    public:
       MatrixSquare() = default;
       MatrixSquare(MatrixSquare &&matrix) noexcept = default;
@@ -21,6 +26,7 @@ class MatrixSquare : public Matrix {
       explicit MatrixSquare(const int &size) : Matrix{size, size} {}
       MatrixSquare(const MatrixSquare &matrix);
       ~MatrixSquare() override = default;
+      MatrixSquare(double data[], const int &size) : Matrix{data, size, size} {};
       MatrixSquare &operator=(const MatrixSquare &matrix) = default;
       MatrixSquare &operator=(MatrixSquare &&matrix) noexcept = default;
       [[nodiscard]] int size() const;
@@ -30,7 +36,6 @@ class MatrixSquare : public Matrix {
       MatrixSquare operator*(const MatrixSquare &matrix) const;
       MatrixSquare operator*(const double &scalar) const;
       Matrix operator*(const Matrix &matrix) const override;
-
       Vector operator*(const Vector &vector) const override;
       virtual void fillDiagonalWith(const double &value);
 
@@ -74,6 +79,22 @@ class MatrixSquare : public Matrix {
        * @return DecompositionPQR PQR calculator
        */
       [[nodiscard]] DecompositionPQR decomposeToPQR() const;
+
+      /**
+       * @brief Insert a row and a column with repeated values afters the specified position
+       *
+       * @param pos If pos is negative or greater than size-1 then it is set to -1 or
+       * size-1 respectively
+       * @param value
+       */
+      virtual void insertRowColumn(const int &pos, const double &value);
+
+      /**
+       * @brief Clears this matrix and sets a new size
+       *
+       * @param size New size
+       */
+      virtual void clearAndResize(const int &size);
 };
 
 } // namespace pmat
