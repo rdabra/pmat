@@ -1,7 +1,9 @@
 #include "MatrixSymmetric.h"
 #include "DecompositionCholesky.h"
+#include "Messages.h"
 #include <random>
 #include <stdexcept>
+
 
 double pmat::MatrixSymmetric::operator()(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())

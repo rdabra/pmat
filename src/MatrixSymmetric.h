@@ -14,7 +14,7 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       MatrixSymmetric() = default;
       explicit MatrixSymmetric(const int &size) : MatrixSymmetry::MatrixSymmetry(size){};
       MatrixSymmetric(const MatrixSymmetric &matrix) = default;
-      MatrixSymmetric(MatrixSymmetric &&matrix)
+      MatrixSymmetric(MatrixSymmetric &&matrix) noexcept
           : MatrixSymmetry::MatrixSymmetry{std::move(matrix)} {};
       MatrixSymmetric &operator=(const MatrixSymmetric &matrix) = default;
       MatrixSymmetric &operator=(MatrixSymmetric &&matrix) = default;

@@ -1,11 +1,8 @@
 #include "MatrixUpperTriangular.h"
+#include "Messages.h"
 #include "utils.h"
 #include <random>
 #include <stdexcept>
-
-// int pmat::MatrixUpperTriangular::vectorIndex(const int &i, const int &j) const {
-//    return (j * (j + 1)) / 2 + i;
-// }
 
 double pmat::MatrixUpperTriangular::operator()(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())

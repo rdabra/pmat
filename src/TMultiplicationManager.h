@@ -1,12 +1,11 @@
 #ifndef TOPERATIONMANAGER_H
 #define TOPERATIONMANAGER_H
-#include <memory>
-#include <mutex>
 #pragma once
 
 #include "Matrix.h"
 #include "TMultiplicationPerformer.h"
-#include <utility>
+#include <memory>
+#include <mutex>
 #include <vector>
 
 namespace pmat {

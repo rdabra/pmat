@@ -57,7 +57,7 @@ class Matrix : public pmat::Array {
       virtual void clearAndResize(const int &rowSize, const int &columnSize);
 
       /**
-       * @brief Sets the informed value at the informed position
+       * @brief Sets the specified value at the specified position
        *
        * @param value Value to be set
        * @param row Row position
@@ -66,16 +66,23 @@ class Matrix : public pmat::Array {
       virtual void setValue(const double &value, const int &row, const int &column);
 
       /**
-       * @brief Informs the value at the informed position
+       * @brief Returns the value at the specified position
        *
-       * @param row Row position of the value to be informed
-       * @param column Column position of the value to be informed
-       * @return double Value at the informed position
+       * @param row Row position of the value to be specified
+       * @param column Column position of the value to be specified
+       * @return double Value at the specified position
        */
       inline virtual double operator()(const int &row, const int &column) const {
          return _matrix(this->vectorIndex(row, column));
       }
 
+      /**
+       * @brief Returns the reference to the specified position
+       *
+       * @param row Row position of the value to be specified
+       * @param column Column position of the value to be specified
+       * @return double& Reference to the specified position
+       */
       inline virtual double &operator()(const int &row, const int &column) {
          return _matrix(this->vectorIndex(row, column));
       }
@@ -99,7 +106,7 @@ class Matrix : public pmat::Array {
       virtual bool operator==(const Matrix &matrix) const;
 
       /**
-       * @brief Calculates the dot product of this matrix with the informed matrix
+       * @brief Calculates the dot product of this matrix with the specified matrix
        * @details The dot product of matrices \f$A\f$ and \f$B\f$ is \f[A:B =
        * \sum_{i,j}A_{ij}B_{ij}\f]
        *
@@ -110,7 +117,7 @@ class Matrix : public pmat::Array {
       [[nodiscard]] virtual double dotProduct(const Matrix &matrix) const;
 
       /**
-       * @brief Sums this matrix with the informed matrix
+       * @brief Sums this matrix with the specified matrix
        *
        * @param matrix Second operand of the sum
        * @return Matrix Sum result
@@ -119,7 +126,7 @@ class Matrix : public pmat::Array {
       Matrix operator+(const Matrix &matrix) const;
 
       /**
-       * @brief Sums this matrix with the informed matrix, setting the result in this matrix
+       * @brief Sums this matrix with the specified matrix, setting the result in this matrix
        *
        * @param matrix Second operand
        * @exception std::invalid_argument Incompatible sizes
@@ -127,7 +134,7 @@ class Matrix : public pmat::Array {
       void addBy(const Matrix &matrix);
 
       /**
-       * @brief Subtracts this matrix with the informed matrix
+       * @brief Subtracts this matrix with the specified matrix
        *
        * @param matrix Second operand of the subtraction
        * @return Matrix Subtraction result
@@ -136,7 +143,7 @@ class Matrix : public pmat::Array {
       Matrix operator-(const Matrix &matrix) const;
 
       /**
-       * @brief Subtracts this matrix with the informed matrix, setting the result in this matrix
+       * @brief Subtracts this matrix with the specified matrix, setting the result in this matrix
        *
        * @param matrix Second operand
        * @exception std::invalid_argument Incompatible sizes
@@ -144,7 +151,7 @@ class Matrix : public pmat::Array {
       void subtractBy(const Matrix &matrix);
 
       /**
-       * @brief Multiplies this matrix and the informed matrix
+       * @brief Multiplies this matrix and the specified matrix
        *
        * @param matrix Right operand
        * @return Matrix Multiplication result
@@ -153,7 +160,7 @@ class Matrix : public pmat::Array {
       virtual Matrix operator*(const Matrix &matrix) const;
 
       /**
-       * @brief Multiplies this matrix and the informed vector, considered as a column matrix
+       * @brief Multiplies this matrix and the specified vector, considered as a column matrix
        *
        * @param vector Right operand
        * @return Vector Multiplication result
@@ -162,7 +169,7 @@ class Matrix : public pmat::Array {
       virtual Vector operator*(const Vector &vector) const;
 
       /**
-       * @brief Multiplies this matrix by the informed scalar
+       * @brief Multiplies this matrix by the specified scalar
        *
        * @param scalar Second operand of the multiplication
        * @return Matrix Multiplication result
@@ -170,14 +177,14 @@ class Matrix : public pmat::Array {
       Matrix operator*(const double &scalar) const;
 
       /**
-       * @brief Multiplies this matrix and the informed scalar, setting the result in this matrix
+       * @brief Multiplies this matrix and the specified scalar, setting the result in this matrix
        *
        * @param scalar Second operand of the multiplication
        */
       virtual void multiplyBy(const double &scalar);
 
       /**
-       * @brief Multiplies this matrix by the informed scalar using multiple threads
+       * @brief Multiplies this matrix by the specified scalar using multiple threads
        *
        * @param matrix Right operand of the multiplication
        * @param nThreads number of threads to be created
@@ -186,7 +193,7 @@ class Matrix : public pmat::Array {
       Matrix multiply(const Matrix &matrix, int nThreads);
 
       /**
-       * @brief Performs the Hadamard multiplication of this matrix and the informed matrix
+       * @brief Performs the Hadamard multiplication of this matrix and the specified matrix
        * @details The Hadamard multiplication \f(C\f) of matrices \f(A\f) and \f(B\f) is \f[ C_{ij}
        * = A_{ij}B_{ij}\f]
        *
@@ -197,7 +204,7 @@ class Matrix : public pmat::Array {
       [[nodiscard]] Matrix multiplyHadamardBy(const Matrix &matrix) const;
 
       /**
-       * @brief Multiplies all the elements of the informed row by the informed scalar
+       * @brief Multiplies all the elements of the specified row by the specified scalar
        *
        * @param row Row to be multiplied
        * @param scalar Value to multiply the row
@@ -206,7 +213,7 @@ class Matrix : public pmat::Array {
       virtual void multiplyRowBy(const int &row, const double &scalar);
 
       /**
-       * @brief Multiplies all the elements of the informed column by the informed scalar
+       * @brief Multiplies all the elements of the specified column by the specified scalar
        *
        * @param column Column to be multiplied
        * @param scalar Value to multiply the row
@@ -215,7 +222,7 @@ class Matrix : public pmat::Array {
       virtual void multiplyColumnBy(const int &column, const double &scalar);
 
       /**
-       * @brief Swaps the rows at the informed positions in a range of columns
+       * @brief Swaps the rows at the specified positions in a range of columns
        *
        * @param rowA Position A
        * @param rowB Position B
@@ -227,7 +234,7 @@ class Matrix : public pmat::Array {
                             const int &endColumn);
 
       /**
-       * @brief Swaps the rows at the informed positions
+       * @brief Swaps the rows at the specified positions
        *
        * @param rowA Position A
        * @param rowB Position B
@@ -236,7 +243,7 @@ class Matrix : public pmat::Array {
       virtual void swapRows(const int &rowA, const int &rowB);
 
       /**
-       * @brief Swaps the columns at the informed positions in a range of rows
+       * @brief Swaps the columns at the specified positions in a range of rows
        *
        * @param columnA Position A
        * @param columnB Position B
@@ -248,7 +255,7 @@ class Matrix : public pmat::Array {
                                const int &endRow);
 
       /**
-       * @brief Swaps the columns at the informed positions
+       * @brief Swaps the columns at the specified positions
        *
        * @param columnA Position A
        * @param columnB Position B
@@ -273,19 +280,19 @@ class Matrix : public pmat::Array {
       void fillWithRandomValues(const double &min, const double &max) override;
 
       /**
-       * @brief Gets the informed row as a vector
+       * @brief Gets the specified row as a vector
        *
        * @param row Row postion
-       * @return Vector Informed row as a vector
+       * @return Vector specified row as a vector
        * @exception std::invalid_argument Index out of bounds
        */
       [[nodiscard]] Vector rowToVector(const int &row) const;
 
       /**
-       * @brief Gets the informed column as a vector
+       * @brief Gets the specified column as a vector
        *
        * @param column Column postion
-       * @return Vector Informed column as a vector
+       * @return Vector specified column as a vector
        * @exception std::invalid_argument Index out of bounds
        */
       [[nodiscard]] Vector columnToVector(const int &column) const;
@@ -293,7 +300,7 @@ class Matrix : public pmat::Array {
       [[nodiscard]] int occurrences(const double &value) const override;
 
       /**
-       * @brief Informs the number of occurrences of the informed value at the informed row
+       * @brief Informs the number of occurrences of the specified value at the specified row
        *
        * @param row Row position
        * @param value Value to be searched
@@ -303,7 +310,7 @@ class Matrix : public pmat::Array {
       [[nodiscard]] virtual int occurrencesInRow(const int row, const double &value) const;
 
       /**
-       * @brief Informs the number of occurrences of the informed value at the informed column
+       * @brief Informs the number of occurrences of the specified value at the specified column
        *
        * @param column Column position
        * @param value Value to be searched

@@ -1,7 +1,9 @@
 #include "DecompositionPQR.h"
+#include "Messages.h"
 #include "utils.h"
 #include <cmath>
 #include <stdexcept>
+
 
 /**
  * @brief Calculates the Householder matrix by using the opposite sign of the column Frobenius norm

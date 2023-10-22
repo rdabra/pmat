@@ -9,16 +9,9 @@
 #include <iterator>
 #include <vector>
 
-class Foo {
-   private:
-      int _v[6] = {1, 2, 3, 4, 5, 6};
-
-   public:
-      void soma();
-
-      //      int operator()(int i) const { return _v[i]; }
-      //      int &operator()(int i) { return _v[i]; }
-};
+inline int vectorIndex(const int &i, const int &j) {
+   return (i * (i + 1)) / 2 + j;
+}
 
 int main() {
 

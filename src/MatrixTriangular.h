@@ -1,5 +1,4 @@
 #include "MatrixSquare.h"
-#include "Messages.h"
 
 #ifndef MATRIXTRIANGULAR_H
 #define MATRIXTRIANGULAR_H

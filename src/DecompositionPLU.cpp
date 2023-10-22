@@ -1,4 +1,5 @@
 #include "DecompositionPLU.h"
+#include "Messages.h"
 #include "utils.h"
 #include <stdexcept>
 

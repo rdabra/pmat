@@ -8,11 +8,6 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
-#include <vector>
-
-// int pmat::Matrix::vectorIndex(const int &row, const int &column) const {
-//    return _isTransposed ? row + column * _rowSize : column + row * _columnSize;
-// }
 
 double pmat::Matrix::vectorElement(const int &row, const int &column) const {
    return _matrix(this->vectorIndex(row, column));
