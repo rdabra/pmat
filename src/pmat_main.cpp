@@ -9,12 +9,24 @@
 #include <iterator>
 #include <vector>
 
+class Foo {
+   private:
+      int _v[6] = {1, 2, 3, 4, 5, 6};
+
+   public:
+      void soma();
+
+      //      int operator()(int i) const { return _v[i]; }
+      //      int &operator()(int i) { return _v[i]; }
+};
+
 int main() {
 
-   pmat::Matrix m(3, 3);
-   pmat::MatrixSquare mq(3);
+   pmat::Matrix m(2, 3);
 
-   pmat::Matrix x{mq * m};
+   m.fillWithRandomValues(-1, 1);
+
+   std::cout << m.formattedString();
 
    return 0;
 }

@@ -10,7 +10,9 @@ namespace pmat {
 class MatrixUpperTriangular : public pmat::MatrixTriangular {
 
    protected:
-      [[nodiscard]] int vectorIndex(const int &i, const int &j) const override;
+      [[nodiscard]] inline int vectorIndex(const int &i, const int &j) const override {
+         return (j * (j + 1)) / 2 + i;
+      };
 
    public:
       MatrixUpperTriangular() = default;

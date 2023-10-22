@@ -16,7 +16,9 @@ class Matrix : public pmat::Array {
       int _rowSize{0}, _columnSize{0};
 
    protected:
-      [[nodiscard]] virtual int vectorIndex(const int &row, const int &column) const;
+      [[nodiscard]] inline virtual int vectorIndex(const int &row, const int &column) const {
+         return _isTransposed ? row + column * _rowSize : column + row * _columnSize;
+      }
       [[nodiscard]] double vectorElement(const int &row, const int &column) const;
       void moveToThis(Matrix &&matrix);
 
@@ -70,7 +72,13 @@ class Matrix : public pmat::Array {
        * @param column Column position of the value to be informed
        * @return double Value at the informed position
        */
-      virtual double operator()(const int &row, const int &column) const;
+      inline virtual double operator()(const int &row, const int &column) const {
+         return _matrix(this->vectorIndex(row, column));
+      }
+
+      inline virtual double &operator()(const int &row, const int &column) {
+         return _matrix(this->vectorIndex(row, column));
+      }
 
       /**
        * @brief Informs the size of matrix row dimension

@@ -4,10 +4,6 @@
 #include <random>
 #include <stdexcept>
 
-int pmat::MatrixLowerTriangular::vectorIndex(const int &i, const int &j) const {
-   return (i * (i + 1)) / 2 + j;
-}
-
 double pmat::MatrixLowerTriangular::operator()(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);

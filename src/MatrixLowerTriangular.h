@@ -10,14 +10,16 @@ class MatrixUpperTriangular;
 
 class MatrixLowerTriangular : public pmat::MatrixTriangular {
    protected:
-      [[nodiscard]] int vectorIndex(const int &i, const int &j) const override;
+      [[nodiscard]] inline int vectorIndex(const int &i, const int &j) const override {
+         return (i * (i + 1)) / 2 + j;
+      }
 
    public:
       MatrixLowerTriangular() = default;
       explicit MatrixLowerTriangular(const int &size) : MatrixTriangular::MatrixTriangular(size){};
       MatrixLowerTriangular(const MatrixLowerTriangular &matrix)
           : MatrixTriangular::MatrixTriangular{std::move(matrix)} {}
-      MatrixLowerTriangular(MatrixLowerTriangular &&matrix)
+      MatrixLowerTriangular(MatrixLowerTriangular &&matrix) noexcept
           : MatrixTriangular::MatrixTriangular{std::move(matrix)} {};
       MatrixLowerTriangular &operator=(const MatrixLowerTriangular &matrix) = default;
       MatrixLowerTriangular &operator=(MatrixLowerTriangular &&matrix) = default;

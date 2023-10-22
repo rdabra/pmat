@@ -12,6 +12,9 @@ enum class TriangType { UPPER, LOWER };
 class MatrixTriangular : public pmat::MatrixSquare {
    private:
       void transpose() override {}
+      inline double &operator()(const int &row, const int &column) override {
+         return MatrixSquare::operator()(row, column);
+      };
 
    protected:
       [[nodiscard]] int vectorIndex(const int &i, const int &j) const override = 0;
@@ -25,7 +28,7 @@ class MatrixTriangular : public pmat::MatrixSquare {
       MatrixTriangular &operator=(const MatrixTriangular &) = default;
       MatrixTriangular &operator=(MatrixTriangular &&) = default;
       [[nodiscard]] int length() const override;
-      double operator()(const int &row, const int &column) const override = 0;
+      inline double operator()(const int &row, const int &column) const override = 0;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override = 0;
       MatrixSquare operator*(const MatrixTriangular &matrix) const;
       [[nodiscard]] MatrixSquare getSwappedByRows(const int &rowIndexA, const int &rowIndexB) const;

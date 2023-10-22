@@ -17,7 +17,7 @@
    },
    "workbench.colorCustomizations": {
       "[Visual Studio Dark]": {
-         "editor.lineHighlightBorder": "#57575752",
+         "editor.lineHighlightBorder": "#6b6b6b52",
          "editor.background": "#1D1D21"
       }
    },

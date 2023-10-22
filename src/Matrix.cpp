@@ -10,9 +10,9 @@
 #include <utility>
 #include <vector>
 
-int pmat::Matrix::vectorIndex(const int &row, const int &column) const {
-   return _isTransposed ? row + column * _rowSize : column + row * _columnSize;
-}
+// int pmat::Matrix::vectorIndex(const int &row, const int &column) const {
+//    return _isTransposed ? row + column * _rowSize : column + row * _columnSize;
+// }
 
 double pmat::Matrix::vectorElement(const int &row, const int &column) const {
    return _matrix(this->vectorIndex(row, column));
@@ -88,14 +88,7 @@ void pmat::Matrix::setValue(const double &value, const int &row, const int &colu
    if (row >= this->rowSize() || column >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
-   _matrix.set(this->vectorIndex(row, column), value);
-}
-
-double pmat::Matrix::operator()(const int &row, const int &column) const {
-   if (row >= this->rowSize() || column >= this->columnSize())
-      throw std::invalid_argument(pmat::messages::INDEX_OUT);
-
-   return _matrix(this->vectorIndex(row, column));
+   _matrix(this->vectorIndex(row, column)) = value;
 }
 
 pmat::Matrix &pmat::Matrix::operator=(const Matrix &matrix) {

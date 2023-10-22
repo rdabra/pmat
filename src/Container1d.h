@@ -57,6 +57,8 @@ class Container1d {
        */
       inline double operator()(const int &index) const { return (*_ptrVector)(index); };
 
+      inline double &operator()(const int &index) { return (*_ptrVector)(index); };
+
       /**
        * @brief Sets the specified value at the specified index
        *
