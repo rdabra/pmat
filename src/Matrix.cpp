@@ -1,7 +1,7 @@
 #include "Matrix.h"
 #include "Messages.h"
 #include "TMultiplicationManager.h"
-#include "utils.h"
+#include "pmatUtils.h"
 #include <fstream>
 #include <random>
 #include <sstream>

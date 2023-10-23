@@ -1,7 +1,7 @@
 #include "../src/DecompositionPLU.h"
 #include "../src/MatrixSkewSymmetric.h"
 #include "../src/MatrixSymmetric.h"
-#include "../src/utils.h"
+#include "../src/pmatUtils.h"
 #include "gtest/gtest.h"
 
 using namespace pmat;

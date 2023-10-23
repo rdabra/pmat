@@ -1,6 +1,6 @@
 #include "DecompositionPLU.h"
 #include "Messages.h"
-#include "utils.h"
+#include "pmatUtils.h"
 #include <stdexcept>
 
 void pmat::DecompositionPLU::swapRowsBellow(MatrixSquare &matU, const int &idxPivot) {

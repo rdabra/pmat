@@ -1,5 +1,5 @@
 #include "DecompositionSAS.h"
-#include "utils.h"
+#include "pmatUtils.h"
 
 void pmat::DecompositionSAS::calculate() {
    if (!_calculated) {

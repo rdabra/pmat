@@ -1,10 +1,9 @@
 #include "DecompositionCholesky.h"
 #include "MatrixSymmetric.h"
 #include "Messages.h"
-#include "utils.h"
+#include "pmatUtils.h"
 #include <cmath>
 #include <stdexcept>
-
 
 void pmat::DecompositionCholesky::calculate() {
    if (!_calculated) {

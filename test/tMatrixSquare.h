@@ -6,7 +6,7 @@
 #include "../src/MatrixSquare.h"
 #include "../src/MatrixSymmetric.h"
 #include "../src/MatrixUpperTriangular.h"
-#include "../src/utils.h"
+#include "../src/pmatUtils.h"
 #include "gtest/gtest.h"
 
 using namespace pmat;

@@ -1,10 +1,9 @@
 #include "MatrixLowerTriangular.h"
 #include "MatrixUpperTriangular.h"
 #include "Messages.h"
-#include "utils.h"
+#include "pmatUtils.h"
 #include <random>
 #include <stdexcept>
-
 
 double pmat::MatrixLowerTriangular::operator()(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())

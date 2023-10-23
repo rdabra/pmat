@@ -3,7 +3,7 @@
 #include "DecompositionPQR.h"
 #include "DecompositionSAS.h"
 #include "Messages.h"
-#include "utils.h"
+#include "pmatUtils.h"
 #include <stdexcept>
 
 pmat::MatrixSquare::MatrixSquare(Matrix &&matrix) {
