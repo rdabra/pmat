@@ -30,20 +30,8 @@ static inline double abs(const double &a) {
    return a > ZERO ? a : -a;
 };
 
-/**
- * @brief Comparison between doubles
- * @details From Donald Knuth
- *
- * @param a
- * @param b
- * @return true
- * @return false
- */
 static inline bool areEqual(const double &a, const double &b) {
-   return max(std::fabs(a), std::fabs(b)) < TOLERANCE
-              ? true
-              : std::fabs(a - b) <=
-                    (std::fabs(a) > std::fabs(b) ? std::fabs(b) : std::fabs(a)) * TOLERANCE;
+   return std::fabs(a - b) < TOLERANCE;
 }
 
 static inline bool isZero(const double &a) {
