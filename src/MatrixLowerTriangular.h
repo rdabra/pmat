@@ -57,7 +57,9 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
        *
        * @return TriangType Triangular type
        */
-      [[nodiscard]] TriangType type() const override { return TriangType::LOWER; };
+      [[nodiscard]] pmat::utils::TriangType type() const override {
+         return pmat::utils::TriangType::LOWER;
+      };
 
       /**
        * @brief Calculates the inverse of this matrix through back substitution

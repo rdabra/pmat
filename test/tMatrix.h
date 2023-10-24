@@ -1,5 +1,4 @@
 #include "../src/Matrix.h"
-#include "../src/TMultiplicationManager.h"
 #include "../src/pmatUtils.h"
 #include "gtest/gtest.h"
 #include <cmath>

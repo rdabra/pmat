@@ -1,9 +1,22 @@
 #include "MatrixSymmetric.h"
 #include "DecompositionCholesky.h"
 #include "Messages.h"
+#include "pmatUtils.h"
 #include <random>
 #include <stdexcept>
 
+pmat::MatrixSymmetric::MatrixSymmetric(const MatrixSquare &matrix, pmat::utils::TriangType type) {
+   this->initializeMembers(matrix.size(), matrix.size(), false);
+   if (type == pmat::utils::TriangType::LOWER) {
+      for (int i = 0; i < this->size(); i++)
+         for (int j = 0; j <= i; j++)
+            this->setValue(matrix(i, j), i, j);
+   } else {
+      for (int i = 0; i < this->size(); i++)
+         for (int j = i; j < this->size(); j++)
+            this->setValue(matrix(i, j), i, j);
+   }
+}
 
 double pmat::MatrixSymmetric::operator()(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())
@@ -86,4 +99,17 @@ void pmat::MatrixSymmetric::fillWithRandomValues(const double &min, const double
 pmat::DecompositionCholesky pmat::MatrixSymmetric::decomposeToCholesky() {
    DecompositionCholesky res{*this};
    return res;
+}
+
+pmat::MatrixSymmetric pmat::MatrixSymmetric::gramMatrix(const pmat::Matrix &matrix) {
+   pmat::MatrixSymmetric resp{matrix.columnSize()};
+   for (int i = 0; i < matrix.columnSize(); i++)
+      for (int j = 0; j <= i; j++) {
+         double aux{pmat::utils::ZERO};
+         for (int k = 0; k < matrix.rowSize(); k++)
+            aux += matrix(k, i) * matrix(k, j);
+         resp.setValue(aux, i, j);
+      }
+
+   return resp;
 }

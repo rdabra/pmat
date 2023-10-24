@@ -83,7 +83,7 @@ pmat::Vector pmat::MatrixTriangular::linearSolve(const Vector &rhs) {
 void pmat::MatrixTriangular::findInverseByBackSubstitution(const MatrixTriangular &matrix,
                                                            MatrixTriangular &resp) {
    std::vector<int> ids(matrix.size());
-   if (matrix.type() == TriangType::LOWER)
+   if (matrix.type() == pmat::utils::TriangType::LOWER)
       for (int k = 0; k < matrix.size(); k++)
          ids[k] = k;
    else
@@ -106,7 +106,7 @@ pmat::Vector pmat::MatrixTriangular::findSolutionByBackSubstitution(const Matrix
                                                                     const Vector &rhs) {
    Vector resp(rhs.size());
    std::vector<int> ids(matrix.size());
-   if (matrix.type() == TriangType::LOWER)
+   if (matrix.type() == pmat::utils::TriangType::LOWER)
       for (int k = 0; k < matrix.size(); k++)
          ids[k] = k;
    else

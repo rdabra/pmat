@@ -17,6 +17,8 @@ static const double ONE_HALF = 0.5000000000;
 
 static const int NUM_THREADS = 5;
 
+enum class TriangType { UPPER, LOWER };
+
 static const double &max(const double &a, const double &b) {
    return a > b ? a : b;
 };

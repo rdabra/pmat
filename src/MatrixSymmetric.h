@@ -3,6 +3,7 @@
 #pragma once
 
 #include "MatrixSymmetry.h"
+#include "pmatUtils.h"
 
 namespace pmat {
 
@@ -12,13 +13,16 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
 
    public:
       MatrixSymmetric() = default;
-      explicit MatrixSymmetric(const int &size) : MatrixSymmetry::MatrixSymmetry(size){};
       MatrixSymmetric(const MatrixSymmetric &matrix) = default;
       MatrixSymmetric(MatrixSymmetric &&matrix) noexcept
           : MatrixSymmetry::MatrixSymmetry{std::move(matrix)} {};
       MatrixSymmetric &operator=(const MatrixSymmetric &matrix) = default;
       MatrixSymmetric &operator=(MatrixSymmetric &&matrix) = default;
       ~MatrixSymmetric() override = default;
+
+      explicit MatrixSymmetric(const int &size) : MatrixSymmetry::MatrixSymmetry(size){};
+      MatrixSymmetric(const MatrixSquare &matrix, pmat::utils::TriangType type);
+
       double operator()(const int &row, const int &column) const override;
       MatrixSymmetric operator+(const MatrixSymmetric &matrix) const;
       MatrixSquare operator+(const MatrixSymmetry &matrix) const;
@@ -40,6 +44,14 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
        * @return DecompositionCholesky Cholesky calculator
        */
       DecompositionCholesky decomposeToCholesky();
+
+      /**
+       * @brief Returns the Gram Matrix of the specified matrix
+       * @details The Gram Matrix of matrix \f$A\f$ is the symmetric matrix \f$A^{T} A\f$
+       * @param matrix
+       * @return pmat::MatrixSymmetric
+       */
+      static pmat::MatrixSymmetric gramMatrix(const pmat::Matrix &matrix);
 };
 
 } // namespace pmat

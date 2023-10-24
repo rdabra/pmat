@@ -1,12 +1,11 @@
 #include "MatrixSquare.h"
+#include "pmatUtils.h"
 
 #ifndef MATRIXTRIANGULAR_H
 #define MATRIXTRIANGULAR_H
 #pragma once
 
 namespace pmat {
-
-enum class TriangType { UPPER, LOWER };
 
 class MatrixTriangular : public pmat::MatrixSquare {
    private:
@@ -38,7 +37,7 @@ class MatrixTriangular : public pmat::MatrixSquare {
                     const int &endColumn) override = 0;
       void swapColumns(const int &columnA, const int &columnB, const int &startRow,
                        const int &endRow) override = 0;
-      [[nodiscard]] virtual TriangType type() const = 0;
+      [[nodiscard]] virtual pmat::utils::TriangType type() const = 0;
 
       /**
        * @brief Calculates the determinant of this matrix through its diagonal

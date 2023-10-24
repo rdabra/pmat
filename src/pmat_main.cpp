@@ -9,17 +9,11 @@
 #include <iterator>
 #include <vector>
 
-inline int vectorIndex(const int &i, const int &j) {
-   return (i * (i + 1)) / 2 + j;
-}
-
 int main() {
 
    pmat::Matrix m(2, 3);
 
-   m.fillWithRandomValues(-1, 1);
-
-   std::cout << m.formattedString();
+   m = pmat::Matrix(2, 3);
 
    return 0;
 }

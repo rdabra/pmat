@@ -485,3 +485,19 @@ TEST(TestMatrixSymmetric, TestLinearSolve) {
 
    EXPECT_TRUE(x == resp);
 }
+
+TEST(TestMatrixSymmetric, TestStatics) {
+   double dat[]{1.,  2,  3,  4,  3.,  4,  1,  2,  7.,  8,  9,  1,  4.,  3,  2,  1,
+                11., 21, 31, 41, 31., 41, 11, 21, 71., 81, 91, 13, 41., 31, 21, 12};
+
+   Matrix z((double *)dat, 8, 4);
+
+   double dat1[]{7879., 8606., 8081., 2538., 8606., 9737., 9212., 3174.,
+                 8081., 9212., 9899., 2962., 2538., 3174., 2962., 2457.};
+
+   MatrixSymmetric resp{MatrixSquare{(double *)dat1, 4}, pmat::utils::TriangType::LOWER};
+
+   std::cout << MatrixSymmetric::gramMatrix(z).formattedString();
+
+   EXPECT_TRUE(MatrixSymmetric::gramMatrix(z) == resp);
+}
