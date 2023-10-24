@@ -664,7 +664,7 @@ TEST(TestMatrixSquare, TestDecompQR) {
    B.setValue(-41.0, 2, 2);
 
    EXPECT_TRUE(resp == A * qr.matP());
-   EXPECT_TRUE(B.decomposeToPQR().rank() == 2);
+   EXPECT_TRUE(pmat::utils::areEqual(B.decomposeToPQR().rank(), 2.0));
    EXPECT_TRUE(identity == A * invA);
 }
 

@@ -497,7 +497,5 @@ TEST(TestMatrixSymmetric, TestStatics) {
 
    MatrixSymmetric resp{MatrixSquare{(double *)dat1, 4}, pmat::utils::TriangType::LOWER};
 
-   std::cout << MatrixSymmetric::gramMatrix(z).formattedString();
-
    EXPECT_TRUE(MatrixSymmetric::gramMatrix(z) == resp);
 }

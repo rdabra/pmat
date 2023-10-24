@@ -1,9 +1,10 @@
 #pragma once
 
+#include <cmath>
 namespace pmat::utils {
 
 // Tolerance for relational operators with doubles
-static const double DIF_TOLERANCE = 0.0000000001;
+static const double DIF_TOLERANCE = 0.000001;
 
 static const double ZERO = 0.0000000000;
 
@@ -27,9 +28,20 @@ static inline double abs(const double &a) {
    return a > ZERO ? a : -a;
 };
 
+/**
+ * @brief Comparison between doubles
+ * @details From Donald Knuth
+ *
+ * @param a
+ * @param b
+ * @return true
+ * @return false
+ */
 static inline bool areEqual(const double &a, const double &b) {
-   const double m = max(abs(a), abs(b));
-   return m < DIF_TOLERANCE ? true : (abs(a - b) / m) < DIF_TOLERANCE;
+   return max(std::fabs(a), std::fabs(b)) < DIF_TOLERANCE
+              ? true
+              : std::fabs(a - b) <=
+                    (std::fabs(a) > std::fabs(b) ? std::fabs(b) : std::fabs(a)) * DIF_TOLERANCE;
 }
 
 static inline bool isZero(const double &a) {
