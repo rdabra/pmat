@@ -360,10 +360,14 @@ int pmat::Matrix::occurrencesInColumn(const int column, const double &value) con
 }
 
 std::string pmat::Matrix::formattedString() const {
-   std::string res{"\n"};
+   std::string res{""};
    for (int i{0}; i < this->rowSize(); i++) {
       for (int j{0}; j < this->columnSize(); j++) {
-         res += std::to_string((*this)(i, j)) + " ";
+         std::stringstream stream;
+         stream.setf(std::ios::fixed);
+         stream.precision(pmat::utils::PRECISION + 1);
+         stream << (*this)(i, j);
+         res += stream.str() + " ";
       }
       res += "\n";
    }

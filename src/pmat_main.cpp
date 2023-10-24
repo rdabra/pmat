@@ -11,9 +11,16 @@
 
 int main() {
 
-   pmat::Matrix m(2, 3);
+   double a = 1.123456789;
 
-   m = pmat::Matrix(2, 3);
+   std::stringstream stream;
+   stream.setf(std::ios::fixed);
+   stream.precision(8 + 1);
+   stream << a;
+
+   std::string s{stream.str()};
+
+   std::cout << s;
 
    return 0;
 }

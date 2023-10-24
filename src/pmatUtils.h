@@ -3,18 +3,20 @@
 #include <cmath>
 namespace pmat::utils {
 
+static const int PRECISION = 8;
+
 // Tolerance for relational operators with doubles
-static const double DIF_TOLERANCE = 0.000001;
+static const double TOLERANCE = 0.00000001;
 
-static const double ZERO = 0.0000000000;
+static const double ZERO = 0.00000000;
 
-static const double ONE = 1.0000000000;
+static const double ONE = 1.00000000;
 
-static const double TWO = 2.0000000000;
+static const double TWO = 2.00000000;
 
-static const double MINUS_ONE = -1.0000000000;
+static const double MINUS_ONE = -1.00000000;
 
-static const double ONE_HALF = 0.5000000000;
+static const double ONE_HALF = 0.50000000;
 
 static const int NUM_THREADS = 5;
 
@@ -38,10 +40,10 @@ static inline double abs(const double &a) {
  * @return false
  */
 static inline bool areEqual(const double &a, const double &b) {
-   return max(std::fabs(a), std::fabs(b)) < DIF_TOLERANCE
+   return max(std::fabs(a), std::fabs(b)) < TOLERANCE
               ? true
               : std::fabs(a - b) <=
-                    (std::fabs(a) > std::fabs(b) ? std::fabs(b) : std::fabs(a)) * DIF_TOLERANCE;
+                    (std::fabs(a) > std::fabs(b) ? std::fabs(b) : std::fabs(a)) * TOLERANCE;
 }
 
 static inline bool isZero(const double &a) {
