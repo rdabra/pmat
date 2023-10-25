@@ -49,6 +49,13 @@ class Array {
       [[nodiscard]] virtual int occurrences(const double &value) const = 0;
 
       /**
+       * @brief Fills the array with the specified value
+       *
+       * @param value
+       */
+      virtual void fillWith(const double &value) = 0;
+
+      /**
        * @brief Fills the array with random values
        *
        * @param min Minimum acceptable value

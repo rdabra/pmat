@@ -277,6 +277,8 @@ class Matrix : public pmat::Array {
        */
       [[nodiscard]] virtual double getFrobeniusNorm() const;
 
+      void fillWith(const double &value) override;
+
       void fillWithRandomValues(const double &min, const double &max) override;
 
       /**

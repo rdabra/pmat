@@ -52,12 +52,20 @@ class Vector : public Array {
       void setValue(const double &value, const int &index);
 
       /**
-       * @brief Informs the value at the informed position
+       * @brief Informs the value at the specified position
        *
        * @param index Position of the value to be informed
-       * @return const double& Value at the informed position
+       * @return const double Value at the informed position
        */
       double operator()(const int &index) const;
+
+      /**
+       * @brief Informs the reference at the specified position
+       *
+       * @param index Position of the value to be informed
+       * @return const double& Reference at the informed position
+       */
+      inline double &operator()(const int &index) { return _vector(index); }
 
       Vector &operator=(const Vector &vector);
       Vector &operator=(Vector &&vector) noexcept;
@@ -135,6 +143,8 @@ class Vector : public Array {
        */
       [[nodiscard]] Vector getUnitaryVector() const;
       [[nodiscard]] int occurrences(const double &value) const override;
+
+      void fillWith(const double &value) override;
       void fillWithRandomValues(const double &min, const double &max) override;
 
       /**

@@ -300,6 +300,16 @@ TEST(TestVector, TestMisc) {
    li.setValue(12.0, 0, 5);
    li.setValue(14.0, 0, 6);
 
+   Vector vvv{4};
+   vvv.fillWith(5.0);
+
+   Vector rrr{4};
+   rrr(0) = 5.0;
+   rrr(1) = 5.0;
+   rrr(2) = 5.0;
+   rrr(3) = 5.0;
+   rrr(4) = 5.0;
+
    EXPECT_TRUE(res.toColumnMatrix() == co);
    EXPECT_TRUE(res.toRowMatrix() == li);
    EXPECT_TRUE(v1.length() == 5);
@@ -309,4 +319,5 @@ TEST(TestVector, TestMisc) {
    EXPECT_TRUE(b == v);
    EXPECT_TRUE(c == res);
    EXPECT_TRUE(vv == res1);
+   EXPECT_TRUE(vvv == rrr);
 }

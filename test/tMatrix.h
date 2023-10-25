@@ -500,6 +500,11 @@ TEST(TestMatrix, TestMisc) {
    Matrix k(1, 1);
    k.clearAndResize(3, 7);
 
+   Matrix kk(2, 3);
+   kk.fillWith(5.);
+   double dd[]{5., 5., 5., 5., 5., 5.};
+   Matrix rr((double *)dd, 2, 3);
+
    EXPECT_TRUE(a.dimension() == 2);
    EXPECT_TRUE(a == z);
    EXPECT_TRUE(b == z);
@@ -509,6 +514,7 @@ TEST(TestMatrix, TestMisc) {
    EXPECT_TRUE(resp3 == f);
    EXPECT_TRUE(k.length() == 21);
    EXPECT_TRUE(e(2, 2) < 2.0 && e(2, 2) > -1.0);
+   EXPECT_TRUE(kk == rr);
 }
 
 TEST(TestMatrix, TestExtracts) {

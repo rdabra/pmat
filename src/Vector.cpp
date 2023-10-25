@@ -142,6 +142,11 @@ int pmat::Vector::occurrences(const double &value) const {
    return res;
 }
 
+void pmat::Vector::fillWith(const double &value) {
+   for (int i = 0; i < this->length(); i++)
+      (*this)(i) = value;
+}
+
 void pmat::Vector::fillWithRandomValues(const double &min, const double &max) {
    std::uniform_real_distribution<double> dist(min, max);
    std::mt19937 rng(std::random_device{}());

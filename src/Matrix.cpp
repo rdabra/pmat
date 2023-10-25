@@ -291,6 +291,12 @@ double pmat::Matrix::getFrobeniusNorm() const {
    return sqrt(this->dotProduct(*this));
 }
 
+void pmat::Matrix::fillWith(const double &value) {
+   for (int i = 0; i < this->rowSize(); i++)
+      for (int j = 0; j < this->columnSize(); j++)
+         (*this)(i, j) = value;
+}
+
 void pmat::Matrix::fillWithRandomValues(const double &min, const double &max) {
    // Type of random number distribution
    std::uniform_real_distribution<double> dist(min, max);
@@ -301,7 +307,7 @@ void pmat::Matrix::fillWithRandomValues(const double &min, const double &max) {
 
    for (int i = 0; i < this->rowSize(); i++)
       for (int j = 0; j < this->columnSize(); j++)
-         this->setValue(dist(rng), i, j);
+         (*this)(i, j) = dist(rng);
 }
 
 pmat::Vector pmat::Matrix::rowToVector(const int &row) const {
