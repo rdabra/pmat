@@ -19,11 +19,12 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       MatrixSymmetric &operator=(const MatrixSymmetric &matrix) = default;
       MatrixSymmetric &operator=(MatrixSymmetric &&matrix) = default;
       ~MatrixSymmetric() override = default;
-
       explicit MatrixSymmetric(const int &size) : MatrixSymmetry::MatrixSymmetry(size){};
       MatrixSymmetric(const MatrixSquare &matrix, pmat::utils::TriangType type);
-
-      double operator()(const int &row, const int &column) const override;
+      inline double operator()(const int &row, const int &column) const override {
+         return column > row ? this->vectorElement(column, row) : this->vectorElement(row, column);
+      }
+      [[nodiscard]] double at(const int &row, const int &column) const override;
       MatrixSymmetric operator+(const MatrixSymmetric &matrix) const;
       MatrixSquare operator+(const MatrixSymmetry &matrix) const;
       virtual void addBy(const MatrixSymmetric &matrix);

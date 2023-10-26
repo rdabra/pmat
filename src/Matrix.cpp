@@ -79,11 +79,22 @@ void pmat::Matrix::clear() {
    _columnSize = 0;
 }
 
-void pmat::Matrix::setValue(const double &value, const int &row, const int &column) {
+void pmat::Matrix::assign(const double &value, const int &row, const int &column) {
    if (row >= this->rowSize() || column >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    _matrix(this->vectorIndex(row, column)) = value;
+}
+
+void pmat::Matrix::assignNoCheck(const double &value, const int &row, const int &column) {
+   _matrix(this->vectorIndex(row, column)) = value;
+}
+
+double pmat::Matrix::at(const int &row, const int &column) const {
+   if (row >= this->rowSize() || column >= this->columnSize())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
+   return _matrix(this->vectorIndex(row, column));
 }
 
 pmat::Matrix &pmat::Matrix::operator=(const Matrix &matrix) {
@@ -136,7 +147,7 @@ pmat::Matrix pmat::Matrix::operator+(const Matrix &matrix) const {
    Matrix resp{this->rowSize(), this->columnSize()};
    for (int i = 0; i < this->rowSize(); i++)
       for (int j = 0; j < this->columnSize(); j++)
-         resp.setValue((*this)(i, j) + matrix(i, j), i, j);
+         resp(i, j) = (*this)(i, j) + matrix(i, j);
 
    return resp;
 }
@@ -147,7 +158,7 @@ void pmat::Matrix::addBy(const Matrix &matrix) {
 
    for (int i = 0; i < this->rowSize(); i++)
       for (int j = 0; j < this->columnSize(); j++)
-         this->setValue((*this)(i, j) + matrix(i, j), i, j);
+         (*this)(i, j) = (*this)(i, j) + matrix(i, j);
 }
 
 pmat::Matrix pmat::Matrix::operator-(const Matrix &matrix) const {
@@ -157,7 +168,7 @@ pmat::Matrix pmat::Matrix::operator-(const Matrix &matrix) const {
    Matrix resp{this->rowSize(), this->columnSize()};
    for (int i = 0; i < this->rowSize(); i++)
       for (int j = 0; j < this->columnSize(); j++)
-         resp.setValue((*this)(i, j) - matrix(i, j), i, j);
+         resp(i, j) = (*this)(i, j) - matrix(i, j);
 
    return resp;
 }
@@ -168,7 +179,7 @@ void pmat::Matrix::subtractBy(const Matrix &matrix) {
 
    for (int i = 0; i < this->rowSize(); i++)
       for (int j = 0; j < this->columnSize(); j++)
-         this->setValue((*this)(i, j) - matrix(i, j), i, j);
+         (*this)(i, j) = (*this)(i, j) - matrix(i, j);
 }
 
 pmat::Matrix pmat::Matrix::operator*(const Matrix &matrix) const {
@@ -181,7 +192,7 @@ pmat::Matrix pmat::Matrix::operator*(const Matrix &matrix) const {
          double aux = pmat::utils::ZERO;
          for (int k = 0; k < this->columnSize(); k++)
             aux += (*this)(i, k) * matrix(k, j);
-         resp.setValue(aux, i, j);
+         resp(i, j) = aux;
       }
 
    return resp;
@@ -235,7 +246,7 @@ pmat::Matrix pmat::Matrix::multiplyHadamardBy(const Matrix &matrix) const {
    Matrix resp{matrix.rowSize(), matrix.columnSize()};
    for (int i = 0; i < resp.rowSize(); i++)
       for (int j = 0; j < resp.columnSize(); j++)
-         resp.setValue((*this)(i, j) * matrix(i, j), i, j);
+         resp(i, j) = (*this)(i, j) * matrix(i, j);
 
    return resp;
 }
@@ -245,7 +256,7 @@ void pmat::Matrix::multiplyRowBy(const int &row, const double &scalar) {
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    for (int j = 0; j < this->columnSize(); j++)
-      this->setValue((*this)(row, j) * scalar, row, j);
+      (*this)(row, j) = (*this)(row, j) * scalar;
 }
 
 void pmat::Matrix::multiplyColumnBy(const int &column, const double &scalar) {
@@ -253,7 +264,7 @@ void pmat::Matrix::multiplyColumnBy(const int &column, const double &scalar) {
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    for (int i = 0; i < this->rowSize(); i++)
-      this->setValue((*this)(i, column) * scalar, i, column);
+      (*this)(i, column) = (*this)(i, column) * scalar;
 }
 
 void pmat::Matrix::swapRows(const int &rowA, const int &rowB, const int &startColumn,

@@ -4,7 +4,7 @@
 #include <random>
 #include <stdexcept>
 
-double pmat::MatrixUpperTriangular::operator()(const int &row, const int &column) const {
+double pmat::MatrixUpperTriangular::at(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -28,7 +28,7 @@ pmat::MatrixUpperTriangular::operator+(const MatrixUpperTriangular &matrix) cons
    MatrixUpperTriangular res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
-         res.setValue((*this)(i, j) + matrix(i, j), i, j);
+         res.assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
 
    return res;
 }
@@ -36,7 +36,7 @@ pmat::MatrixUpperTriangular::operator+(const MatrixUpperTriangular &matrix) cons
 void pmat::MatrixUpperTriangular::addBy(const MatrixUpperTriangular &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
-         this->setValue((*this)(i, j) + matrix(i, j), i, j);
+         this->assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
 }
 
 pmat::MatrixUpperTriangular
@@ -44,7 +44,7 @@ pmat::MatrixUpperTriangular::operator-(const MatrixUpperTriangular &matrix) cons
    MatrixUpperTriangular res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
-         res.setValue((*this)(i, j) - matrix(i, j), i, j);
+         res.assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
 
    return res;
 }
@@ -52,14 +52,14 @@ pmat::MatrixUpperTriangular::operator-(const MatrixUpperTriangular &matrix) cons
 void pmat::MatrixUpperTriangular::subtractBy(const MatrixUpperTriangular &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
-         this->setValue((*this)(i, j) - matrix(i, j), i, j);
+         this->assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
 }
 
 pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::operator*(const double &scalar) const {
    MatrixUpperTriangular res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
-         res.setValue((*this)(i, j) * scalar, i, j);
+         res.assignNoCheck((*this)(i, j) * scalar, i, j);
 
    return res;
 }
@@ -71,7 +71,7 @@ pmat::MatrixSquare pmat::MatrixUpperTriangular::operator*(const MatrixSquare &ma
 void pmat::MatrixUpperTriangular::multiplyBy(const double &scalar) {
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
-         this->setValue((*this)(i, j) * scalar, i, j);
+         this->assignNoCheck((*this)(i, j) * scalar, i, j);
 }
 
 pmat::MatrixSquare pmat::MatrixUpperTriangular::operator+(const MatrixSquare &matrix) const {
@@ -97,7 +97,7 @@ pmat::MatrixUpperTriangular::operator*(const MatrixUpperTriangular &matrix) cons
          double aux = pmat::utils::ZERO;
          for (int k = i; k < this->columnSize(); k++)
             aux += (*this)(i, k) * matrix(k, j);
-         resp.setValue(aux, i, j);
+         resp.assignNoCheck(aux, i, j);
       }
 
    return resp;
@@ -111,7 +111,7 @@ pmat::MatrixLowerTriangular pmat::MatrixUpperTriangular::getTranspose() const {
    MatrixLowerTriangular resp(this->size());
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         resp.setValue((*this)(j, i), i, j);
+         resp.assignNoCheck((*this)(j, i), i, j);
 
    return resp;
 }
@@ -138,7 +138,7 @@ void pmat::MatrixUpperTriangular::fillWithRandomValues(const double &min, const 
 
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
-         this->setValue(dist(rng), i, j);
+         this->assignNoCheck(dist(rng), i, j);
 }
 
 pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::inverse() {

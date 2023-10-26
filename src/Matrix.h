@@ -57,16 +57,34 @@ class Matrix : public pmat::Array {
       virtual void clearAndResize(const int &rowSize, const int &columnSize);
 
       /**
-       * @brief Sets the specified value at the specified position
+       * @brief Sets the specified value at the specified position with bounds checking
        *
        * @param value Value to be set
        * @param row Row position
        * @param column Column position
        */
-      virtual void setValue(const double &value, const int &row, const int &column);
+      virtual void assign(const double &value, const int &row, const int &column);
 
       /**
-       * @brief Returns the value at the specified position
+       * @brief Sets the specified value at the specified position without bounds checking
+       *
+       * @param value Value to be set
+       * @param row Row position
+       * @param column Column position
+       */
+      void assignNoCheck(const double &value, const int &row, const int &column);
+
+      /**
+       * @brief Returns the value at the specified position with bounds checking
+       *
+       * @param row Row position
+       * @param column Column position
+       * @return double
+       */
+      [[nodiscard]] virtual double at(const int &row, const int &column) const;
+
+      /**
+       * @brief Returns the value at the specified position without bounds checking
        *
        * @param row Row position of the value to be specified
        * @param column Column position of the value to be specified
@@ -77,7 +95,7 @@ class Matrix : public pmat::Array {
       }
 
       /**
-       * @brief Returns the reference to the specified position
+       * @brief Returns the reference to the specified position without bounds checking
        *
        * @param row Row position of the value to be specified
        * @param column Column position of the value to be specified

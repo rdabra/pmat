@@ -4,6 +4,7 @@
 #pragma once
 
 #include "MatrixSymmetry.h"
+#include "pmatUtils.h"
 
 namespace pmat {
 
@@ -14,12 +15,17 @@ class MatrixSkewSymmetric : public pmat::MatrixSymmetry {
       explicit MatrixSkewSymmetric(const int &size) : MatrixSymmetry::MatrixSymmetry(size){};
       MatrixSkewSymmetric(const MatrixSkewSymmetric &matrix)
           : MatrixSymmetry::MatrixSymmetry{std::move(matrix)} {}
-      MatrixSkewSymmetric(MatrixSkewSymmetric &&matrix)
+      MatrixSkewSymmetric(MatrixSkewSymmetric &&matrix) noexcept
           : MatrixSymmetry::MatrixSymmetry{std::move(matrix)} {};
       MatrixSkewSymmetric &operator=(const MatrixSkewSymmetric &matrix) = default;
       MatrixSkewSymmetric &operator=(MatrixSkewSymmetric &&matrix) = default;
       ~MatrixSkewSymmetric() override = default;
-      double operator()(const int &row, const int &column) const override;
+      double operator()(const int &row, const int &column) const override {
+         return (this->isTransposed() ? pmat::utils::MINUS_ONE : pmat::utils::ONE) *
+                (column > row ? pmat::utils::MINUS_ONE * this->vectorElement(column, row)
+                              : this->vectorElement(row, column));
+      }
+      [[nodiscard]] double at(const int &row, const int &column) const override;
       MatrixSkewSymmetric operator+(const MatrixSkewSymmetric &matrix) const;
       MatrixSquare operator+(const MatrixSymmetry &matrix) const;
       virtual void addBy(const MatrixSkewSymmetric &matrix);

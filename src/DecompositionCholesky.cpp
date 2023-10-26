@@ -14,12 +14,12 @@ void pmat::DecompositionCholesky::calculate() {
          if (pmat::utils::isZero(diag) || diag < pmat::utils::ZERO) {
             throw std::logic_error(messages::MATRIX_NOT_L);
          }
-         _factor.setValue(std::sqrt(diag), i, i);
+         _factor.assign(std::sqrt(diag), i, i);
          for (int j = i + 1; j < _matrix->size(); ++j) {
             double aux = (*_matrix)(i, j);
             for (int k = 0; k < i; ++k)
                aux -= (_factor)(i, k) * (_factor)(j, k);
-            _factor.setValue(aux / (_factor)(i, i), j, i);
+            _factor.assign(aux / (_factor)(i, i), j, i);
          }
       }
       _calculated = true;
@@ -91,7 +91,7 @@ pmat::MatrixSymmetric pmat::DecompositionCholesky::inverseAsSymmetric() {
    MatrixSquare aux{this->inverse()};
    for (int i = 0; i < _matrix->size(); ++i)
       for (int j = 0; j <= i; ++j)
-         res.setValue(aux(i, j), i, j);
+         res.assign(aux(i, j), i, j);
 
    return res;
 }

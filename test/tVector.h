@@ -8,31 +8,31 @@ using namespace pmat;
 
 TEST(TestVector, TestEqualityOperator) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    Vector z(7);
-   z.setValue(1.0, 0);
-   z.setValue(2.0, 1);
-   z.setValue(3.0, 2);
-   z.setValue(4.0, 3);
-   z.setValue(5.0, 4);
-   z.setValue(6.0, 5);
-   z.setValue(7.0, 6);
+   z.assign(1.0, 0);
+   z.assign(2.0, 1);
+   z.assign(3.0, 2);
+   z.assign(4.0, 3);
+   z.assign(5.0, 4);
+   z.assign(6.0, 5);
+   z.assign(7.0, 6);
 
    Vector y(7);
-   y.setValue(1.0, 0);
-   y.setValue(2.0, 1);
-   y.setValue(4.0, 2);
-   y.setValue(3.0, 3);
-   y.setValue(5.0, 4);
-   y.setValue(6.0, 5);
-   y.setValue(7.0, 6);
+   y.assign(1.0, 0);
+   y.assign(2.0, 1);
+   y.assign(4.0, 2);
+   y.assign(3.0, 3);
+   y.assign(5.0, 4);
+   y.assign(6.0, 5);
+   y.assign(7.0, 6);
 
    EXPECT_TRUE(v == z);
    EXPECT_FALSE(z == y);
@@ -40,53 +40,53 @@ TEST(TestVector, TestEqualityOperator) {
 
 TEST(TestVector, TestDotProduct) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    Vector z(7);
-   z.setValue(7.0, 0);
-   z.setValue(6.0, 1);
-   z.setValue(5.0, 2);
-   z.setValue(4.0, 3);
-   z.setValue(3.0, 4);
-   z.setValue(2.0, 5);
-   z.setValue(1.0, 6);
+   z.assign(7.0, 0);
+   z.assign(6.0, 1);
+   z.assign(5.0, 2);
+   z.assign(4.0, 3);
+   z.assign(3.0, 4);
+   z.assign(2.0, 5);
+   z.assign(1.0, 6);
 
    EXPECT_TRUE(v.dotProduct(z) == 84.0);
 }
 
 TEST(TestVector, TestPlus) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    Vector z(7);
-   z.setValue(7.0, 0);
-   z.setValue(6.0, 1);
-   z.setValue(5.0, 2);
-   z.setValue(4.0, 3);
-   z.setValue(3.0, 4);
-   z.setValue(2.0, 5);
-   z.setValue(1.0, 6);
+   z.assign(7.0, 0);
+   z.assign(6.0, 1);
+   z.assign(5.0, 2);
+   z.assign(4.0, 3);
+   z.assign(3.0, 4);
+   z.assign(2.0, 5);
+   z.assign(1.0, 6);
 
    Vector res(7);
-   res.setValue(8.0, 0);
-   res.setValue(8.0, 1);
-   res.setValue(8.0, 2);
-   res.setValue(8.0, 3);
-   res.setValue(8.0, 4);
-   res.setValue(8.0, 5);
-   res.setValue(8.0, 6);
+   res.assign(8.0, 0);
+   res.assign(8.0, 1);
+   res.assign(8.0, 2);
+   res.assign(8.0, 3);
+   res.assign(8.0, 4);
+   res.assign(8.0, 5);
+   res.assign(8.0, 6);
 
    Vector x1{z + v};
    const Vector &x2 = v + z;
@@ -99,31 +99,31 @@ TEST(TestVector, TestPlus) {
 
 TEST(TestVector, TestMinus) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    Vector z(7);
-   z.setValue(7.0, 0);
-   z.setValue(6.0, 1);
-   z.setValue(5.0, 2);
-   z.setValue(4.0, 3);
-   z.setValue(3.0, 4);
-   z.setValue(2.0, 5);
-   z.setValue(1.0, 6);
+   z.assign(7.0, 0);
+   z.assign(6.0, 1);
+   z.assign(5.0, 2);
+   z.assign(4.0, 3);
+   z.assign(3.0, 4);
+   z.assign(2.0, 5);
+   z.assign(1.0, 6);
 
    Vector res(7);
-   res.setValue(-6.0, 0);
-   res.setValue(-4.0, 1);
-   res.setValue(-2.0, 2);
-   res.setValue(0.0, 3);
-   res.setValue(2.0, 4);
-   res.setValue(4.0, 5);
-   res.setValue(6.0, 6);
+   res.assign(-6.0, 0);
+   res.assign(-4.0, 1);
+   res.assign(-2.0, 2);
+   res.assign(0.0, 3);
+   res.assign(2.0, 4);
+   res.assign(4.0, 5);
+   res.assign(6.0, 6);
 
    Vector x1{v - z};
    const Vector &x2 = v - z;
@@ -136,24 +136,24 @@ TEST(TestVector, TestMinus) {
 
 TEST(TestVector, TestTimes) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    double scalar = 3.0;
 
    Vector res(7);
-   res.setValue(3.0, 0);
-   res.setValue(6.0, 1);
-   res.setValue(9.0, 2);
-   res.setValue(12.0, 3);
-   res.setValue(15.0, 4);
-   res.setValue(18.0, 5);
-   res.setValue(21.0, 6);
+   res.assign(3.0, 0);
+   res.assign(6.0, 1);
+   res.assign(9.0, 2);
+   res.assign(12.0, 3);
+   res.assign(15.0, 4);
+   res.assign(18.0, 5);
+   res.assign(21.0, 6);
 
    Vector x1{v * scalar};
    const Vector &x2 = v * scalar;
@@ -166,13 +166,13 @@ TEST(TestVector, TestTimes) {
 
 TEST(TestVector, TestFrobenius) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    double frobV{sqrt(v.dotProduct(v))};
 
@@ -181,44 +181,44 @@ TEST(TestVector, TestFrobenius) {
 
 TEST(TestVector, TestNormalization) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    EXPECT_TRUE(v == v.getUnitaryVector() * v.frobeniusNorm());
 }
 
 TEST(TestVector, TestOrder) {
    Vector v(7);
-   v.setValue(5.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(7.0, 2);
-   v.setValue(1.0, 3);
-   v.setValue(3.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(4.0, 6);
+   v.assign(5.0, 0);
+   v.assign(2.0, 1);
+   v.assign(7.0, 2);
+   v.assign(1.0, 3);
+   v.assign(3.0, 4);
+   v.assign(6.0, 5);
+   v.assign(4.0, 6);
 
    Vector asc(7);
-   asc.setValue(1.0, 0);
-   asc.setValue(2.0, 1);
-   asc.setValue(3.0, 2);
-   asc.setValue(4.0, 3);
-   asc.setValue(5.0, 4);
-   asc.setValue(6.0, 5);
-   asc.setValue(7.0, 6);
+   asc.assign(1.0, 0);
+   asc.assign(2.0, 1);
+   asc.assign(3.0, 2);
+   asc.assign(4.0, 3);
+   asc.assign(5.0, 4);
+   asc.assign(6.0, 5);
+   asc.assign(7.0, 6);
 
    Vector dsc(7);
-   dsc.setValue(7.0, 0);
-   dsc.setValue(6.0, 1);
-   dsc.setValue(5.0, 2);
-   dsc.setValue(4.0, 3);
-   dsc.setValue(3.0, 4);
-   dsc.setValue(2.0, 5);
-   dsc.setValue(1.0, 6);
+   dsc.assign(7.0, 0);
+   dsc.assign(6.0, 1);
+   dsc.assign(5.0, 2);
+   dsc.assign(4.0, 3);
+   dsc.assign(3.0, 4);
+   dsc.assign(2.0, 5);
+   dsc.assign(1.0, 6);
 
    v.ascendingSort();
    EXPECT_TRUE(v == asc);
@@ -228,13 +228,13 @@ TEST(TestVector, TestOrder) {
 
 TEST(TestVector, TestOccurrences) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(5.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(7.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(5.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(5.0, 1);
+   v.assign(3.0, 2);
+   v.assign(7.0, 3);
+   v.assign(5.0, 4);
+   v.assign(5.0, 5);
+   v.assign(7.0, 6);
 
    EXPECT_TRUE(v.occurrences(5.0) == 3);
    EXPECT_TRUE(v.occurrences(7.0) == 2);
@@ -243,13 +243,13 @@ TEST(TestVector, TestOccurrences) {
 
 TEST(TestVector, TestMisc) {
    Vector v(7);
-   v.setValue(1.0, 0);
-   v.setValue(2.0, 1);
-   v.setValue(3.0, 2);
-   v.setValue(4.0, 3);
-   v.setValue(5.0, 4);
-   v.setValue(6.0, 5);
-   v.setValue(7.0, 6);
+   v.assign(1.0, 0);
+   v.assign(2.0, 1);
+   v.assign(3.0, 2);
+   v.assign(4.0, 3);
+   v.assign(5.0, 4);
+   v.assign(6.0, 5);
+   v.assign(7.0, 6);
 
    Vector a(v);
    Vector b;
@@ -258,22 +258,22 @@ TEST(TestVector, TestMisc) {
    c = a * 2.0;
 
    Vector res(7);
-   res.setValue(2.0, 0);
-   res.setValue(4.0, 1);
-   res.setValue(6.0, 2);
-   res.setValue(8.0, 3);
-   res.setValue(10.0, 4);
-   res.setValue(12.0, 5);
-   res.setValue(14.0, 6);
+   res.assign(2.0, 0);
+   res.assign(4.0, 1);
+   res.assign(6.0, 2);
+   res.assign(8.0, 3);
+   res.assign(10.0, 4);
+   res.assign(12.0, 5);
+   res.assign(14.0, 6);
 
    Vector res1(7);
-   res1.setValue(1.0, 0);
-   res1.setValue(5.0, 1);
-   res1.setValue(3.0, 2);
-   res1.setValue(4.0, 3);
-   res1.setValue(2.0, 4);
-   res1.setValue(6.0, 5);
-   res1.setValue(7.0, 6);
+   res1.assign(1.0, 0);
+   res1.assign(5.0, 1);
+   res1.assign(3.0, 2);
+   res1.assign(4.0, 3);
+   res1.assign(2.0, 4);
+   res1.assign(6.0, 5);
+   res1.assign(7.0, 6);
 
    Vector vv(v);
    vv.swapElements(1, 4);
@@ -283,22 +283,22 @@ TEST(TestVector, TestMisc) {
    v1.fillWithRandomValues(-2.0, 10.0);
 
    Matrix co{7, 1};
-   co.setValue(2.0, 0, 0);
-   co.setValue(4.0, 1, 0);
-   co.setValue(6.0, 2, 0);
-   co.setValue(8.0, 3, 0);
-   co.setValue(10.0, 4, 0);
-   co.setValue(12.0, 5, 0);
-   co.setValue(14.0, 6, 0);
+   co.assign(2.0, 0, 0);
+   co.assign(4.0, 1, 0);
+   co.assign(6.0, 2, 0);
+   co.assign(8.0, 3, 0);
+   co.assign(10.0, 4, 0);
+   co.assign(12.0, 5, 0);
+   co.assign(14.0, 6, 0);
 
    Matrix li{1, 7};
-   li.setValue(2.0, 0, 0);
-   li.setValue(4.0, 0, 1);
-   li.setValue(6.0, 0, 2);
-   li.setValue(8.0, 0, 3);
-   li.setValue(10.0, 0, 4);
-   li.setValue(12.0, 0, 5);
-   li.setValue(14.0, 0, 6);
+   li.assign(2.0, 0, 0);
+   li.assign(4.0, 0, 1);
+   li.assign(6.0, 0, 2);
+   li.assign(8.0, 0, 3);
+   li.assign(10.0, 0, 4);
+   li.assign(12.0, 0, 5);
+   li.assign(14.0, 0, 6);
 
    Vector vvv{4};
    vvv.fillWith(5.0);

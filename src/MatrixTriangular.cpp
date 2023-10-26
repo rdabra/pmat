@@ -29,7 +29,7 @@ pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByRows(const int &rowIndexA
       else if (i == rowIndexB)
          k = rowIndexA;
       for (int j = 0; j < this->size(); ++j)
-         resp.setValue((*this)(k, j), i, j);
+         resp.assignNoCheck((*this)(k, j), i, j);
    }
 
    return resp;
@@ -49,7 +49,7 @@ pmat::MatrixSquare pmat::MatrixTriangular::getSwappedByColumns(const int &column
       else if (j == columnIndexB)
          k = columnIndexA;
       for (int i = 0; i < this->size(); ++i)
-         resp.setValue((*this)(i, k), i, j);
+         resp.assignNoCheck((*this)(i, k), i, j);
    }
 
    return resp;
@@ -91,13 +91,13 @@ void pmat::MatrixTriangular::findInverseByBackSubstitution(const MatrixTriangula
          ids[k] = matrix.size() - k - 1;
 
    for (int idxPivot = 0; idxPivot < matrix.size(); idxPivot++) {
-      resp.setValue(pmat::utils::ONE / matrix(ids[idxPivot], ids[idxPivot]), ids[idxPivot],
-                    ids[idxPivot]);
+      resp.assignNoCheck(pmat::utils::ONE / matrix(ids[idxPivot], ids[idxPivot]), ids[idxPivot],
+                         ids[idxPivot]);
       for (int i = idxPivot + 1; i < matrix.size(); i++) {
          double num{pmat::utils::ZERO};
          for (int j = idxPivot; j < i; j++)
             num -= matrix(ids[i], ids[j]) * resp(ids[j], ids[idxPivot]);
-         resp.setValue(num / matrix(ids[i], ids[i]), ids[i], ids[idxPivot]);
+         resp.assignNoCheck(num / matrix(ids[i], ids[i]), ids[i], ids[idxPivot]);
       }
    }
 }
@@ -113,12 +113,12 @@ pmat::Vector pmat::MatrixTriangular::findSolutionByBackSubstitution(const Matrix
       for (int k = 0; k < matrix.size(); k++)
          ids[k] = matrix.size() - k - 1;
 
-   resp.setValue(rhs(ids[0]) / matrix(ids[0], ids[0]), ids[0]);
+   resp(ids[0]) = rhs(ids[0]) / matrix(ids[0], ids[0]);
    for (int i = 1; i < matrix.size(); i++) {
       double num{rhs(ids[i])};
       for (int j = 0; j < i; j++)
          num -= matrix(ids[i], ids[j]) * resp(ids[j]);
-      resp.setValue(num / matrix(ids[i], ids[i]), ids[i]);
+      resp(ids[i]) = num / matrix(ids[i], ids[i]);
    }
 
    return resp;

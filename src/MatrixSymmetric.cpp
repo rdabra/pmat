@@ -10,15 +10,15 @@ pmat::MatrixSymmetric::MatrixSymmetric(const MatrixSquare &matrix, pmat::utils::
    if (type == pmat::utils::TriangType::LOWER) {
       for (int i = 0; i < this->size(); i++)
          for (int j = 0; j <= i; j++)
-            this->setValue(matrix(i, j), i, j);
+            this->assignNoCheck(matrix(i, j), i, j);
    } else {
       for (int i = 0; i < this->size(); i++)
          for (int j = i; j < this->size(); j++)
-            this->setValue(matrix(i, j), i, j);
+            this->assignNoCheck(matrix(i, j), i, j);
    }
 }
 
-double pmat::MatrixSymmetric::operator()(const int &row, const int &column) const {
+double pmat::MatrixSymmetric::at(const int &row, const int &column) const {
    if (row >= this->size() || column >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -29,7 +29,7 @@ pmat::MatrixSymmetric pmat::MatrixSymmetric::operator+(const MatrixSymmetric &ma
    MatrixSymmetric res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) + matrix(i, j), i, j);
+         res.assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
    return res;
 }
 
@@ -40,14 +40,14 @@ pmat::MatrixSquare pmat::MatrixSymmetric::operator+(const MatrixSymmetry &matrix
 void pmat::MatrixSymmetric::addBy(const MatrixSymmetric &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue((*this)(i, j) + matrix(i, j), i, j);
+         this->assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
 }
 
 pmat::MatrixSymmetric pmat::MatrixSymmetric::operator-(const MatrixSymmetric &matrix) const {
    MatrixSymmetric res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) - matrix(i, j), i, j);
+         res.assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
    return res;
 }
 
@@ -58,14 +58,14 @@ pmat::MatrixSquare pmat::MatrixSymmetric::operator-(const MatrixSymmetry &matrix
 void pmat::MatrixSymmetric::subtractBy(const MatrixSymmetric &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue((*this)(i, j) - matrix(i, j), i, j);
+         this->assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
 }
 
 pmat::MatrixSymmetric pmat::MatrixSymmetric::operator*(const double &scalar) const {
    MatrixSymmetric res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) * scalar, i, j);
+         res.assignNoCheck((*this)(i, j) * scalar, i, j);
    return res;
 }
 
@@ -84,7 +84,7 @@ pmat::Vector pmat::MatrixSymmetric::operator*(const Vector &vector) const {
 void pmat::MatrixSymmetric::multiplyBy(const double &scalar) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue((*this)(i, j) * scalar, i, j);
+         this->assignNoCheck((*this)(i, j) * scalar, i, j);
 }
 
 void pmat::MatrixSymmetric::fillWithRandomValues(const double &min, const double &max) {
@@ -93,7 +93,7 @@ void pmat::MatrixSymmetric::fillWithRandomValues(const double &min, const double
 
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue(dist(rng), i, j);
+         this->assignNoCheck(dist(rng), i, j);
 }
 
 pmat::DecompositionCholesky pmat::MatrixSymmetric::decomposeToCholesky() {
@@ -108,7 +108,7 @@ pmat::MatrixSymmetric pmat::MatrixSymmetric::gramMatrix(const pmat::Matrix &matr
          double aux{pmat::utils::ZERO};
          for (int k = 0; k < matrix.rowSize(); k++)
             aux += matrix(k, i) * matrix(k, j);
-         resp.setValue(aux, i, j);
+         resp.assignNoCheck(aux, i, j);
       }
 
    return resp;

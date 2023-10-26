@@ -16,7 +16,7 @@ pmat::TMultiplicationManager::TMultiplicationManager(const Matrix &operandFirst,
 void pmat::TMultiplicationManager::setResultValue(const double &value, const int &row,
                                                   const int &column) {
    std::lock_guard<std::mutex> lg(mtx1);
-   _result->setValue(value, row, column);
+   _result->assign(value, row, column);
 }
 
 bool pmat::TMultiplicationManager::getNextRowColumn(int id) {

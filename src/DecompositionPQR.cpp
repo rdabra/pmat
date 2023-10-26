@@ -19,25 +19,25 @@ pmat::DecompositionPQR::calculateHouseholderSubMatrix(const MatrixSquare &partia
    double alpha{pmat::utils::ZERO};
    for (int i = idxPivot; i < partialR.size(); ++i) {
       alpha += partialR(i, idxPivot) * partialR(i, idxPivot);
-      u.setValue(partialR(i, idxPivot), i - idxPivot);
+      u.assign(partialR(i, idxPivot), i - idxPivot);
    }
 
    // Using the opposite sign of the Frobenius norm
    alpha = -pmat::utils::ONE * pmat::utils::signOf(partialR(idxPivot, idxPivot)) * std::sqrt(alpha);
 
-   u.setValue(u(0) - alpha, 0);
+   u.assign(u(0) - alpha, 0);
 
    const double squareNormU = u.dotProduct(u);
    MatrixSquare resp(u.size());
    for (int i = 0; i < resp.size(); ++i) {
       if (pmat::utils::isZero(squareNormU))
-         resp.setValue(pmat::utils::ONE, i, i);
+         resp.assign(pmat::utils::ONE, i, i);
       else
          for (int j = 0; j < resp.size(); ++j) {
             if (i == j)
-               resp.setValue(pmat::utils::ONE - pmat::utils::TWO * u(i) * u(j) / squareNormU, i, j);
+               resp.assign(pmat::utils::ONE - pmat::utils::TWO * u(i) * u(j) / squareNormU, i, j);
             else
-               resp.setValue(-pmat::utils::TWO * u(i) * u(j) / squareNormU, i, j);
+               resp.assign(-pmat::utils::TWO * u(i) * u(j) / squareNormU, i, j);
          }
    }
 
@@ -81,9 +81,9 @@ void pmat::DecompositionPQR::calculate() {
          if (!pmat::utils::isZero(matR(i, i)))
             _rank++;
          for (int j = 0; j < _matrix->size(); ++j) {
-            _matQ.setValue(matQAux(j, i), i, j);
+            _matQ.assign(matQAux(j, i), i, j);
             if (j >= i)
-               _matR.setValue(matR(i, j), i, j);
+               _matR.assign(matR(i, j), i, j);
          }
       }
 
@@ -141,5 +141,5 @@ pmat::MatrixSquare pmat::DecompositionPQR::inverse() {
 pmat::DecompositionPQR::DecompositionPQR(const MatrixSquare &matrix)
     : _matrix{&matrix}, _matP{matrix.size()}, _matQ{matrix.size()}, _matR{matrix.size()} {
    for (int j = 0; j < matrix.size(); j++)
-      _matP.setValue(pmat::utils::ONE, j, j);
+      _matP.assign(pmat::utils::ONE, j, j);
 }

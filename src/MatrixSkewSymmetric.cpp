@@ -4,7 +4,7 @@
 #include <random>
 #include <stdexcept>
 
-double pmat::MatrixSkewSymmetric::operator()(const int &row, const int &column) const {
+double pmat::MatrixSkewSymmetric::at(const int &row, const int &column) const {
    if (row >= this->rowSize() || column >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -19,7 +19,7 @@ pmat::MatrixSkewSymmetric::operator+(const MatrixSkewSymmetric &matrix) const {
    MatrixSkewSymmetric res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) + matrix(i, j), i, j);
+         res.assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
    return res;
 }
 
@@ -30,7 +30,7 @@ pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator+(const MatrixSymmetry &ma
 void pmat::MatrixSkewSymmetric::addBy(const MatrixSkewSymmetric &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue((*this)(i, j) + matrix(i, j), i, j);
+         this->assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
 }
 
 pmat::MatrixSkewSymmetric
@@ -38,7 +38,7 @@ pmat::MatrixSkewSymmetric::operator-(const MatrixSkewSymmetric &matrix) const {
    MatrixSkewSymmetric res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) - matrix(i, j), i, j);
+         res.assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
    return res;
 }
 
@@ -49,14 +49,14 @@ pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator-(const MatrixSymmetry &ma
 void pmat::MatrixSkewSymmetric::subtractBy(const MatrixSkewSymmetric &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue((*this)(i, j) - matrix(i, j), i, j);
+         this->assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
 }
 
 pmat::MatrixSkewSymmetric pmat::MatrixSkewSymmetric::operator*(const double &scalar) const {
    MatrixSkewSymmetric res{this->size()};
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         res.setValue((*this)(i, j) * scalar, i, j);
+         res.assignNoCheck((*this)(i, j) * scalar, i, j);
    return res;
 }
 
@@ -75,7 +75,7 @@ pmat::Matrix pmat::MatrixSkewSymmetric::operator*(const Matrix &matrix) const {
 void pmat::MatrixSkewSymmetric::multiplyBy(const double &scalar) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue((*this)(i, j) * scalar, i, j);
+         this->assignNoCheck((*this)(i, j) * scalar, i, j);
 }
 
 void pmat::MatrixSkewSymmetric::transpose() {
@@ -88,5 +88,5 @@ void pmat::MatrixSkewSymmetric::fillWithRandomValues(const double &min, const do
 
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
-         this->setValue(dist(rng), i, j);
+         this->assignNoCheck(dist(rng), i, j);
 }

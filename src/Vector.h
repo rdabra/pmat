@@ -44,23 +44,31 @@ class Vector : public Array {
       void emplaceBack(const double &value);
 
       /**
-       * @brief Sets the informed value at the informed position
+       * @brief Sets the informed value at the informed position with bounds checking
        *
        * @param value Value to be set
        * @param index Position in vector
        */
-      void setValue(const double &value, const int &index);
+      void assign(const double &value, const int &index);
 
       /**
-       * @brief Informs the value at the specified position
+       * @brief Returns the value at the specified position with bounds checking
+       *
+       * @param index Position
+       * @return double
+       */
+      [[nodiscard]] double at(const int &index) const;
+
+      /**
+       * @brief Informs the value at the specified position without bounds checking
        *
        * @param index Position of the value to be informed
        * @return const double Value at the informed position
        */
-      double operator()(const int &index) const;
+      inline double operator()(const int &index) const { return _vector(index); };
 
       /**
-       * @brief Informs the reference at the specified position
+       * @brief Informs the reference at the specified position without bounds checking
        *
        * @param index Position of the value to be informed
        * @return const double& Reference at the informed position

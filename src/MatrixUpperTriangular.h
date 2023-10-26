@@ -22,7 +22,10 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
       ~MatrixUpperTriangular() override = default;
       MatrixUpperTriangular &operator=(const MatrixUpperTriangular &matrix) = default;
       MatrixUpperTriangular &operator=(MatrixUpperTriangular &&matrix) = default;
-      double operator()(const int &row, const int &column) const override;
+      inline double operator()(const int &row, const int &column) const override {
+         return column < row ? pmat::utils::ZERO : this->vectorElement(row, column);
+      }
+      [[nodiscard]] double at(const int &row, const int &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixUpperTriangular operator+(const MatrixUpperTriangular &matrix) const;
       virtual void addBy(const MatrixUpperTriangular &matrix);

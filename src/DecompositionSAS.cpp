@@ -5,8 +5,8 @@ void pmat::DecompositionSAS::calculate() {
    if (!_calculated) {
       for (int i = 0; i < _matrix->size(); ++i)
          for (int j = 0; j <= i; ++j) {
-            _matS.setValue(pmat::utils::ONE_HALF * ((*_matrix)(i, j) + (*_matrix)(j, i)), i, j);
-            _matAS.setValue(pmat::utils::ONE_HALF * ((*_matrix)(i, j) - (*_matrix)(j, i)), i, j);
+            _matS.assign(pmat::utils::ONE_HALF * ((*_matrix)(i, j) + (*_matrix)(j, i)), i, j);
+            _matAS.assign(pmat::utils::ONE_HALF * ((*_matrix)(i, j) - (*_matrix)(j, i)), i, j);
          }
       _calculated = true;
    }

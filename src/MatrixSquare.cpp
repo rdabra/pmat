@@ -17,7 +17,7 @@ pmat::MatrixSquare::MatrixSquare(const MatrixSquare &matrix) {
    this->initializeMembers(matrix.size(), matrix.size(), matrix.isTransposed());
    for (int i = 0; i < matrix.size(); ++i)
       for (int j = 0; j < matrix.size(); ++j)
-         this->setValue(matrix(i, j), i, j);
+         (*this)(i, j) = matrix(i, j);
 }
 
 int pmat::MatrixSquare::size() const {
@@ -60,12 +60,12 @@ pmat::MatrixSquare pmat::MatrixSquare::multiplyByBiggerMatrix(const MatrixSquare
    for (int i = 0; i < matrix.size(); ++i)
       for (int j = 0; j < matrix.size(); ++j) {
          if (i < limInf || i >= limSup)
-            resp.setValue(matrix(i, j), i, j);
+            resp(i, j) = matrix(i, j);
          else {
             double aux{pmat::utils::ZERO};
             for (int k = limInf; k < limSup; ++k)
                aux += (*this)(i - limInf, k - limInf) * matrix(k, j);
-            resp.setValue(aux, i, j);
+            resp(i, j) = aux;
          }
       }
 
@@ -96,7 +96,7 @@ double pmat::MatrixSquare::trace() const {
 
 void pmat::MatrixSquare::fillDiagonalWith(const double &value) {
    for (int i = 0; i < this->size(); ++i)
-      this->setValue(value, i, i);
+      (*this)(i, i) = value;
 }
 
 pmat::DecompositionPLU pmat::MatrixSquare::decomposeToPLU() const {

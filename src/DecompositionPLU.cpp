@@ -24,9 +24,9 @@ void pmat::DecompositionPLU::swapRowsBellow(MatrixSquare &matU, const int &idxPi
 
 void pmat::DecompositionPLU::nullifyElementBellow(MatrixSquare &matU, const int &idxPivot) {
    for (int i = idxPivot + 1; i < matU.size(); i++) {
-      _matL.setValue(matU(i, idxPivot) / matU(idxPivot, idxPivot), i, idxPivot);
+      _matL.assign(matU(i, idxPivot) / matU(idxPivot, idxPivot), i, idxPivot);
       for (int j = idxPivot; j < matU.size(); j++)
-         matU.setValue(matU(i, j) - matU(idxPivot, j) * _matL(i, idxPivot), i, j);
+         matU.assign(matU(i, j) - matU(idxPivot, j) * _matL(i, idxPivot), i, j);
    }
 }
 
@@ -42,7 +42,7 @@ void pmat::DecompositionPLU::calculate() {
          }
          for (int i = 0; i < matU.size(); ++i)
             for (int j = i; j < matU.size(); ++j)
-               _matU.setValue(matU(i, j), i, j);
+               _matU.assign(matU(i, j), i, j);
       } else {
          MatrixSquare matU(*_matrix);
          for (int idxPivot = 0; idxPivot < matU.size() - 1; idxPivot++) {
@@ -53,7 +53,7 @@ void pmat::DecompositionPLU::calculate() {
 
          for (int i = 0; i < matU.size(); ++i)
             for (int j = i; j < matU.size(); ++j)
-               _matU.setValue(matU(i, j), i, j);
+               _matU.assign(matU(i, j), i, j);
       }
 
       _calculated = true;
@@ -63,8 +63,8 @@ void pmat::DecompositionPLU::calculate() {
 pmat::DecompositionPLU::DecompositionPLU(const MatrixSquare &matrix)
     : _matrix{&matrix}, _matP{matrix.size()}, _matL{matrix.size()}, _matU{matrix.size()} {
    for (int j = 0; j < _matrix->size(); j++) {
-      _matL.setValue(pmat::utils::ONE, j, j);
-      _matP.setValue(pmat::utils::ONE, j, j);
+      _matL.assign(pmat::utils::ONE, j, j);
+      _matP.assign(pmat::utils::ONE, j, j);
    }
 }
 
@@ -72,8 +72,8 @@ pmat::DecompositionPLU::DecompositionPLU(const MatrixSquare &matrix, bool calcul
     : _matrix{&matrix}, _matP{matrix.size()}, _matL{matrix.size()}, _matU{matrix.size()},
       _strictLUMode{calculateStrictLU} {
    for (int j = 0; j < _matrix->size(); j++) {
-      _matL.setValue(pmat::utils::ONE, j, j);
-      _matP.setValue(pmat::utils::ONE, j, j);
+      _matL.assign(pmat::utils::ONE, j, j);
+      _matP.assign(pmat::utils::ONE, j, j);
    }
 }
 
@@ -183,8 +183,8 @@ void pmat::DecompositionPLU::setStrictLUMode() {
       _matL.resize(_matrix->size());
       _matU.resize(_matrix->size());
       for (int j = 0; j < _matrix->size(); j++) {
-         _matL.setValue(pmat::utils::ONE, j, j);
-         _matP.setValue(pmat::utils::ONE, j, j);
+         _matL.assign(pmat::utils::ONE, j, j);
+         _matP.assign(pmat::utils::ONE, j, j);
       }
    }
    _strictLUMode = true;

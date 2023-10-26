@@ -24,7 +24,10 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       MatrixLowerTriangular &operator=(const MatrixLowerTriangular &matrix) = default;
       MatrixLowerTriangular &operator=(MatrixLowerTriangular &&matrix) = default;
       ~MatrixLowerTriangular() override = default;
-      double operator()(const int &row, const int &column) const override;
+      double operator()(const int &row, const int &column) const override {
+         return column > row ? pmat::utils::ZERO : this->vectorElement(row, column);
+      };
+      [[nodiscard]] double at(const int &row, const int &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixLowerTriangular operator+(const MatrixLowerTriangular &matrix) const;
       virtual void addBy(const MatrixLowerTriangular &matrix);

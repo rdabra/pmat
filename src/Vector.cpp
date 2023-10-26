@@ -18,14 +18,14 @@ void pmat::Vector::emplaceBack(const double &value) {
    _vector.pushBack(value);
 }
 
-void pmat::Vector::setValue(const double &value, const int &index) {
+void pmat::Vector::assign(const double &value, const int &index) {
    if (index >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
    _vector.set(index, value);
 }
 
-double pmat::Vector::operator()(const int &index) const {
+double pmat::Vector::at(const int &index) const {
    if (index >= this->size())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -76,7 +76,7 @@ void pmat::Vector::addBy(const Vector &vector) {
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    for (int i{0}; i < vector.length(); i++)
-      this->setValue((*this)(i) + vector(i), i);
+      (*this)(i) = (*this)(i) + vector(i);
 }
 
 pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
@@ -95,7 +95,7 @@ void pmat::Vector::subtractBy(const Vector &vector) {
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    for (int i{0}; i < vector.length(); i++)
-      this->setValue((*this)(i)-vector(i), i);
+      (*this)(i) = (*this)(i)-vector(i);
 }
 
 pmat::Vector pmat::Vector::operator*(const double &scalar) const {
@@ -108,7 +108,7 @@ pmat::Vector pmat::Vector::operator*(const double &scalar) const {
 
 void pmat::Vector::multiplyBy(const double &scalar) {
    for (int i{0}; i < this->length(); i++)
-      this->setValue((*this)(i)*scalar, i);
+      (*this)(i) = (*this)(i)*scalar;
 }
 
 double pmat::Vector::dotProduct(const Vector &vector) const {
@@ -152,7 +152,7 @@ void pmat::Vector::fillWithRandomValues(const double &min, const double &max) {
    std::mt19937 rng(std::random_device{}());
 
    for (int i = 0; i < this->length(); i++)
-      this->setValue(dist(rng), i);
+      (*this)(i) = dist(rng);
 }
 
 void pmat::Vector::swapElements(const int &elmIndexA, const int &elmIndexB) {
@@ -173,14 +173,16 @@ void pmat::Vector::descendingSort() {
 pmat::Matrix pmat::Vector::toColumnMatrix() const {
    Matrix res{this->length(), 1};
    for (int i = 0; i < this->length(); i++)
-      res.setValue(_vector(i), i, 0);
+      res(i, 0) = _vector(i);
+
    return res;
 }
 
 pmat::Matrix pmat::Vector::toRowMatrix() const {
    Matrix res{1, this->length()};
    for (int i = 0; i < this->length(); i++)
-      res.setValue(_vector(i), 0, i);
+      res(0, i) = _vector(i);
+
    return res;
 }
 
