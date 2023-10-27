@@ -1,6 +1,9 @@
 #pragma once
 
 #include <cmath>
+#include <sstream>
+#include <string>
+
 namespace pmat::utils {
 
 static const int PRECISION = 8;
@@ -48,6 +51,15 @@ static inline double signOf(const double &a) {
 
 static inline double inv(const double &a) {
    return ONE / a;
+}
+
+static std::string format(const double &a) {
+   std::stringstream stream;
+   stream.setf(std::ios::fixed);
+   stream.precision(pmat::utils::PRECISION + 1);
+   stream << a;
+
+   return stream.str();
 }
 
 } // namespace pmat::utils

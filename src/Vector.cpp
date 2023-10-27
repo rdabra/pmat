@@ -193,7 +193,7 @@ double pmat::Vector::euclideanDistantFrom(const Vector &vector) const {
 std::string pmat::Vector::formattedString() const {
    std::string res{"\n"};
    for (int i{0}; i < this->size(); i++)
-      res += std::to_string((*this)(i)) + " ";
+      res += pmat::utils::format((*this)(i)) + " ";
    res += "\n";
 
    return res;
