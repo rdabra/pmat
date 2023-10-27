@@ -6,6 +6,10 @@
 #include <stdexcept>
 #include <utility>
 
+pmat::Vector::Vector(double data[], const int &size) {
+   _vector = pmat::Container1d{data, size};
+}
+
 pmat::Vector::Vector(const Vector &vector) : _vector{vector._vector} {
 }
 

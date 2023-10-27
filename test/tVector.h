@@ -314,10 +314,8 @@ TEST(TestVector, TestMisc) {
    x(1) = 5.0;
    x(2) = 7.0;
 
-   Vector y{3};
-   y(0) = 8.0;
-   y(1) = 13.0;
-   y(2) = 7.0;
+   double data[] = {8., 13., 7.};
+   Vector y{data, 3};
 
    EXPECT_TRUE(res.toColumnMatrix() == co);
    EXPECT_TRUE(res.toRowMatrix() == li);

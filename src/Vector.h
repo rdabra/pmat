@@ -23,6 +23,7 @@ class Vector : public Array {
       Vector(const Vector &vector);
       Vector(Vector &&vector) noexcept : _vector{std::move(vector._vector)} {};
       ~Vector() override = default;
+      Vector(double data[], const int &size);
       [[nodiscard]] int length() const override { return _vector.size(); };
       [[nodiscard]] int dimension() const override { return 1; };
 
