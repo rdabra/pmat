@@ -332,6 +332,14 @@ pmat::Vector pmat::Matrix::rowToVector(const int &row) const {
    return resp;
 }
 
+std::vector<pmat::Vector> pmat::Matrix::rowsToVectors() const {
+   std::vector<pmat::Vector> resp;
+   for (int i = 0; i < this->rowSize(); i++)
+      resp.emplace_back(this->rowToVector(i));
+
+   return resp;
+}
+
 pmat::Vector pmat::Matrix::columnToVector(const int &column) const {
    if (column >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
@@ -339,6 +347,14 @@ pmat::Vector pmat::Matrix::columnToVector(const int &column) const {
    Vector resp{};
    for (int i = 0; i < this->rowSize(); i++)
       resp.pushBack((*this)(i, column));
+
+   return resp;
+}
+
+std::vector<pmat::Vector> pmat::Matrix::columnsToVectors() const {
+   std::vector<pmat::Vector> resp;
+   for (int j = 0; j < this->columnSize(); j++)
+      resp.emplace_back(this->columnToVector(j));
 
    return resp;
 }

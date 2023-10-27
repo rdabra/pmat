@@ -2,6 +2,7 @@
 #include "../src/pmatUtils.h"
 #include "gtest/gtest.h"
 #include <cmath>
+#include <vector>
 
 using namespace pmat;
 
@@ -533,6 +534,9 @@ TEST(TestMatrix, TestExtracts) {
    z.assign(10.0, 3, 1);
    z.assign(9.0, 3, 2);
 
+   std::vector<Vector> rows = z.rowsToVectors();
+   std::vector<Vector> cols = z.columnsToVectors();
+
    Vector v1{};
    v1.pushBack(2.0);
    v1.pushBack(5.0);
@@ -546,6 +550,8 @@ TEST(TestMatrix, TestExtracts) {
 
    EXPECT_TRUE(z.columnToVector(1) == v1);
    EXPECT_TRUE(z.rowToVector(2) == v2);
+   EXPECT_TRUE(cols[1] == v1);
+   EXPECT_TRUE(rows[2] == v2);
 }
 
 TEST(TestMatrix, TestFromFile) {

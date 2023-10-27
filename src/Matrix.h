@@ -184,7 +184,7 @@ class Matrix : public pmat::Array {
        * @return Vector Multiplication result
        * @exception std::invalid_argument Incompatible sizes
        */
-      virtual Vector operator*(const Vector &vector) const;
+      virtual pmat::Vector operator*(const pmat::Vector &vector) const;
 
       /**
        * @brief Multiplies this matrix by the specified scalar
@@ -306,7 +306,9 @@ class Matrix : public pmat::Array {
        * @return Vector specified row as a vector
        * @exception std::invalid_argument Index out of bounds
        */
-      [[nodiscard]] Vector rowToVector(const int &row) const;
+      [[nodiscard]] pmat::Vector rowToVector(const int &row) const;
+
+      [[nodiscard]] std::vector<pmat::Vector> rowsToVectors() const;
 
       /**
        * @brief Gets the specified column as a vector
@@ -315,7 +317,9 @@ class Matrix : public pmat::Array {
        * @return Vector specified column as a vector
        * @exception std::invalid_argument Index out of bounds
        */
-      [[nodiscard]] Vector columnToVector(const int &column) const;
+      [[nodiscard]] pmat::Vector columnToVector(const int &column) const;
+
+      [[nodiscard]] std::vector<pmat::Vector> columnsToVectors() const;
 
       [[nodiscard]] int occurrences(const double &value) const override;
 
