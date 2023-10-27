@@ -46,4 +46,8 @@ static inline double signOf(const double &a) {
    return a < 0 ? -ONE : ONE;
 }
 
+static inline double inv(const double &a) {
+   return ONE / a;
+}
+
 } // namespace pmat::utils
