@@ -41,10 +41,10 @@ class Vector : public Array {
       void resize(const int &size);
 
       void clear() override { _vector.clear(); };
-      void emplaceBack(const double &value);
+      void pushBack(const double &value);
 
       /**
-       * @brief Sets the informed value at the informed position with bounds checking
+       * @brief Sets the specified value at the specified position with bounds checking
        *
        * @param value Value to be set
        * @param index Position in vector
@@ -62,16 +62,16 @@ class Vector : public Array {
       /**
        * @brief Informs the value at the specified position without bounds checking
        *
-       * @param index Position of the value to be informed
-       * @return const double Value at the informed position
+       * @param index Position of the value to be specified
+       * @return const double Value at the specified position
        */
       inline double operator()(const int &index) const { return _vector(index); };
 
       /**
        * @brief Informs the reference at the specified position without bounds checking
        *
-       * @param index Position of the value to be informed
-       * @return const double& Reference at the informed position
+       * @param index Position of the value to be specified
+       * @return const double& Reference at the specified position
        */
       inline double &operator()(const int &index) { return _vector(index); }
 
@@ -80,7 +80,7 @@ class Vector : public Array {
       bool operator==(const Vector &vector) const;
 
       /**
-       * @brief Sums this vector and the informed vector
+       * @brief Sums this vector and the specified vector
        *
        * @param vector Second operand of the sum
        * @return Vector Sum result
@@ -88,14 +88,14 @@ class Vector : public Array {
       Vector operator+(const Vector &vector) const;
 
       /**
-       * @brief Sums this vector and the informed vector, setting the result in this vector
+       * @brief Sums this vector and the specified vector, setting the result in this vector
        *
        * @param vector Second operand
        */
       void addBy(const Vector &vector);
 
       /**
-       * @brief Subtracts this vector and the informed vector
+       * @brief Subtracts this vector and the specified vector
        *
        * @param vector Right operand of the sum
        * @return Vector Sum result
@@ -103,14 +103,14 @@ class Vector : public Array {
       Vector operator-(const Vector &vector) const;
 
       /**
-       * @brief Subtracts this vector and the informed vector, setting the result in this vector
+       * @brief Subtracts this vector and the specified vector, setting the result in this vector
        *
        * @param vector Right operand
        */
       void subtractBy(const Vector &vector);
 
       /**
-       * @brief Multiplies this vector by the informed scalar
+       * @brief Multiplies this vector by the specified scalar
        *
        * @param scalar Second operand of the multiplication
        * @return Vector Multiplication result
@@ -118,14 +118,14 @@ class Vector : public Array {
       Vector operator*(const double &scalar) const;
 
       /**
-       * @brief Multiplies this vector by the informed scalar, setting the result in this vector
+       * @brief Multiplies this vector by the specified scalar, setting the result in this vector
        *
        * @param scalar Second operand of the multiplication
        */
       void multiplyBy(const double &scalar);
 
       /**
-       * @brief Calculates the dot product of this vector with the informed vector
+       * @brief Calculates the dot product of this vector with the specified vector
        * @param vector Second operand
        * @details The dot product of vectors \f$ v\f$ and \f$ u\f$ is
        *  \f[
@@ -156,7 +156,7 @@ class Vector : public Array {
       void fillWithRandomValues(const double &min, const double &max) override;
 
       /**
-       * @brief Swaps the elements of the vector according to the informed positions
+       * @brief Swaps the elements of the vector according to the specified positions
        *
        * @param elmIndexA Position A
        * @param elmIndexB Position B

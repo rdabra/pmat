@@ -207,7 +207,7 @@ pmat::Vector pmat::Matrix::operator*(const Vector &vector) const {
       double aux = 0.0;
       for (int k = 0; k < this->columnSize(); k++)
          aux += (*this)(i, k) * vector(k);
-      resp.emplaceBack(aux);
+      resp.pushBack(aux);
    }
 
    return resp;
@@ -327,7 +327,7 @@ pmat::Vector pmat::Matrix::rowToVector(const int &row) const {
 
    Vector resp{};
    for (int j = 0; j < this->columnSize(); j++)
-      resp.emplaceBack((*this)(row, j));
+      resp.pushBack((*this)(row, j));
 
    return resp;
 }
@@ -338,7 +338,7 @@ pmat::Vector pmat::Matrix::columnToVector(const int &column) const {
 
    Vector resp{};
    for (int i = 0; i < this->rowSize(); i++)
-      resp.emplaceBack((*this)(i, column));
+      resp.pushBack((*this)(i, column));
 
    return resp;
 }

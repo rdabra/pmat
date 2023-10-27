@@ -534,15 +534,15 @@ TEST(TestMatrix, TestExtracts) {
    z.assign(9.0, 3, 2);
 
    Vector v1{};
-   v1.emplaceBack(2.0);
-   v1.emplaceBack(5.0);
-   v1.emplaceBack(8.0);
-   v1.emplaceBack(10.0);
+   v1.pushBack(2.0);
+   v1.pushBack(5.0);
+   v1.pushBack(8.0);
+   v1.pushBack(10.0);
 
    Vector v2{};
-   v2.emplaceBack(7.0);
-   v2.emplaceBack(8.0);
-   v2.emplaceBack(9.0);
+   v2.pushBack(7.0);
+   v2.pushBack(8.0);
+   v2.pushBack(9.0);
 
    EXPECT_TRUE(z.columnToVector(1) == v1);
    EXPECT_TRUE(z.rowToVector(2) == v2);

@@ -14,7 +14,7 @@ void pmat::Vector::resize(const int &size) {
    _vector.resize(size);
 }
 
-void pmat::Vector::emplaceBack(const double &value) {
+void pmat::Vector::pushBack(const double &value) {
    _vector.pushBack(value);
 }
 
@@ -66,7 +66,7 @@ pmat::Vector pmat::Vector::operator+(const Vector &vector) const {
 
    pmat::Vector resp{};
    for (int i{0}; i < vector.length(); i++)
-      resp.emplaceBack((*this)(i) + vector(i));
+      resp.pushBack((*this)(i) + vector(i));
 
    return resp;
 }
@@ -85,7 +85,7 @@ pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
 
    pmat::Vector resp{};
    for (int i{0}; i < vector.length(); i++)
-      resp.emplaceBack((*this)(i)-vector(i));
+      resp.pushBack((*this)(i)-vector(i));
 
    return resp;
 }
@@ -101,7 +101,7 @@ void pmat::Vector::subtractBy(const Vector &vector) {
 pmat::Vector pmat::Vector::operator*(const double &scalar) const {
    pmat::Vector resp{};
    for (int i{0}; i < this->length(); i++)
-      resp.emplaceBack((*this)(i)*scalar);
+      resp.pushBack((*this)(i)*scalar);
 
    return resp;
 }
