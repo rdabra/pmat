@@ -308,7 +308,16 @@ TEST(TestVector, TestMisc) {
    rrr(1) = 5.0;
    rrr(2) = 5.0;
    rrr(3) = 5.0;
-   rrr(4) = 5.0;
+
+   Vector x{3};
+   x(0) = 4.0;
+   x(1) = 5.0;
+   x(2) = 7.0;
+
+   Vector y{3};
+   y(0) = 8.0;
+   y(1) = 13.0;
+   y(2) = 7.0;
 
    EXPECT_TRUE(res.toColumnMatrix() == co);
    EXPECT_TRUE(res.toRowMatrix() == li);
@@ -320,4 +329,6 @@ TEST(TestVector, TestMisc) {
    EXPECT_TRUE(c == res);
    EXPECT_TRUE(vv == res1);
    EXPECT_TRUE(vvv == rrr);
+   EXPECT_TRUE(pmat::utils::areEqual(x.euclideanDistantFrom(y), y.euclideanDistantFrom(x)));
+   EXPECT_TRUE(pmat::utils::areEqual(x.euclideanDistantFrom(y), 8.94427191));
 }

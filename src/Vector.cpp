@@ -186,6 +186,10 @@ pmat::Matrix pmat::Vector::toRowMatrix() const {
    return res;
 }
 
+double pmat::Vector::euclideanDistantFrom(const Vector &vector) const {
+   return ((*this) - vector).frobeniusNorm();
+}
+
 std::string pmat::Vector::formattedString() const {
    std::string res{"\n"};
    for (int i{0}; i < this->size(); i++)

@@ -190,6 +190,14 @@ class Vector : public Array {
        */
       [[nodiscard]] Matrix toRowMatrix() const;
 
+      /**
+       * @brief Returns the Euclidean distance between this vector and the specified
+       *
+       * @param vector
+       * @return double
+       */
+      [[nodiscard]] double euclideanDistantFrom(const Vector &vector) const;
+
       [[nodiscard]] std::string formattedString() const override;
 };
 
