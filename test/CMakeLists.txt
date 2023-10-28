@@ -24,13 +24,14 @@ add_executable(
   tMatrixSkewSymmetric.h
   pmat_test.cpp
 )  
-target_include_directories(pmat_test PUBLIC "$ENV{BLITZ_INCLUDE}" "$ENV{PMAT_SRC}")
+target_include_directories(pmat_test PUBLIC "$ENV{PMAT_SRC}")
 
 
-target_link_directories(pmat_test PUBLIC "$ENV{BLITZ_LIB}")
+#target_link_directories(pmat_test PUBLIC "$ENV{BLITZ_LIB}")
+#incluir blitz no comando abaixo 
 target_link_libraries(
   pmat_test
-  GTest::gtest_main blitz pmatLib 
+  GTest::gtest_main pmatLib 
 )
 
 

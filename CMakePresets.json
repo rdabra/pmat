@@ -13,10 +13,6 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
             "CMAKE_CXX_FLAGS": "-O0 -coverage",
             "CMAKE_BUILD_TYPE": "Debug"
-         },
-         "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/clang64/blitz/include/",
-            "BLITZ_LIB": "d:/clibraries/clang64/blitz/lib/"
          }
       },
       {
@@ -31,10 +27,6 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
             "CMAKE_CXX_FLAGS": "",
             "CMAKE_BUILD_TYPE": "Debug"
-         },
-         "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/clang64/blitz/include/",
-            "BLITZ_LIB": "d:/clibraries/clang64/blitz/lib/"
          }
       },
       {
@@ -49,10 +41,6 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
             "CMAKE_CXX_FLAGS": "-O0 -coverage",
             "CMAKE_BUILD_TYPE": "Debug"
-         },
-         "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/mingw64/blitz/include/",
-            "BLITZ_LIB": "d:/clibraries/mingw64/blitz/lib/"
          }
       },
       {
@@ -67,10 +55,6 @@
             "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
             "CMAKE_CXX_FLAGS": "",
             "CMAKE_BUILD_TYPE": "Debug"
-         },
-         "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/mingw64/blitz/include/",
-            "BLITZ_LIB": "d:/clibraries/mingw64/blitz/lib/"
          }
       },
       {
@@ -84,10 +68,6 @@
             "CMAKE_CXX_COMPILER": "d:/Programs/Intel/oneAPI/compiler/latest/windows/bin/icx.exe",
             "CMAKE_CXX_FLAGS": "/Ox /EHsc",
             "CMAKE_BUILD_TYPE": "Release"
-         },
-         "environment": {
-            "BLITZ_INCLUDE": "d:/clibraries/intel64/blitz/include/",
-            "BLITZ_LIB": "d:/clibraries/intel64/blitz/lib/"
          }
       }
    ],

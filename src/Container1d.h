@@ -2,10 +2,6 @@
 #define CONTAINER1D_H
 #pragma once
 
-#include <blitz/array.h>
-#include <memory>
-#include <utility>
-
 namespace pmat {
 
 /**
@@ -58,6 +54,12 @@ class Container1d {
        */
       inline double operator()(const int &index) const { return _ptrVector[index]; };
 
+      /**
+       * @brief Returns a reference for the element at the specified index
+       *
+       * @param index
+       * @return double&
+       */
       inline double &operator()(const int &index) { return _ptrVector[index]; };
 
       /**
