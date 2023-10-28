@@ -19,7 +19,7 @@ class Vector : public Array {
 
    public:
       Vector() = default;
-      Vector(int size) : _vector(size, 0.){};
+      Vector(const int &size) : _vector(size){};
       Vector(const Vector &vector);
       Vector(Vector &&vector) noexcept : _vector{std::move(vector._vector)} {};
       ~Vector() override = default;

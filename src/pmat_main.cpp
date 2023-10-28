@@ -1,37 +1,32 @@
-#include "Container1d.h"
-#include "Matrix.h"
-#include "MatrixSquare.h"
 
-// #include <blitz/array.h>
+#include <cstdlib>
+#include <iostream>
 
-#include "Matrix.h"
+void printArray(double *v, int size) {
 
-class Foo {
-   private:
-      int _number{0};
-
-   public:
-      Foo() = default;
-      Foo(int number) : _number{number} {};
-      Foo(const Foo &other) { std::cout << "Copy constructor\n"; };
-      Foo(Foo &&other) noexcept { std::cout << "Move constructor\n"; };
-      ~Foo() = default;
-      Foo operator+(Foo otherFoo) const {
-         Foo resp{this->number() + otherFoo.number()};
-         return resp;
-      }
-
-      int number() const { return _number; }
-};
+   for (int i = 0; i < size; i++) {
+      std::cout << v[i] << " , ";
+   }
+   std::cout << "\n";
+}
 
 int main() {
 
-   Foo f1{12};
-   Foo f2{15};
+   double *v = (double *)calloc(5, sizeof(double));
 
-   Foo f{f1};
+   v[0] = 1;
+   v[1] = 2;
+   v[2] = 3;
+   v[3] = 4;
+   v[4] = 5;
 
-   Foo f3{std::move(f1)};
+   printArray(v, 5);
+
+   // resize
+
+   v = (double *)realloc(v, 6 * sizeof(double));
+
+   printArray(v, 6);
 
    return 0;
 }

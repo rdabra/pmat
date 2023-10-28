@@ -14,23 +14,25 @@ namespace pmat {
  */
 class Container1d {
    private:
-   public:
-      std::unique_ptr<blitz::Array<double, 1>> _ptrVector;
+      double *_ptrVector{nullptr};
+      int _size{0};
 
-      Container1d() : _ptrVector{std::make_unique<blitz::Array<double, 1>>()} {};
+      void manageSize(const int &newSize);
+
+   public:
+      Container1d() = default;
       Container1d(const Container1d &container);
-      Container1d(Container1d &&container) noexcept
-          : _ptrVector{std::move(container._ptrVector)} {};
+      Container1d(Container1d &&container) noexcept;
       Container1d &operator=(const Container1d &container);
       Container1d &operator=(Container1d &&container) noexcept;
-      ~Container1d() = default;
+      ~Container1d();
 
       /**
        * @brief Construct a new Container 1d object
        *
        * @param size Container size
        */
-      Container1d(const int &size) : _ptrVector{std::make_unique<blitz::Array<double, 1>>(size)} {};
+      Container1d(const int &size);
 
       /**
        * @brief Construct a new Container 1d object
@@ -46,8 +48,7 @@ class Container1d {
        * @param data Raw array of values
        * @param size Size of the raw array
        */
-      Container1d(double data[], const int &size)
-          : _ptrVector{std::make_unique<blitz::Array<double, 1>>(data, size)} {};
+      Container1d(double data[], const int &size);
 
       /**
        * @brief Returns the value at the specified index
@@ -55,9 +56,9 @@ class Container1d {
        * @param index
        * @return double
        */
-      inline double operator()(const int &index) const { return (*_ptrVector)(index); };
+      inline double operator()(const int &index) const { return _ptrVector[index]; };
 
-      inline double &operator()(const int &index) { return (*_ptrVector)(index); };
+      inline double &operator()(const int &index) { return _ptrVector[index]; };
 
       /**
        * @brief Sets the specified value at the specified index
@@ -65,14 +66,14 @@ class Container1d {
        * @param index
        * @param value
        */
-      inline void set(const int &index, const double &value) { (*_ptrVector)(index) = value; };
+      inline void set(const int &index, const double &value) { _ptrVector[index] = value; };
 
       /**
        * @brief Returns the size of the container
        *
        * @return int
        */
-      [[nodiscard]] inline int size() const { return _ptrVector->numElements(); };
+      [[nodiscard]] inline const int &size() const { return _size; };
 
       /**
        * @brief Resize the container. If the new size is greater than the old size, the new elements
@@ -86,7 +87,7 @@ class Container1d {
        * @brief Clears the container and sets its size to zero
        *
        */
-      inline void clear() { _ptrVector->resize(0); };
+      void clear();
 
       /**
        * @brief Inserts one element at the end of the container and sets it to the specified value
