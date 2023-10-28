@@ -1,5 +1,6 @@
 #include "Container1d.h"
 #include "pmatUtils.h"
+#include <algorithm>
 
 void pmat::Container1d::manageSize(const int &newSize) {
    if (newSize > 0) {

@@ -6,6 +6,7 @@
 #include "Container1d.h"
 #include "Vector.h"
 #include <string>
+#include <vector>
 
 namespace pmat {
 

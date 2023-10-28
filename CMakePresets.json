@@ -2,9 +2,9 @@
    "version": 2,
    "configurePresets": [
       {
-         "name": "covClang",
+         "name": "gcovClang",
          "displayName": "Clang(gcov)",
-         "description": "Using compilers: C = C:\\msys64\\clang64\\bin\\clang.exe, CXX = C:\\msys64\\clang64\\bin\\clang++.exe",
+         "description": "Using compilers: clang.exe, clang++.exe",
          "generator": "Ninja",
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
@@ -18,34 +18,34 @@
       {
          "name": "debugClang",
          "displayName": "Clang(debug)",
-         "description": "Using compilers: C = C:\\msys64\\clang64\\bin\\clang.exe, CXX = C:\\msys64\\clang64\\bin\\clang++.exe",
+         "description": "Using compilers: clang.exe, clang++.exe",
          "generator": "Ninja",
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
             "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
             "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
-            "CMAKE_CXX_FLAGS": "",
+            "CMAKE_CXX_FLAGS": "-O0 -g",
             "CMAKE_BUILD_TYPE": "Debug"
          }
       },
       {
-         "name": "covGcc",
-         "displayName": "GCC(gcov)",
-         "description": "Using compilers: gcc.exe, g++.exe",
+         "name": "releaseClang",
+         "displayName": "Clang(Release)",
+         "description": "Using compilers: clang.exe, clang++.exe",
          "generator": "Ninja",
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_C_COMPILER": "C:/msys64/mingw64/bin/gcc.exe",
-            "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
-            "CMAKE_CXX_FLAGS": "-O0 -coverage",
-            "CMAKE_BUILD_TYPE": "Debug"
+            "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
+            "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+            "CMAKE_CXX_FLAGS": "-Ofast",
+            "CMAKE_BUILD_TYPE": "Release"
          }
       },
       {
-         "name": "debugGcc",
-         "displayName": "GCC(debug)",
+         "name": "releaseGcc",
+         "displayName": "GCC(release)",
          "description": "Using compilers: g++.exe, gcc.exe",
          "generator": "Ninja",
          "binaryDir": "${sourceDir}/out/build/${presetName}",
@@ -53,8 +53,8 @@
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
             "CMAKE_C_COMPILER": "C:/msys64/mingw64/bin/gcc.exe",
             "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
-            "CMAKE_CXX_FLAGS": "",
-            "CMAKE_BUILD_TYPE": "Debug"
+            "CMAKE_CXX_FLAGS": "-Ofast",
+            "CMAKE_BUILD_TYPE": "Release"
          }
       },
       {
@@ -80,11 +80,25 @@
          "configurePreset": "debugClang"
       },
       {
-         "name": "debugGcc",
+         "name": "gcovClang",
          "description": "",
-         "displayName": "GCC(Debug)",
+         "displayName": "Clang(Gcov)",
          "jobs": 8,
-         "configurePreset": "debugGcc"
+         "configurePreset": "gcovClang"
+      },
+      {
+         "name": "releaseClang",
+         "description": "",
+         "displayName": "Clang(Release)",
+         "jobs": 8,
+         "configurePreset": "releaseClang"
+      },
+      {
+         "name": "releaseGcc",
+         "description": "",
+         "displayName": "Gcc(Release)",
+         "jobs": 8,
+         "configurePreset": "releaseGcc"
       },
       {
          "name": "releaseIntel",
@@ -99,7 +113,7 @@
          "name": "testClang",
          "description": "",
          "displayName": "Clang(Test)",
-         "configurePreset": "covClang"
+         "configurePreset": "debugClang"
       }
    ]
 }

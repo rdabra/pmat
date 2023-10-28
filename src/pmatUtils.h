@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <fstream>
 #include <sstream>
 #include <string>
 
@@ -60,6 +61,20 @@ static std::string format(const double &a) {
    stream << a;
 
    return stream.str();
+}
+
+static int countFileLines(std::string fileName) {
+   int nRows{0};
+   std::ifstream f{fileName};
+   std::string line;
+
+   if (f.is_open()) {
+      while (std::getline(f, line))
+         nRows++;
+      f.close();
+   }
+
+   return nRows;
 }
 
 } // namespace pmat::utils
