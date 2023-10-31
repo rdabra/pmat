@@ -1,32 +1,27 @@
-
-#include <cstdlib>
+#include "AnalyticsBaseTable.h"
+#include "LinearOrdinaryLeastSquares.h"
 #include <iostream>
-
-void printArray(double *v, int size) {
-
-   for (int i = 0; i < size; i++) {
-      std::cout << v[i] << " , ";
-   }
-   std::cout << "\n";
-}
 
 int main() {
 
-   double *v = (double *)calloc(5, sizeof(double));
+   std::cout << "Reading file...\n";
 
-   v[0] = 1;
-   v[1] = 2;
-   v[2] = 3;
-   v[3] = 4;
-   v[4] = 5;
+   AnalyticsBaseTable tab{42, 1, 90, "d:/sandbox/pprbe/pprbe.csv", true, ','};
+   tab.readFile();
 
-   printArray(v, 5);
+   std::cout << "Training size: " << tab.trainingSize() << "\n";
+   std::cout << "Test size: " << tab.testSize() << "\n";
 
-   // resize
+   LinearOrdinaryLeastSquares lols{tab};
+   lols.setTolerance(0.00001);
 
-   v = (double *)realloc(v, 6 * sizeof(double));
+   std::cout << "Calculating GD solution...\n";
+   double train = lols.gradientDescentTrainingCorrelation();
+   double test = lols.gradientDescentTestCorrelation();
 
-   printArray(v, 6);
+   std::cout << "GD training correlation: " << train << "\n";
+   std::cout << "GD test correlation: " << test << "\n";
+   std::cout << "Number of iterations: " << lols.nIterations() << "\n";
 
    return 0;
 }

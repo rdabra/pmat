@@ -94,9 +94,11 @@ double LinearOrdinaryLeastSquares::calcCorrCoeffs(const pmat::Matrix feature,
    double distancesFromMean{pmat::utils::ZERO};
    double distancesFromEstimation{pmat::utils::ZERO};
    for (int i{0}; i < targets.size(); i++) {
-      distancesFromMean += mean.euclideanDistantFrom(targets[i]);
+      double distFM{mean.euclideanDistantFrom(targets[i])};
+      distancesFromMean += distFM * distFM;
       features[i].pushBack(pmat::utils::ONE);
-      distancesFromEstimation += targets[i].euclideanDistantFrom(coefs * features[i]);
+      double distFE{targets[i].euclideanDistantFrom(coefs * features[i])};
+      distancesFromEstimation += distFE * distFE;
    }
 
    return pmat::utils::ONE - (distancesFromEstimation / distancesFromMean);
