@@ -199,6 +199,8 @@ class Vector : public Array {
        */
       [[nodiscard]] double euclideanDistantFrom(const Vector &vector) const;
 
+      [[nodiscard]] int hammingDistantFrom(const Vector &vector) const;
+
       [[nodiscard]] std::string formattedString() const override;
 };
 

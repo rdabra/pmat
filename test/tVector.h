@@ -317,6 +317,14 @@ TEST(TestVector, TestMisc) {
    double data[] = {8., 13., 7.};
    Vector y{data, 3};
 
+   double data1[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+   double data2[]{1, 2, 0, 4, 5, 0, 7, 0, 0};
+
+   pmat::Vector d1{(double *)data1, 9};
+   pmat::Vector d2{(double *)data2, 9};
+
+   std::cout << d2.hammingDistantFrom(d1);
+
    EXPECT_TRUE(res.toColumnMatrix() == co);
    EXPECT_TRUE(res.toRowMatrix() == li);
    EXPECT_TRUE(v1.length() == 5);
@@ -329,4 +337,5 @@ TEST(TestVector, TestMisc) {
    EXPECT_TRUE(vvv == rrr);
    EXPECT_TRUE(pmat::utils::areEqual(x.euclideanDistantFrom(y), y.euclideanDistantFrom(x)));
    EXPECT_TRUE(pmat::utils::areEqual(x.euclideanDistantFrom(y), 8.94427191));
+   EXPECT_TRUE(pmat::utils::areEqual(d2.hammingDistantFrom(d1), 4));
 }

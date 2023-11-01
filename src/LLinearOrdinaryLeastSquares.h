@@ -2,15 +2,17 @@
 #define LEASTSQUARES_H
 #pragma once
 
-#include "AnalyticsBaseTable.h"
+#include "LAnalyticsBaseTable.h"
 #include "Matrix.h"
 #include "Vector.h"
+
+namespace pmat {
 
 /**
  * @brief Calculates Linear Regression coefficients via the Ordinary Least Squares Method
  *
  */
-class LinearOrdinaryLeastSquares {
+class LLinearOrdinaryLeastSquares {
    private:
       const pmat::Matrix *_trainFeature{nullptr};
       const pmat::Matrix *_trainTarget{nullptr};
@@ -34,7 +36,7 @@ class LinearOrdinaryLeastSquares {
                             const pmat::Matrix &coeffs);
 
    public:
-      LinearOrdinaryLeastSquares(const AnalyticsBaseTable &table)
+      LLinearOrdinaryLeastSquares(const pmat::LAnalyticsBaseTable &table)
           : _trainFeature{&table.featureTrainingData()}, _trainTarget{&table.targetTrainingData()},
             _testFeature{&table.featureTestData()}, _testTarget{&table.targetTestData()} {}
 
@@ -139,5 +141,7 @@ class LinearOrdinaryLeastSquares {
        */
       void setMaxIterations(int maxIterations) { _maxIterations = maxIterations; }
 };
+
+} // namespace pmat
 
 #endif

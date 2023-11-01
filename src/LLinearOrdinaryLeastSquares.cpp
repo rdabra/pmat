@@ -1,4 +1,4 @@
-#include "LinearOrdinaryLeastSquares.h"
+#include "LLinearOrdinaryLeastSquares.h"
 #include "DecompositionPLU.h"
 #include "Matrix.h"
 #include "MatrixSquare.h"
@@ -8,7 +8,7 @@
 #include <cmath>
 #include <utility>
 
-void LinearOrdinaryLeastSquares::calcAnalyticSolution() {
+void pmat::LLinearOrdinaryLeastSquares::calcAnalyticSolution() {
    if (!_analyticCalculated) {
       if (_trainFeature->rowSize() >= 2) {
          pmat::Matrix X{*_trainFeature};
@@ -35,7 +35,7 @@ void LinearOrdinaryLeastSquares::calcAnalyticSolution() {
    }
 }
 
-void LinearOrdinaryLeastSquares::calcGdSolution() {
+void pmat::LLinearOrdinaryLeastSquares::calcGdSolution() {
    if (!_gdCalculated) {
       if (_trainFeature->rowSize() >= 2) {
          pmat::Matrix X{*_trainFeature};
@@ -80,9 +80,9 @@ void LinearOrdinaryLeastSquares::calcGdSolution() {
    }
 }
 
-double LinearOrdinaryLeastSquares::calcCorrCoeffs(const pmat::Matrix feature,
-                                                  const pmat::Matrix target,
-                                                  const pmat::Matrix &coefs) {
+double pmat::LLinearOrdinaryLeastSquares::calcCorrCoeffs(const pmat::Matrix feature,
+                                                         const pmat::Matrix target,
+                                                         const pmat::Matrix &coefs) {
    std::vector<pmat::Vector> features{feature.rowsToVectors()};
    std::vector<pmat::Vector> targets{target.rowsToVectors()};
 
@@ -104,40 +104,40 @@ double LinearOrdinaryLeastSquares::calcCorrCoeffs(const pmat::Matrix feature,
    return pmat::utils::ONE - (distancesFromEstimation / distancesFromMean);
 }
 
-const pmat::Matrix &LinearOrdinaryLeastSquares::analyticCoefficients() {
+const pmat::Matrix &pmat::LLinearOrdinaryLeastSquares::analyticCoefficients() {
    this->calcAnalyticSolution();
    return _analyticCoeffs;
 }
 
-const pmat::Matrix &LinearOrdinaryLeastSquares::gradientDescentCoefficients() {
+const pmat::Matrix &pmat::LLinearOrdinaryLeastSquares::gradientDescentCoefficients() {
    this->calcGdSolution();
    return _gdCoeffs;
 }
 
-void LinearOrdinaryLeastSquares::setTolerance(const double &tolerance) {
+void pmat::LLinearOrdinaryLeastSquares::setTolerance(const double &tolerance) {
    _tolerance = tolerance;
    _gdCalculated = false;
 }
 
-const double &LinearOrdinaryLeastSquares::analyticTrainingCorrelation() {
+const double &pmat::LLinearOrdinaryLeastSquares::analyticTrainingCorrelation() {
    this->calcAnalyticSolution();
    return _analyticCorrTrainData;
 }
 
-const double &LinearOrdinaryLeastSquares::analyticTestCorrelation() {
+const double &pmat::LLinearOrdinaryLeastSquares::analyticTestCorrelation() {
    if (_testFeature->rowSize() < 2)
       throw std::logic_error("Insufficent test data.");
    this->calcAnalyticSolution();
    return _analyticCorrTestData;
 }
 
-const double &LinearOrdinaryLeastSquares::gradientDescentTrainingCorrelation() {
+const double &pmat::LLinearOrdinaryLeastSquares::gradientDescentTrainingCorrelation() {
    this->calcGdSolution();
 
    return _gdCorrTrainData;
 }
 
-const double &LinearOrdinaryLeastSquares::gradientDescentTestCorrelation() {
+const double &pmat::LLinearOrdinaryLeastSquares::gradientDescentTestCorrelation() {
    if (_testFeature->rowSize() < 2)
       throw std::logic_error("Insufficent test data.");
    this->calcGdSolution();
@@ -145,7 +145,7 @@ const double &LinearOrdinaryLeastSquares::gradientDescentTestCorrelation() {
    return _gdCorrTestData;
 }
 
-pmat::Vector LinearOrdinaryLeastSquares::analyticTargetOf(const pmat::Vector &feature) {
+pmat::Vector pmat::LLinearOrdinaryLeastSquares::analyticTargetOf(const pmat::Vector &feature) {
    pmat::Vector aux{feature};
    aux.pushBack(pmat::utils::ONE);
    this->calcAnalyticSolution();
@@ -154,7 +154,8 @@ pmat::Vector LinearOrdinaryLeastSquares::analyticTargetOf(const pmat::Vector &fe
    return resp;
 }
 
-pmat::Vector LinearOrdinaryLeastSquares::gradientDescentTargetOf(const pmat::Vector &feature) {
+pmat::Vector
+pmat::LLinearOrdinaryLeastSquares::gradientDescentTargetOf(const pmat::Vector &feature) {
    pmat::Vector aux{feature};
    aux.pushBack(pmat::utils::ONE);
    this->calcGdSolution();

@@ -4,6 +4,7 @@
 #include "pmatUtils.h"
 #include <random>
 #include <stdexcept>
+#include <string>
 #include <utility>
 
 pmat::Vector::Vector(double data[], const int &size) {
@@ -192,6 +193,23 @@ pmat::Matrix pmat::Vector::toRowMatrix() const {
 
 double pmat::Vector::euclideanDistantFrom(const Vector &vector) const {
    return ((*this) - vector).frobeniusNorm();
+}
+
+int pmat::Vector::hammingDistantFrom(const Vector &vector) const {
+   int resp = 0;
+   for (int i{0}; i < this->size(); i++) {
+      std::string str1{std::to_string((int)(*this)(i))};
+      std::string str2{std::to_string((int)vector(i))};
+
+      if (str1.length() == str2.length()) {
+         for (int j{0}; j < str1.length(); j++)
+            if (str1[j] != str2[j])
+               resp++;
+      } else
+         throw std::runtime_error("Strings must have the same size.");
+   }
+
+   return resp;
 }
 
 std::string pmat::Vector::formattedString() const {

@@ -1,10 +1,11 @@
-#include "../src/AnalyticsBaseTable.h"
+#include "../src/LAnalyticsBaseTable.h"
 #include "../src/Matrix.h"
 #include "gtest/gtest.h"
 
 TEST(TestAnalyticsBaseTable, TestMatrices) {
 
-   AnalyticsBaseTable tab{4, 2, 80, "D:/myWorks/programacao/rbepp/test/pequeno.txt", true, ','};
+   pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/rbepp/test/pequeno.txt",
+                                 true, ','};
    tab.readFile();
 
    const pmat::Matrix &features = tab.featureTrainingData();

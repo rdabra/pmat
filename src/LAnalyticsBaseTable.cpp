@@ -1,4 +1,4 @@
-#include "AnalyticsBaseTable.h"
+#include "LAnalyticsBaseTable.h"
 #include "Matrix.h"
 #include "Vector.h"
 #include "pmatUtils.h"
@@ -7,8 +7,8 @@
 #include <string>
 #include <vector>
 
-int AnalyticsBaseTable::parseHeader(std::stringstream &lineStream, int nWords,
-                                    std::vector<std::string> &headerType) {
+int pmat::LAnalyticsBaseTable::parseHeader(std::stringstream &lineStream, int nWords,
+                                           std::vector<std::string> &headerType) {
    std::string word;
    for (int j{0}; j < nWords; j++) {
       if (std::getline(lineStream, word, _separator))
@@ -19,8 +19,8 @@ int AnalyticsBaseTable::parseHeader(std::stringstream &lineStream, int nWords,
    return true;
 }
 
-int AnalyticsBaseTable::parseDataRow(std::stringstream &lineStream, int nWords, int row,
-                                     pmat::Matrix &matrix) {
+int pmat::LAnalyticsBaseTable::parseDataRow(std::stringstream &lineStream, int nWords, int row,
+                                            pmat::Matrix &matrix) {
    std::string word;
    for (int j{0}; j < nWords; j++) {
       if (std::getline(lineStream, word, _separator))
@@ -31,10 +31,10 @@ int AnalyticsBaseTable::parseDataRow(std::stringstream &lineStream, int nWords, 
    return true;
 }
 
-AnalyticsBaseTable::AnalyticsBaseTable(int nFeatures, int nTargets, int pctTrainSize,
-                                       std::string fileName, bool hasHeader, char separator)
+pmat::LAnalyticsBaseTable::LAnalyticsBaseTable(int nFeatures, int nTargets, int pctTrainSize,
+                                               std::string fileName, bool hasHeader, char separator)
     : _nFeatures{nFeatures}, _nTargets{nTargets}, _fileName{fileName}, _hasHeader{hasHeader},
-      _separator(separator) {
+      _separator{separator} {
    int nLines{pmat::utils::countFileLines(fileName)};
    if (hasHeader)
       nLines--;
@@ -47,7 +47,7 @@ AnalyticsBaseTable::AnalyticsBaseTable(int nFeatures, int nTargets, int pctTrain
    _testTargetData = pmat::Matrix{_testSize, nTargets};
 }
 
-void AnalyticsBaseTable::readFile() {
+void pmat::LAnalyticsBaseTable::readFile() {
    std::ifstream f{_fileName};
    std::string line{""};
 

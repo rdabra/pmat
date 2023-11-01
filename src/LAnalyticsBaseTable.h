@@ -7,11 +7,13 @@
 #include <string>
 #include <vector>
 
+namespace pmat {
+
 /**
  * @brief Abstracts the Analytics Base Table (ABT)
  *
  */
-class AnalyticsBaseTable {
+class LAnalyticsBaseTable {
    private:
       int _nFeatures{0};
       int _nTargets{0};
@@ -45,8 +47,8 @@ class AnalyticsBaseTable {
        * @param separator separator of values
        * The remaining data rows are considered testing data.
        */
-      AnalyticsBaseTable(int nFeatures, int nTargets, int pctTrainingSize, std::string fileName,
-                         bool hasHeader, char separator);
+      LAnalyticsBaseTable(int nFeatures, int nTargets, int pctTrainingSize, std::string fileName,
+                          bool hasHeader, char separator);
 
       /**
        * @brief Reads any text file in which every row has feature values in columns followed by
@@ -126,5 +128,5 @@ class AnalyticsBaseTable {
        */
       [[nodiscard]] const pmat::Matrix &targetTestData() const { return _testTargetData; }
 };
-
+} // namespace pmat
 #endif
