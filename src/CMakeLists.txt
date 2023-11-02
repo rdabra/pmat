@@ -5,7 +5,7 @@ set(ENV{PMAT_SRC} "${CMAKE_CURRENT_LIST_DIR}")
 add_library(pmatLib STATIC Container1d.cpp Array.cpp Vector.cpp Matrix.cpp MatrixSquare.cpp MatrixTriangular.cpp 
 MatrixLowerTriangular.cpp MatrixUpperTriangular.cpp MatrixSymmetry.cpp  MatrixSymmetric.cpp  MatrixSkewSymmetric.cpp 
 DecompositionPLU.cpp DecompositionSAS.cpp DecompositionPQR.cpp DecompositionCholesky.cpp TMultiplicationManager.cpp 
-TMultiplicationPerformer.cpp LAnalyticsBaseTable.cpp LLinearOrdinaryLeastSquares.cpp)
+TMultiplicationPerformer.cpp LAnalyticsBaseTable.cpp LLearningModel.cpp LLinearOLS.cpp LLinearOLS_GD.cpp)
 #target_include_directories(pmatLib PUBLIC "$ENV{BLITZ_INCLUDE}")
 #
 # Include in CMakePresets.json the following after "cacheVariables"

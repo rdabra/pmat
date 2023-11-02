@@ -1,3 +1,6 @@
+#include "LAnalyticsBaseTable.h"
+#include "LLinearOLS.h"
+#include "LLinearOLS_GD.h"
 #include "Vector.h"
 #include <iostream>
 
@@ -28,13 +31,8 @@ int main() {
 
    // std::string aa{"roberto"};
 
-   double data1[]{1, 2, 3, 44, 5, 6, 7, 8, 9};
-   double data2[]{1, 2, 0, 45, 5, 0, 7, 0, 0};
-
-   pmat::Vector d1{(double *)data1, 9};
-   pmat::Vector d2{(double *)data2, 9};
-
-   std::cout << d2.hammingDistantFrom(d1);
+   pmat::LAnalyticsBaseTable tab{42, 1, 90, "d:/sandbox/pprbe/pprbe.csv", true, ','};
+   pmat::LLinearOLS_GD x{tab};
 
    return 0;
 }

@@ -1,8 +1,9 @@
-#ifndef LEASTSQUARES_H
-#define LEASTSQUARES_H
+#ifndef LLINEAROLS_GD_H
+#define LLINEAROLS_GD_H
 #pragma once
 
 #include "LAnalyticsBaseTable.h"
+#include "LLearningModel.h"
 #include "Matrix.h"
 #include "Vector.h"
 
@@ -12,40 +13,25 @@ namespace pmat {
  * @brief Calculates Linear Regression coefficients via the Ordinary Least Squares Method
  *
  */
-class LLinearOrdinaryLeastSquares {
+class LLinearOLS_GD : public pmat::LLearningModel {
    private:
-      const pmat::Matrix *_trainFeature{nullptr};
-      const pmat::Matrix *_trainTarget{nullptr};
-      const pmat::Matrix *_testFeature{nullptr};
-      const pmat::Matrix *_testTarget{nullptr};
-      pmat::Matrix _analyticCoeffs;
       pmat::Matrix _gdCoeffs;
       double _tolerance{0.0001};
-      bool _analyticCalculated{false};
       bool _gdCalculated{false};
       int _nIterations{0};
       int _maxIterations{5000};
-      double _analyticCorrTrainData{0};
-      double _analyticCorrTestData{0};
       double _gdCorrTrainData{0};
       double _gdCorrTestData{0};
 
-      void calcAnalyticSolution();
       void calcGdSolution();
-      double calcCorrCoeffs(const pmat::Matrix feature, const pmat::Matrix target,
-                            const pmat::Matrix &coeffs);
+
+      [[nodiscard]] inline double distance(const pmat::Vector &v1,
+                                           const pmat::Vector &v2) override {
+         return v1.euclideanDistantFrom(v2);
+      };
 
    public:
-      LLinearOrdinaryLeastSquares(const pmat::LAnalyticsBaseTable &table)
-          : _trainFeature{&table.featureTrainingData()}, _trainTarget{&table.targetTrainingData()},
-            _testFeature{&table.featureTestData()}, _testTarget{&table.targetTestData()} {}
-
-      /**
-       * @brief Calculates the Linear Regression coefficient matrix analytically
-       *
-       * @return const pmat::Matrix&
-       */
-      [[nodiscard]] const pmat::Matrix &analyticCoefficients();
+      LLinearOLS_GD(const pmat::LAnalyticsBaseTable &table) : pmat::LLearningModel{table} {}
 
       /**
        * @brief Calculates the Linear Regression coefficient matrix via the Gradient Descent
@@ -54,7 +40,7 @@ class LLinearOrdinaryLeastSquares {
        * Barzilai-Borwein method. Default tolerance is 0.0001
        * @return const pmat::Matrix&
        */
-      [[nodiscard]] const pmat::Matrix &gradientDescentCoefficients();
+      [[nodiscard]] const pmat::Matrix &coefficients();
 
       /**
        * @brief Returns the number of iterations of the last Gradient Descent execution
@@ -78,28 +64,12 @@ class LLinearOrdinaryLeastSquares {
       void setTolerance(const double &tolerance);
 
       /**
-       * @brief Returns the correlation coefficient of the analytic solution relative to training
-       * data
-       *
-       * @return const double&
-       */
-      [[nodiscard]] const double &analyticTrainingCorrelation();
-
-      /**
-       * @brief Returns the correlation coefficient of the analytic solution relative to test
-       * data
-       *
-       * @return const double&
-       */
-      [[nodiscard]] const double &analyticTestCorrelation();
-
-      /**
        * @brief Returns the correlation coefficient of the Gradient Descent solution relative to
        * training data
        *
        * @return const double&
        */
-      [[nodiscard]] const double &gradientDescentTrainingCorrelation();
+      [[nodiscard]] const double &trainingCorrelation() override;
 
       /**
        * @brief Returns the correlation coefficient of the Gradient Descent solution relative to
@@ -107,7 +77,7 @@ class LLinearOrdinaryLeastSquares {
        *
        * @return const double&
        */
-      [[nodiscard]] const double &gradientDescentTestCorrelation();
+      [[nodiscard]] const double &testCorrelation() override;
 
       /**
        * @brief Returns the target of the specified feature calculated by the analytic solution
@@ -115,16 +85,7 @@ class LLinearOrdinaryLeastSquares {
        * @param feature
        * @return pmat::Vector
        */
-      [[nodiscard]] pmat::Vector analyticTargetOf(const pmat::Vector &feature);
-
-      /**
-       * @brief Returns the target of the specified feature calculated by the Gradient Descent
-       * solution
-       *
-       * @param feature
-       * @return pmat::Vector
-       */
-      [[nodiscard]] pmat::Vector gradientDescentTargetOf(const pmat::Vector &feature);
+      [[nodiscard]] pmat::Vector targetOf(const pmat::Vector &feature) override;
 
       /**
        * @brief Returns the maximum number of iterations allowed for the Gradient Descent. Default

@@ -1,5 +1,6 @@
 #include "../src/LAnalyticsBaseTable.h"
-#include "../src/LLinearOrdinaryLeastSquares.h"
+#include "../src/LLinearOLS.h"
+#include "../src/LLinearOLS_GD.h"
 #include "../src/Matrix.h"
 #include "../src/Vector.h"
 #include "../src/pmatUtils.h"
@@ -10,13 +11,13 @@ TEST(TestLinearOrdinaryLeastSquares, TestAnalyticalSolution) {
    pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/pmat/test/pequeno.txt",
                                  true, ','};
    tab.readFile();
-   pmat::LLinearOrdinaryLeastSquares lols{tab};
+   pmat::LLinearOLS lols{tab};
 
    double data[]{2.73916482, -1.51972640, -0.25641727, 0.92879600,  21.30597329,
                  1.12728756, -0.85210798, -0.02582400, -0.24619481, 26.99922389};
    pmat::Matrix resp((double *)data, 2, 5);
 
-   EXPECT_TRUE(lols.analyticCoefficients() == resp);
+   EXPECT_TRUE(lols.coefficients() == resp);
 }
 
 TEST(TestLinearOrdinaryLeastSquares, TestGdSolution) {
@@ -24,7 +25,7 @@ TEST(TestLinearOrdinaryLeastSquares, TestGdSolution) {
    pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/pmat/test/pequeno.txt",
                                  true, ','};
    tab.readFile();
-   pmat::LLinearOrdinaryLeastSquares lols{tab};
+   pmat::LLinearOLS_GD lols{tab};
    lols.setTolerance(0.00001);
 
    double data[]{2.74013502, -1.51994457, -0.25669041, 0.92980678,  21.26975210,
@@ -32,7 +33,7 @@ TEST(TestLinearOrdinaryLeastSquares, TestGdSolution) {
 
    pmat::Matrix resp((double *)data, 2, 5);
 
-   EXPECT_TRUE(lols.gradientDescentCoefficients() == resp);
+   EXPECT_TRUE(lols.coefficients() == resp);
 }
 
 TEST(TestLinearOrdinaryLeastSquares, TestCorrelations) {
@@ -40,7 +41,7 @@ TEST(TestLinearOrdinaryLeastSquares, TestCorrelations) {
    pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/pmat/test/pequeno.txt",
                                  true, ','};
    tab.readFile();
-   pmat::LLinearOrdinaryLeastSquares lols{tab};
+   pmat::XXX lols{tab};
    lols.setTolerance(0.00001);
 
    EXPECT_TRUE(pmat::utils::areEqual(lols.analyticTrainingCorrelation(), 0.882423263));
@@ -54,7 +55,7 @@ TEST(TestLinearOrdinaryLeastSquares, TestValuesOf) {
    pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/pmat/test/pequeno.txt",
                                  true, ','};
    tab.readFile();
-   pmat::LLinearOrdinaryLeastSquares lols{tab};
+   pmat::XXX lols{tab};
    lols.setTolerance(0.00001);
 
    double data[]{5., 6., 7., 8.};
