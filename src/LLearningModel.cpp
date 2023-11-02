@@ -16,7 +16,7 @@ double pmat::LLearningModel::calcCorrCoeffs(const pmat::Matrix feature, const pm
    for (int i{0}; i < targets.size(); i++) {
       double distFM{this->distance(mean, targets[i])};
       distancesFromMean += distFM * distFM;
-      features[i].pushBack(pmat::utils::ONE);
+      //      features[i].pushBack(pmat::utils::ONE);
       double distFE{this->distance(targets[i], this->targetOf(features[i]))};
       distancesFromEstimation += distFE * distFE;
    }

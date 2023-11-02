@@ -41,11 +41,11 @@ void pmat::LLinearOLS_GD::calcGdSolution() {
             _nIterations++;
          };
          _gdCoeffs = std::move(Bl);
+         _gdCalculated = true;
          _gdCorrTrainData = calcCorrCoeffs(*_trainFeature, *_trainTarget);
          if (_testFeature->rowSize() >= 2) {
             _gdCorrTestData = calcCorrCoeffs(*_testFeature, *_testTarget);
          }
-         _gdCalculated = true;
       } else
          throw std::logic_error("Insufficent training data.");
    }

@@ -8,7 +8,7 @@
          "type": "lldb",
          "request": "launch",
          "name": "pmat_test(lldb)",
-         "program": "${workspaceFolder}/out/build/covClang/test/pmat_test.exe",
+         "program": "${workspaceFolder}/out/build/debugClang/test/pmat_test.exe",
          "args": [],
          "cwd": "${workspaceFolder}"
       },
