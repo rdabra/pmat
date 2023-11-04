@@ -7,24 +7,23 @@
 #include "pmatUtils.h"
 #include <utility>
 
-void pmat::LLinearOLS::calcAnalyticSolution() {
+void pmat::LLinearOLS::calcSolution() {
    if (!_analyticCalculated) {
-      if (_trainFeature->rowSize() >= 2) {
-         pmat::Matrix X{*_trainFeature};
-         X.insertColumn(_trainFeature->columnSize() - 1, pmat::utils::ONE);
+      auto featTrainData = _table->featureTrainingData();
+      auto targTrainData = _table->targetTrainingData();
+
+      if (featTrainData.rowSize() >= 2) {
+         pmat::Matrix X{featTrainData};
+         X.insertColumn(featTrainData.columnSize() - 1, pmat::utils::ONE);
          pmat::MatrixSymmetric Z{pmat::MatrixSymmetric::gramMatrix(X)};
          pmat::DecompositionPLU decomp{Z};
 
          if (decomp.isInvertible()) {
-            pmat::Matrix Y{*_trainTarget};
+            pmat::Matrix Y{targTrainData};
             Y.transpose();
 
             _analyticCoeffs = std::move(Y * X * decomp.inverse());
             _analyticCalculated = true;
-            _analyticCorrTrainData = calcCorrCoeffs(*_trainFeature, *_trainTarget);
-            if (_testFeature->rowSize() >= 2) {
-               _analyticCorrTestData = calcCorrCoeffs(*_testFeature, *_testTarget);
-            }
          } else {
             _analyticCalculated = false;
             throw std::logic_error("Coefficients cannot be obtained analytically.");
@@ -35,24 +34,14 @@ void pmat::LLinearOLS::calcAnalyticSolution() {
 }
 
 const pmat::Matrix &pmat::LLinearOLS::coefficients() {
-   this->calcAnalyticSolution();
+   this->calcSolution();
    return _analyticCoeffs;
-}
-
-const double &pmat::LLinearOLS::trainingCorrelation() {
-   this->calcAnalyticSolution();
-   return _analyticCorrTrainData;
-}
-
-const double &pmat::LLinearOLS::testCorrelation() {
-   this->calcAnalyticSolution();
-   return _analyticCorrTestData;
 }
 
 pmat::Vector pmat::LLinearOLS::targetOf(const pmat::Vector &feature) {
    pmat::Vector aux{feature};
    aux.pushBack(pmat::utils::ONE);
-   this->calcAnalyticSolution();
+   this->calcSolution();
    pmat::Vector resp{_analyticCoeffs * aux};
 
    return resp;

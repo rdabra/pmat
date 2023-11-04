@@ -9,6 +9,8 @@
 
 namespace pmat {
 
+enum class DATA_TYPE { DISCRETE, CONTINUOUS };
+
 /**
  * @brief Abstracts the Analytics Base Table (ABT)
  *
@@ -23,6 +25,8 @@ class LAnalyticsBaseTable {
       std::string _fileName{""};
       bool _hasHeader{false};
       char _separator{','};
+      DATA_TYPE _featType{DATA_TYPE::CONTINUOUS};
+      DATA_TYPE _targType{DATA_TYPE::CONTINUOUS};
 
       std::vector<std::string> _featureHeader{};
       std::vector<std::string> _targetHeader{};
@@ -127,6 +131,12 @@ class LAnalyticsBaseTable {
        * @return const pmat::Matrix&
        */
       [[nodiscard]] const pmat::Matrix &targetTestData() const { return _testTargetData; }
+
+      [[nodiscard]] DATA_TYPE featureType() const { return _featType; }
+      void setFeatureType(const DATA_TYPE &featType) { _featType = featType; }
+
+      [[nodiscard]] DATA_TYPE targetType() const { return _targType; }
+      void setTargetType(const DATA_TYPE &targType) { _targType = targType; }
 };
 } // namespace pmat
 #endif

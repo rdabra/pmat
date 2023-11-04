@@ -23,12 +23,7 @@ class LLinearOLS_GD : public pmat::LLearningModel {
       double _gdCorrTrainData{0};
       double _gdCorrTestData{0};
 
-      void calcGdSolution();
-
-      [[nodiscard]] inline double distance(const pmat::Vector &v1,
-                                           const pmat::Vector &v2) override {
-         return v1.euclideanDistantFrom(v2);
-      };
+      void calcSolution() override;
 
    public:
       LLinearOLS_GD(const pmat::LAnalyticsBaseTable &table) : pmat::LLearningModel{table} {}
@@ -64,30 +59,6 @@ class LLinearOLS_GD : public pmat::LLearningModel {
       void setTolerance(const double &tolerance);
 
       /**
-       * @brief Returns the correlation coefficient of the Gradient Descent solution relative to
-       * training data
-       *
-       * @return const double&
-       */
-      [[nodiscard]] const double &trainingCorrelation() override;
-
-      /**
-       * @brief Returns the correlation coefficient of the Gradient Descent solution relative to
-       * test data
-       *
-       * @return const double&
-       */
-      [[nodiscard]] const double &testCorrelation() override;
-
-      /**
-       * @brief Returns the target of the specified feature calculated by the analytic solution
-       *
-       * @param feature
-       * @return pmat::Vector
-       */
-      [[nodiscard]] pmat::Vector targetOf(const pmat::Vector &feature) override;
-
-      /**
        * @brief Returns the maximum number of iterations allowed for the Gradient Descent. Default
        * is 5000.
        *
@@ -101,6 +72,8 @@ class LLinearOLS_GD : public pmat::LLearningModel {
        * @param maxIterations
        */
       void setMaxIterations(int maxIterations) { _maxIterations = maxIterations; }
+
+      [[nodiscard]] pmat::Vector targetOf(const pmat::Vector &feature) override;
 };
 
 } // namespace pmat

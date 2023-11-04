@@ -36,7 +36,7 @@ TEST(TestLinearOrdinaryLeastSquares, TestGdSolution) {
    EXPECT_TRUE(lols.coefficients() == resp);
 }
 
-TEST(TestLinearOrdinaryLeastSquares, TestCorrelations) {
+TEST(TestLinearOrdinaryLeastSquares, TestDCs) {
 
    pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/pmat/test/pequeno.txt",
                                  true, ','};
@@ -45,10 +45,13 @@ TEST(TestLinearOrdinaryLeastSquares, TestCorrelations) {
    gd.setTolerance(0.00001);
    pmat::LLinearOLS an{tab};
 
-   EXPECT_TRUE(pmat::utils::areEqual(an.trainingCorrelation(), 0.882423263));
-   EXPECT_TRUE(pmat::utils::areEqual(an.testCorrelation(), -2.360560985));
-   EXPECT_TRUE(pmat::utils::areEqual(gd.trainingCorrelation(), 0.882421535));
-   EXPECT_TRUE(pmat::utils::areEqual(gd.testCorrelation(), -2.374270622));
+   auto dcAn = an.determinationCoefficients();
+   auto dcGd = gd.determinationCoefficients();
+
+   EXPECT_TRUE(pmat::utils::areEqual(dcAn.first, 0.882423263));
+   EXPECT_TRUE(pmat::utils::areEqual(dcAn.second, -2.360560985));
+   EXPECT_TRUE(pmat::utils::areEqual(dcGd.first, 0.882421535));
+   EXPECT_TRUE(pmat::utils::areEqual(dcGd.second, -2.374270622));
 }
 
 TEST(TestLinearOrdinaryLeastSquares, TestValuesOf) {

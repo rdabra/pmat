@@ -201,6 +201,10 @@ int pmat::Vector::hammingDistantFrom(const Vector &vector) const {
       std::string str1{std::to_string((int)(*this)(i))};
       std::string str2{std::to_string((int)vector(i))};
 
+      auto max = std::max(str1.length(), str2.length());
+      str1 = std::string(max - str1.length(), '0') + str1;
+      str2 = std::string(max - str2.length(), '0') + str2;
+
       if (str1.length() == str2.length()) {
          for (int j{0}; j < str1.length(); j++)
             if (str1[j] != str2[j])
