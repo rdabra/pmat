@@ -429,3 +429,25 @@ void pmat::Matrix::insertColumn(const int &col, const double &value) {
    _matrix.pushBack(initialPosition, this->columnSize(), value);
    _columnSize++;
 }
+
+void pmat::Matrix::assignToRow(const int &row, const pmat::Vector &vector) {
+   if (row >= this->rowSize())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
+   if (this->columnSize() != vector.size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   for (int j{0}; j < vector.size(); j++)
+      (*this)(row, j) = vector(j);
+}
+
+void pmat::Matrix::assignToColumn(const int &col, const pmat::Vector &vector) {
+   if (col >= this->columnSize())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
+   if (this->rowSize() != vector.size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   for (int i{0}; i < vector.size(); i++)
+      (*this)(i, col) = vector(i);
+}

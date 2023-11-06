@@ -14,6 +14,9 @@ class MatrixTriangular : public pmat::MatrixSquare {
          return MatrixSquare::operator()(row, column);
       };
 
+      void assignToRow(const int &row, const pmat::Vector &vector) override{};
+      void assignToColumn(const int &col, const pmat::Vector &vector) override{};
+
    protected:
       [[nodiscard]] int vectorIndex(const int &i, const int &j) const override = 0;
 

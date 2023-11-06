@@ -597,6 +597,24 @@ TEST(TestMatrix, TestInserts) {
    pmat::Matrix res1{dataresp1, 4, 5};
    m1.insertRow(0, 88.);
 
+   double datamm[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12.};
+   pmat::Matrix mm{datamm, 3, 4};
+   double dataLinha[] = {9, 9, 9, 9};
+   pmat::Vector vecmm{dataLinha, 4};
+   mm.assignToRow(1, vecmm);
+   double datarespmm[] = {1., 2., 3., 4., 9., 9., 9., 9., 9., 10., 11., 12.};
+   pmat::Matrix resmm{datarespmm, 3, 4};
+
+   double datammm[] = {1., 2., 3., 4., 5., 6., 7., 8., 9., 10., 11., 12.};
+   pmat::Matrix mmm{datammm, 3, 4};
+   double dataCol[] = {9, 9, 9};
+   pmat::Vector vecmmm{dataCol, 3};
+   mmm.assignToColumn(2, vecmmm);
+   double datarespmmm[] = {1., 2., 9., 4., 5., 6., 9., 8., 9., 10., 9., 12.};
+   pmat::Matrix resmmm{datarespmmm, 3, 4};
+
    EXPECT_TRUE(m == res);
    EXPECT_TRUE(m1 == res1);
+   EXPECT_TRUE(mm == resmm);
+   EXPECT_TRUE(mmm == resmmm);
 }

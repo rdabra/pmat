@@ -1,10 +1,10 @@
 #ifndef LNEARESTNEIGHBOR_H
 #define LNEARESTNEIGHBOR_H
-#include <utility>
 #pragma once
 
 #include "LAnalyticsBaseTable.h"
 #include "Matrix.h"
+#include <utility>
 
 namespace pmat {
 
@@ -54,10 +54,12 @@ class LLearningModel {
       /**
        * @brief Returns the target of the specified feature
        *
-       * @param feature
+       * @param query
        * @return pmat::Vector
        */
-      [[nodiscard]] virtual pmat::Vector targetOf(const pmat::Vector &feature) = 0;
+      [[nodiscard]] virtual pmat::Vector targetOf(const pmat::Vector &query) = 0;
+
+      [[nodiscard]] const pmat::LAnalyticsBaseTable &table() const { return *_table; }
 };
 
 } // namespace pmat

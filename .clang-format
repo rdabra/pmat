@@ -2,4 +2,5 @@
 IndentAccessModifiers: true, 
 IndentWidth: 3, 
 ColumnLimit: 100,
-AllowShortFunctionsOnASingleLine: InlineOnly}
+AllowShortFunctionsOnASingleLine: InlineOnly,
+AlwaysBreakTemplateDeclarations: Yes}

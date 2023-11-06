@@ -365,6 +365,10 @@ class Matrix : public pmat::Array {
        * @param value
        */
       virtual void insertColumn(const int &col, const double &value);
+
+      virtual void assignToRow(const int &row, const pmat::Vector &vector);
+
+      virtual void assignToColumn(const int &col, const pmat::Vector &vector);
 };
 
 } // namespace pmat

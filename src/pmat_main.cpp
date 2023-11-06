@@ -34,7 +34,7 @@ int main() {
    // std::string aa{"roberto"};
 
    std::cout << "Reading file...\n";
-   pmat::LAnalyticsBaseTable tab{47, 1, 90, "d:/sandbox/pprbe/pprbeSojaPP.csv", true, ','};
+   pmat::LAnalyticsBaseTable tab{47, 1, 90, "d:/sandbox/pprbe/pprbeSojaRBE.csv", true, ','};
    tab.setFeatureType(pmat::DATA_TYPE::DISCRETE);
    tab.readFile();
 
