@@ -2,6 +2,7 @@
 #include "../src/pmatUtils.h"
 #include "gtest/gtest.h"
 #include <cmath>
+#include <iostream>
 #include <vector>
 
 using namespace pmat;
@@ -555,32 +556,20 @@ TEST(TestMatrix, TestExtracts) {
 }
 
 TEST(TestMatrix, TestFromFile) {
-   Matrix z("../../../../test/matest.txt"); // development environment  relative path
-                                            //  Matrix z("../../test/matest.txt"); // relative path
 
-   Matrix res{4, 5};
-   res.assign(1.0, 0, 0);
-   res.assign(2.0, 0, 1);
-   res.assign(3.0, 0, 2);
-   res.assign(4.0, 0, 3);
-   res.assign(5.0, 0, 4);
-   res.assign(5.0, 1, 0);
-   res.assign(6.0, 1, 1);
-   res.assign(7.0, 1, 2);
-   res.assign(8.0, 1, 3);
-   res.assign(6.0, 1, 4);
-   res.assign(9.0, 2, 0);
-   res.assign(1.0, 2, 1);
-   res.assign(2.0, 2, 2);
-   res.assign(3.0, 2, 3);
-   res.assign(7.0, 2, 4);
-   res.assign(4.0, 3, 0);
-   res.assign(5.0, 3, 1);
-   res.assign(6.0, 3, 2);
-   res.assign(7.0, 3, 3);
-   res.assign(8.0, 3, 4);
+   std::string fileName = "../../../../test/matest.txt";
 
-   EXPECT_TRUE(z == res);
+   double data[]{1.0, 2.0, 3.0, 4.0, 5.0, 5.0, 6.0, 7.0, 8.0, 6.0,
+                 9.0, 1.0, 2.0, 3.0, 7.0, 4.0, 5.0, 6.0, 7.0, 8.0};
+
+   Matrix x{(double *)data, 4, 5};
+
+   x.writeToFile(fileName, ',');
+
+   Matrix z(fileName, ','); // development environment  relative path
+                            //  Matrix z("../../test/matest.txt"); // relative path
+
+   EXPECT_TRUE(x == z);
 }
 
 TEST(TestMatrix, TestInserts) {
@@ -617,4 +606,35 @@ TEST(TestMatrix, TestInserts) {
    EXPECT_TRUE(m1 == res1);
    EXPECT_TRUE(mm == resmm);
    EXPECT_TRUE(mmm == resmmm);
+}
+
+TEST(TestMatrix, TestAppends) {
+
+   double data1[] = {1., 2., 3., 4., 5., 6.};
+   pmat::Matrix m1{(double *)data1, 2, 3};
+
+   double data2[] = {8., 8.};
+   pmat::Vector v1{(double *)data2, 2};
+
+   double data3[] = {8., 8., 8, 8};
+   pmat::Vector v2{(double *)data3, 4};
+
+   double data4[] = {9., 9., 9, 9, 9, 9};
+   pmat::Matrix x1{(double *)data4, 3, 2};
+
+   double data5[] = {9., 9., 9, 9, 9, 9, 9., 9., 9, 9, 9, 9};
+   pmat::Matrix x2{(double *)data5, 2, 6};
+
+   m1.appendRight(v1);
+   m1.appendBottom(v2);
+   m1.appendRight(x1);
+   m1.appendBottom(x2);
+
+   double dataResp[] = {1., 2., 3., 8., 9., 9., 4., 5., 6., 8., 9., 9., 8., 8., 8.,
+                        8., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9.};
+   pmat::Matrix resp{(double *)dataResp, 5, 6};
+
+   std::cout << m1.formattedString();
+
+   EXPECT_TRUE(m1 == resp);
 }

@@ -21,6 +21,7 @@ class Vector : public Array {
       Vector() = default;
       Vector(const int &size) : _vector(size){};
       Vector(const Vector &vector);
+      Vector(const std::string &fileName, const char &separator);
       Vector(Vector &&vector) noexcept : _vector{std::move(vector._vector)} {};
       ~Vector() override = default;
       Vector(double data[], const int &size);
@@ -202,6 +203,8 @@ class Vector : public Array {
       [[nodiscard]] int hammingDistantFrom(const Vector &vector) const;
 
       [[nodiscard]] std::string formattedString() const override;
+
+      void writeToFile(const std::string &fileName, char separator) const override;
 };
 
 } // namespace pmat

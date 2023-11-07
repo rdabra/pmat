@@ -59,7 +59,7 @@ class LLearningModel {
        */
       [[nodiscard]] virtual pmat::Vector predict(const pmat::Vector &query) = 0;
 
-      [[nodiscard]] virtual pmat::Matrix predict(const pmat::Matrix &query) = 0;
+      [[nodiscard]] virtual pmat::Matrix predict(const pmat::Matrix &query);
 
       [[nodiscard]] const pmat::LAnalyticsBaseTable &table() const { return *_table; }
 };

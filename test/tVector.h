@@ -339,3 +339,17 @@ TEST(TestVector, TestMisc) {
    EXPECT_TRUE(pmat::utils::areEqual(x.euclideanDistantFrom(y), 8.94427191));
    EXPECT_TRUE(pmat::utils::areEqual(d2.hammingDistantFrom(d1), 4));
 }
+
+TEST(TestVector, TestFile) {
+
+   std::string fileName = "../../../../test/vetest.txt";
+
+   double data[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+   pmat::Vector d{(double *)data, 9};
+
+   d.writeToFile(fileName, ',');
+
+   pmat::Vector p{fileName, ','};
+
+   EXPECT_TRUE(d == p);
+}

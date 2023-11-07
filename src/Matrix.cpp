@@ -451,3 +451,61 @@ void pmat::Matrix::assignToColumn(const int &col, const pmat::Vector &vector) {
    for (int i{0}; i < vector.size(); i++)
       (*this)(i, col) = vector(i);
 }
+
+void pmat::Matrix::appendBottom(const pmat::Matrix &matrix) {
+   if (this->columnSize() != matrix.columnSize())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   for (int i{0}; i < matrix.rowSize(); i++) {
+      this->insertRow(this->rowSize() - 1, pmat::utils::ZERO);
+      for (int j{0}; j < matrix.columnSize(); j++)
+         (*this)(this->rowSize() - 1, j) = matrix(i, j);
+   }
+}
+
+void pmat::Matrix::appendBottom(const pmat::Vector &vector) {
+   if (this->columnSize() != vector.size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   this->insertRow(this->rowSize() - 1, pmat::utils::ZERO);
+   this->assignToRow(this->rowSize() - 1, vector);
+}
+
+void pmat::Matrix::appendRight(const pmat::Matrix &matrix) {
+   if (this->rowSize() != matrix.rowSize())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   for (int j{0}; j < matrix.columnSize(); j++) {
+      this->insertColumn(this->columnSize() - 1, pmat::utils::ZERO);
+      for (int i{0}; i < matrix.rowSize(); i++)
+         (*this)(i, this->columnSize() - 1) = matrix(i, j);
+   }
+}
+
+void pmat::Matrix::appendRight(const pmat::Vector &vector) {
+   if (this->rowSize() != vector.size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   this->insertColumn(this->columnSize() - 1, pmat::utils::ZERO);
+   this->assignToColumn(this->columnSize() - 1, vector);
+}
+
+void pmat::Matrix::writeToFile(const std::string &fileName, char separator) const {
+   std::ofstream f{fileName};
+   std::string line;
+   if (f.is_open()) {
+      for (int i{0}; i < this->rowSize(); i++) {
+         line = "";
+         for (int j{0}; j < this->columnSize(); j++) {
+            line += pmat::utils::format((*this)(i, j));
+            if (j != this->columnSize() - 1)
+               line += separator;
+         }
+         if (i != this->rowSize() - 1)
+            line += "\n";
+         f << line;
+      }
+      f.close();
+   } else
+      throw std::runtime_error("Could not open file.");
+}

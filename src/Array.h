@@ -69,6 +69,8 @@ class Array {
        * @return std::string
        */
       [[nodiscard]] virtual std::string formattedString() const = 0;
+
+      virtual void writeToFile(const std::string &fileName, char separator) const = 0;
 };
 
 } // namespace pmat

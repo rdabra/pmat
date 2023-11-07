@@ -309,6 +309,11 @@ class Matrix : public pmat::Array {
        */
       [[nodiscard]] pmat::Vector rowToVector(const int &row) const;
 
+      /**
+       * @brief Returns the rows of this matrix as a collection of Vectors
+       *
+       * @return std::vector<pmat::Vector>
+       */
       [[nodiscard]] std::vector<pmat::Vector> rowsToVectors() const;
 
       /**
@@ -320,6 +325,11 @@ class Matrix : public pmat::Array {
        */
       [[nodiscard]] pmat::Vector columnToVector(const int &column) const;
 
+      /**
+       * @brief Returns the columns of this matrix as a collection of Vectors
+       *
+       * @return std::vector<pmat::Vector>
+       */
       [[nodiscard]] std::vector<pmat::Vector> columnsToVectors() const;
 
       [[nodiscard]] int occurrences(const double &value) const override;
@@ -366,9 +376,47 @@ class Matrix : public pmat::Array {
        */
       virtual void insertColumn(const int &col, const double &value);
 
+      /**
+       * @brief Assigns a vector to this matrix specified row
+       *
+       * @param row
+       * @param vector must have the same size of this matrix column size
+       */
       virtual void assignToRow(const int &row, const pmat::Vector &vector);
 
+      /**
+       * @brief Assigns a vector to this matrix specified column
+       *
+       * @param col
+       * @param vector must have the same size of this matrix row size
+       */
       virtual void assignToColumn(const int &col, const pmat::Vector &vector);
+
+      /**
+       * @brief Appends a matrix to the right of this matrix
+       *
+       * @param matrix must have the same number of columns of this matrix
+       */
+      virtual void appendBottom(const pmat::Matrix &matrix);
+
+      virtual void appendBottom(const pmat::Vector &vector);
+
+      /**
+       * @brief Appends a matrix to the right of this matrix
+       *
+       * @param matrix must have the same number of rows of this matrix
+       */
+      virtual void appendRight(const pmat::Matrix &matrix);
+
+      virtual void appendRight(const pmat::Vector &vector);
+
+      /**
+       * @brief Writes each row of this matrix in a line of the specified file
+       *
+       * @param fileName
+       * @param separator delimites column values
+       */
+      void writeToFile(const std::string &fileName, char separator) const override;
 };
 
 } // namespace pmat

@@ -14,6 +14,25 @@ pmat::Vector::Vector(double data[], const int &size) {
 pmat::Vector::Vector(const Vector &vector) : _vector{vector._vector} {
 }
 
+pmat::Vector::Vector(const std::string &fileName, const char &separator) {
+   std::ifstream f{fileName};
+   if (f.is_open()) {
+      int i{0};
+      std::string line;
+      while (std::getline(f, line)) {
+         std::stringstream lineStream{line};
+         std::string element;
+         while (std::getline(lineStream, element, separator))
+            _vector.pushBack(std::stod(element));
+         i++;
+      }
+      f.close();
+      if (_vector.size() % i != 0)
+         throw std::runtime_error(pmat::messages::DATA_NOT_READ);
+   } else
+      throw std::runtime_error(pmat::messages::FILE_NOT_OPEN);
+}
+
 void pmat::Vector::resize(const int &size) {
    _vector.clear();
    _vector.resize(size);
@@ -223,4 +242,19 @@ std::string pmat::Vector::formattedString() const {
    res += "\n";
 
    return res;
+}
+
+void pmat::Vector::writeToFile(const std::string &fileName, char separator) const {
+   std::ofstream f{fileName};
+   std::string line = "";
+   if (f.is_open()) {
+      for (int i{0}; i < this->size(); i++) {
+         line += pmat::utils::format((*this)(i));
+         if (i != this->size() - 1)
+            line += separator;
+      }
+      f << line;
+      f.close();
+   } else
+      throw std::runtime_error("Could not open file.");
 }
