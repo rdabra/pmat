@@ -78,7 +78,7 @@ pmat::Matrix pmat::LLearningModel::predict(const pmat::Matrix &query) {
    if (query.columnSize() != this->_table->nFeatures())
       throw std::runtime_error("Query and model have different dimensions.");
 
-   pmat::Matrix resp{query.rowSize(), query.columnSize()};
+   pmat::Matrix resp{query.rowSize(), this->_table->nTargets()};
    for (int i{0}; i < query.rowSize(); i++)
       resp.assignToRow(i, this->predict(query.rowToVector(i)));
 
