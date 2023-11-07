@@ -236,9 +236,12 @@ int pmat::Vector::hammingDistantFrom(const Vector &vector) const {
 }
 
 std::string pmat::Vector::formattedString(const char &separator) const {
-   std::string res{"\n"};
-   for (int i{0}; i < this->size(); i++)
-      res += pmat::utils::format((*this)(i)) + separator;
+   std::string res{""};
+   for (int i{0}; i < this->size(); i++) {
+      res += pmat::utils::format((*this)(i));
+      if (i != this->size() - 1)
+         res += separator;
+   }
    res += "\n";
 
    return res;
