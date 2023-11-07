@@ -48,19 +48,57 @@ class LLearningModel {
 
       LLearningModel(const pmat::LAnalyticsBaseTable &table) : _table{&table} {}
 
+      /**
+       * @brief Returns respectively the training and test Determination Coefficients
+       *
+       * @return std::pair<double, double>
+       */
       [[nodiscard]] virtual std::pair<double, double> determinationCoefficients();
+
+      /**
+       * @brief Returns respectively the training and test Root Mean Square Errors
+       *
+       * @return std::pair<double, double>
+       */
       [[nodiscard]] virtual std::pair<double, double> rootMeanSquareErrors();
 
       /**
-       * @brief Returns the target of the specified feature
+       * @brief Returns the model prediction of the specified query
        *
        * @param query
        * @return pmat::Vector
        */
       [[nodiscard]] virtual pmat::Vector predict(const pmat::Vector &query) = 0;
 
+      /**
+       * @brief Returns the model predictions to each row of the specified query
+       *
+       * @param query has a query in each row
+       * @return pmat::Matrix shows prediction rows correspondent to query rows
+       */
       [[nodiscard]] virtual pmat::Matrix predict(const pmat::Matrix &query);
 
+      /**
+       * @brief Returns the concatenation of matrices training feature + training target +
+       * prediction
+       *
+       * @return pmat::Matrix
+       */
+      [[nodiscard]] virtual pmat::Matrix predictTraining();
+
+      /**
+       * @brief Returns the concatenation of matrices test feature + test target +
+       * prediction
+       *
+       * @return pmat::Matrix
+       */
+      [[nodiscard]] virtual pmat::Matrix predictTest();
+
+      /**
+       * @brief Returns the Analytics Base Table related to this model
+       *
+       * @return const pmat::LAnalyticsBaseTable&
+       */
       [[nodiscard]] const pmat::LAnalyticsBaseTable &table() const { return *_table; }
 };
 

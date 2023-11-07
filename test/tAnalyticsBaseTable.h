@@ -4,7 +4,7 @@
 
 TEST(TestAnalyticsBaseTable, TestMatrices) {
 
-   pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/rbepp/test/pequeno.txt",
+   pmat::LAnalyticsBaseTable tab{4,    2,  80, "D:/myWorks/programacao/pmat/test/pequeno.txt",
                                  true, ','};
    tab.readFile();
 
