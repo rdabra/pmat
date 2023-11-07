@@ -19,7 +19,7 @@ class LWeightedNN : public pmat::LLearningModel {
       LWeightedNN(const pmat::LAnalyticsBaseTable &table, int kNeighbors)
           : pmat::LLearningModel{table}, _kNeighbors{kNeighbors} {}
 
-      [[nodiscard]] std::pair<double, double> rootMeanSquareErrors() override;
+      [[nodiscard]] std::pair<double, double> relativeRootMeanSquareErrors() override;
 
       [[nodiscard]] pmat::Vector predict(const pmat::Vector &query) override;
 

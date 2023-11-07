@@ -32,12 +32,17 @@ double pmat::LLearningModel::calcRootMeanSquareError(const pmat::Matrix feature,
    std::vector<pmat::Vector> targets{target.rowsToVectors()};
 
    double distancesFromEstimation{pmat::utils::ZERO};
+   pmat::Vector sumTarg{target.columnSize()};
    for (int i{0}; i < targets.size(); i++) {
       double distFE{this->targDistance(targets[i], this->predict(features[i]))};
+      sumTarg = sumTarg + targets[i];
       distancesFromEstimation += distFE * distFE;
    }
 
-   return std::sqrt(distancesFromEstimation / (int)targets.size());
+   double aux = pmat::utils::inv((int)targets.size());
+   double average = this->targDistance(sumTarg * aux, pmat::Vector{target.columnSize()});
+
+   return std::sqrt(distancesFromEstimation * aux) / average;
 }
 
 void pmat::LLearningModel::setStatusFlags(bool status) {
@@ -59,7 +64,7 @@ std::pair<double, double> pmat::LLearningModel::determinationCoefficients() {
    return res;
 }
 
-std::pair<double, double> pmat::LLearningModel::rootMeanSquareErrors() {
+std::pair<double, double> pmat::LLearningModel::relativeRootMeanSquareErrors() {
    if (!_RMSECalculated) {
       this->calcSolution();
       _trainRMSE = this->calcRootMeanSquareError(_table->featureTrainingData(),

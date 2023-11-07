@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-std::pair<double, double> pmat::LWeightedNN::rootMeanSquareErrors() {
+std::pair<double, double> pmat::LWeightedNN::relativeRootMeanSquareErrors() {
    if (!_RMSECalculated) {
       _trainRMSE = pmat::utils::ONE;
       if (_table->featureTestData().rowSize() > 0)

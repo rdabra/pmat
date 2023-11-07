@@ -56,11 +56,12 @@ class LLearningModel {
       [[nodiscard]] virtual std::pair<double, double> determinationCoefficients();
 
       /**
-       * @brief Returns respectively the training and test Root Mean Square Errors
+       * @brief Returns respectively the training and test Root Mean Square Errors divided by the
+       * average target value
        *
        * @return std::pair<double, double>
        */
-      [[nodiscard]] virtual std::pair<double, double> rootMeanSquareErrors();
+      [[nodiscard]] virtual std::pair<double, double> relativeRootMeanSquareErrors();
 
       /**
        * @brief Returns the model prediction of the specified query
