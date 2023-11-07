@@ -202,7 +202,7 @@ class Vector : public Array {
 
       [[nodiscard]] int hammingDistantFrom(const Vector &vector) const;
 
-      [[nodiscard]] std::string formattedString() const override;
+      [[nodiscard]] std::string formattedString(const char &separator) const override;
 
       void writeToFile(const std::string &fileName, char separator) const override;
 };

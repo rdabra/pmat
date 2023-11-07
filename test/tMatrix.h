@@ -634,7 +634,5 @@ TEST(TestMatrix, TestAppends) {
                         8., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9.};
    pmat::Matrix resp{(double *)dataResp, 5, 6};
 
-   std::cout << m1.formattedString();
-
    EXPECT_TRUE(m1 == resp);
 }
