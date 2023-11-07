@@ -137,6 +137,8 @@ class LAnalyticsBaseTable {
 
       [[nodiscard]] DATA_TYPE targetType() const { return _targType; }
       void setTargetType(const DATA_TYPE &targType) { _targType = targType; }
+
+      [[nodiscard]] const bool &hasHeader() const { return _hasHeader; }
 };
 } // namespace pmat
 #endif

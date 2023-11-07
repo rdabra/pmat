@@ -42,7 +42,7 @@ pmat::Matrix::Matrix(const int &rowSize, const int &columnSize) {
    this->initializeMembers(rowSize, columnSize, false);
 }
 
-pmat::Matrix::Matrix(const std::string &fileName) {
+pmat::Matrix::Matrix(const std::string &fileName, const char &separator) {
    std::ifstream f{fileName};
    if (f.is_open()) {
       int i{0};
@@ -50,7 +50,7 @@ pmat::Matrix::Matrix(const std::string &fileName) {
       while (std::getline(f, line)) {
          std::stringstream lineStream{line};
          std::string element;
-         while (std::getline(lineStream, element, ','))
+         while (std::getline(lineStream, element, separator))
             _matrix.pushBack(std::stod(element));
          i++;
       }

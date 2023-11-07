@@ -61,8 +61,8 @@ void pmat::LLinearOLS_GD::setTolerance(const double &tolerance) {
    this->setStatusFlags(false);
 }
 
-pmat::Vector pmat::LLinearOLS_GD::targetOf(const pmat::Vector &feature) {
-   pmat::Vector aux{feature};
+pmat::Vector pmat::LLinearOLS_GD::predict(const pmat::Vector &query) {
+   pmat::Vector aux{query};
    aux.pushBack(pmat::utils::ONE);
    this->calcSolution();
    pmat::Vector resp{_gdCoeffs * aux};

@@ -17,14 +17,14 @@ std::pair<double, double> pmat::LWeightedNN::rootMeanSquareErrors() {
    return res;
 }
 
-pmat::Vector pmat::LWeightedNN::targetOf(const pmat::Vector &feature) {
+pmat::Vector pmat::LWeightedNN::predict(const pmat::Vector &query) {
    auto featTrainData = _table->featureTrainingData();
    auto targTrainData = _table->targetTrainingData();
 
    if (featTrainData.rowSize() >= _kNeighbors) {
       std::vector<std::pair<int, int>> distances;
       for (int i{0}; i < featTrainData.rowSize(); i++)
-         distances.emplace_back(i, this->featDistance(feature, featTrainData.rowToVector(i)));
+         distances.emplace_back(i, this->featDistance(query, featTrainData.rowToVector(i)));
       std::sort(distances.begin(), distances.end(),
                 [](std::pair<int, int> left, std::pair<int, int> right) {
                    return left.second < right.second;

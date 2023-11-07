@@ -18,7 +18,7 @@ double pmat::LLearningModel::calcDeterminationCoeff(const pmat::Matrix feature,
    for (int i{0}; i < targets.size(); i++) {
       double distFM{this->targDistance(mean, targets[i])};
       distancesFromMean += distFM * distFM;
-      double distFE{this->targDistance(targets[i], this->targetOf(features[i]))};
+      double distFE{this->targDistance(targets[i], this->predict(features[i]))};
       distancesFromEstimation += distFE * distFE;
    }
 
@@ -33,7 +33,7 @@ double pmat::LLearningModel::calcRootMeanSquareError(const pmat::Matrix feature,
 
    double distancesFromEstimation{pmat::utils::ZERO};
    for (int i{0}; i < targets.size(); i++) {
-      double distFE{this->targDistance(targets[i], this->targetOf(features[i]))};
+      double distFE{this->targDistance(targets[i], this->predict(features[i]))};
       distancesFromEstimation += distFE * distFE;
    }
 

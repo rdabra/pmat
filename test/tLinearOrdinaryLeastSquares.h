@@ -71,6 +71,6 @@ TEST(TestLinearOrdinaryLeastSquares, TestValuesOf) {
    pmat::Vector analytc{(double *)data1, 2};
    pmat::Vector grd{(double *)data2, 2};
 
-   EXPECT_TRUE(gd.targetOf(v) == grd);
-   EXPECT_TRUE(an.targetOf(v) == analytc);
+   EXPECT_TRUE(gd.predict(v) == grd);
+   EXPECT_TRUE(an.predict(v) == analytc);
 }

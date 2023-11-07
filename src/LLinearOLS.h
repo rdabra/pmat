@@ -30,7 +30,7 @@ class LLinearOLS : public pmat::LLearningModel {
        */
       [[nodiscard]] const pmat::Matrix &coefficients();
 
-      [[nodiscard]] pmat::Vector targetOf(const pmat::Vector &feature) override;
+      [[nodiscard]] pmat::Vector predict(const pmat::Vector &query) override;
 };
 
 } // namespace pmat

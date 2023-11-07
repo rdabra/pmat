@@ -33,29 +33,19 @@ int main() {
 
    // std::string aa{"roberto"};
 
-   std::cout << "Reading file...\n";
-   pmat::LAnalyticsBaseTable tab{47, 1, 90, "d:/sandbox/pprbe/pprbeSojaRBE.csv", true, ','};
-   tab.setFeatureType(pmat::DATA_TYPE::DISCRETE);
-   tab.readFile();
+   // std::cout << "Reading file...\n";
+   // pmat::LAnalyticsBaseTable tab{47, 1, 90, "d:/sandbox/pprbe/pprbeSojaRBE.csv", true, ','};
+   // tab.setFeatureType(pmat::DATA_TYPE::DISCRETE);
+   // tab.readFile();
 
-   pmat::LWeightedNN nn{tab, 10};
-   pmat::LLinearOLS_GD gd{tab};
-   gd.setTolerance(0.00001);
+   // pmat::LWeightedNN nn{tab, 10};
+   // pmat::LLinearOLS_GD gd{tab};
+   // gd.setTolerance(0.00001);
 
-   auto eGD = gd.rootMeanSquareErrors();
-   std::cout << "GD Test correlation: " << eGD.second << "\n";
-   auto eNN = nn.rootMeanSquareErrors();
-   std::cout << "NN Test correlation: " << eNN.second << "\n";
-
-   // std::string a = "1";
-   // std::string b = "21";
-
-   // auto max = std::max(a.length(), b.length());
-   // a = std::string(max - a.length(), '0') + a;
-   // b = std::string(max - b.length(), '0') + b;
-
-   // std::cout << "a: " << a << "\n";
-   // std::cout << "b: " << b << "\n";
+   // auto eGD = gd.rootMeanSquareErrors();
+   // std::cout << "GD Test correlation: " << eGD.second << "\n";
+   // auto eNN = nn.rootMeanSquareErrors();
+   // std::cout << "NN Test correlation: " << eNN.second << "\n";
 
    return 0;
 }

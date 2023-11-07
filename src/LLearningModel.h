@@ -57,7 +57,9 @@ class LLearningModel {
        * @param query
        * @return pmat::Vector
        */
-      [[nodiscard]] virtual pmat::Vector targetOf(const pmat::Vector &query) = 0;
+      [[nodiscard]] virtual pmat::Vector predict(const pmat::Vector &query) = 0;
+
+      [[nodiscard]] virtual pmat::Matrix predict(const pmat::Matrix &query) = 0;
 
       [[nodiscard]] const pmat::LAnalyticsBaseTable &table() const { return *_table; }
 };

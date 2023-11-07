@@ -73,7 +73,7 @@ class LLinearOLS_GD : public pmat::LLearningModel {
        */
       void setMaxIterations(int maxIterations) { _maxIterations = maxIterations; }
 
-      [[nodiscard]] pmat::Vector targetOf(const pmat::Vector &feature) override;
+      [[nodiscard]] pmat::Vector predict(const pmat::Vector &qery) override;
 };
 
 } // namespace pmat

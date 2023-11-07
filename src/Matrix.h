@@ -30,7 +30,7 @@ class Matrix : public pmat::Array {
    public:
       Matrix() = default;
       Matrix(const int &rowSize, const int &columnSize);
-      Matrix(const std::string &fileName);
+      Matrix(const std::string &fileName, const char &separator);
       Matrix(double data[], const int &rowSize, const int &columnSize);
       Matrix(const Matrix &matrix)
           : _matrix{matrix._matrix}, _rowSize{matrix.rowSize()}, _columnSize{matrix.columnSize()},
