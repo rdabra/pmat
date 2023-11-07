@@ -400,7 +400,8 @@ std::string pmat::Matrix::formattedString(const char &separator) const {
          if (j != this->columnSize() - 1)
             res += separator;
       }
-      res += "\n";
+      if (i != this->rowSize() - 1)
+         res += "\n";
    }
 
    return res;

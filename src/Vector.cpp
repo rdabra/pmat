@@ -242,7 +242,6 @@ std::string pmat::Vector::formattedString(const char &separator) const {
       if (i != this->size() - 1)
          res += separator;
    }
-   res += "\n";
 
    return res;
 }
