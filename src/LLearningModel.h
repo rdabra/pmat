@@ -80,16 +80,14 @@ class LLearningModel {
       [[nodiscard]] virtual pmat::Matrix predict(const pmat::Matrix &query);
 
       /**
-       * @brief Returns the concatenation of matrices training feature + training target +
-       * prediction
+       * @brief Returns the predictions of the training features
        *
        * @return pmat::Matrix
        */
       [[nodiscard]] virtual pmat::Matrix predictTraining();
 
       /**
-       * @brief Returns the concatenation of matrices test feature + test target +
-       * prediction
+       * @brief Returns the predictions of the test features
        *
        * @return pmat::Matrix
        */

@@ -354,7 +354,8 @@ class Matrix : public pmat::Array {
        */
       [[nodiscard]] virtual int occurrencesInColumn(const int column, const double &value) const;
 
-      [[nodiscard]] std::string formattedString(const char &separator) const override;
+      [[nodiscard]] std::string formattedString(const char &separator,
+                                                int precision) const override;
 
       /**
        * @brief Inserts a row after the specified position and sets its elements with the specified
@@ -425,7 +426,7 @@ class Matrix : public pmat::Array {
        * @param fileName
        * @param separator delimites column values
        */
-      void writeToFile(const std::string &fileName, char separator) const override;
+      void writeToFile(const std::string &fileName, char separator, int precision) const override;
 };
 
 } // namespace pmat

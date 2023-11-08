@@ -54,10 +54,10 @@ static inline double inv(const double &a) {
    return ONE / a;
 }
 
-static std::string format(const double &a) {
+static std::string format(const double &a, int precision) {
    std::stringstream stream;
    stream.setf(std::ios::fixed);
-   stream.precision(pmat::utils::PRECISION + 1);
+   stream.precision(precision + 1);
    stream << a;
 
    return stream.str();

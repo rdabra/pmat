@@ -347,7 +347,7 @@ TEST(TestVector, TestFile) {
    double data[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
    pmat::Vector d{(double *)data, 9};
 
-   d.writeToFile(fileName, ',');
+   d.writeToFile(fileName, ',', pmat::utils::PRECISION);
 
    pmat::Vector p{fileName, ','};
 

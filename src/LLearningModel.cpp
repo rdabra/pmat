@@ -91,19 +91,13 @@ pmat::Matrix pmat::LLearningModel::predict(const pmat::Matrix &query) {
 }
 
 pmat::Matrix pmat::LLearningModel::predictTraining() {
-   pmat::Matrix resp{this->_table->featureTrainingData()};
-   pmat::Matrix pred{this->predict(resp)};
-   resp.appendRight(this->_table->targetTrainingData());
-   resp.appendRight(pred);
+   pmat::Matrix resp{this->predict(this->_table->featureTrainingData())};
 
    return resp;
 }
 
 pmat::Matrix pmat::LLearningModel::predictTest() {
-   pmat::Matrix resp{this->_table->featureTestData()};
-   pmat::Matrix pred{this->predict(resp)};
-   resp.appendRight(this->_table->targetTestData());
-   resp.appendRight(pred);
+   pmat::Matrix resp{this->predict(this->_table->featureTestData())};
 
    return resp;
 }

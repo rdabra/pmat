@@ -235,10 +235,10 @@ int pmat::Vector::hammingDistantFrom(const Vector &vector) const {
    return resp;
 }
 
-std::string pmat::Vector::formattedString(const char &separator) const {
+std::string pmat::Vector::formattedString(const char &separator, int precision) const {
    std::string res{""};
    for (int i{0}; i < this->size(); i++) {
-      res += pmat::utils::format((*this)(i));
+      res += pmat::utils::format((*this)(i), precision);
       if (i != this->size() - 1)
          res += separator;
    }
@@ -246,12 +246,12 @@ std::string pmat::Vector::formattedString(const char &separator) const {
    return res;
 }
 
-void pmat::Vector::writeToFile(const std::string &fileName, char separator) const {
+void pmat::Vector::writeToFile(const std::string &fileName, char separator, int precision) const {
    std::ofstream f{fileName};
    std::string line = "";
    if (f.is_open()) {
       for (int i{0}; i < this->size(); i++) {
-         line += pmat::utils::format((*this)(i));
+         line += pmat::utils::format((*this)(i), precision);
          if (i != this->size() - 1)
             line += separator;
       }

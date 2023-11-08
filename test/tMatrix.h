@@ -564,7 +564,7 @@ TEST(TestMatrix, TestFromFile) {
 
    Matrix x{(double *)data, 4, 5};
 
-   x.writeToFile(fileName, ',');
+   x.writeToFile(fileName, ',', pmat::utils::PRECISION);
 
    Matrix z(fileName, ','); // development environment  relative path
                             //  Matrix z("../../test/matest.txt"); // relative path

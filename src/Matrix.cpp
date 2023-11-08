@@ -392,11 +392,11 @@ int pmat::Matrix::occurrencesInColumn(const int column, const double &value) con
    return res;
 }
 
-std::string pmat::Matrix::formattedString(const char &separator) const {
+std::string pmat::Matrix::formattedString(const char &separator, int precision) const {
    std::string res{""};
    for (int i{0}; i < this->rowSize(); i++) {
       for (int j{0}; j < this->columnSize(); j++) {
-         res += pmat::utils::format((*this)(i, j));
+         res += pmat::utils::format((*this)(i, j), precision);
          if (j != this->columnSize() - 1)
             res += separator;
       }
@@ -506,14 +506,14 @@ pmat::Matrix pmat::Matrix::subMatrix(const int &row, const int &col) const {
    return resp;
 }
 
-void pmat::Matrix::writeToFile(const std::string &fileName, char separator) const {
+void pmat::Matrix::writeToFile(const std::string &fileName, char separator, int precision) const {
    std::ofstream f{fileName};
    std::string line;
    if (f.is_open()) {
       for (int i{0}; i < this->rowSize(); i++) {
          line = "";
          for (int j{0}; j < this->columnSize(); j++) {
-            line += pmat::utils::format((*this)(i, j));
+            line += pmat::utils::format((*this)(i, j), precision);
             if (j != this->columnSize() - 1)
                line += separator;
          }
