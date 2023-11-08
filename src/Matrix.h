@@ -418,7 +418,9 @@ class Matrix : public pmat::Array {
        * @param col
        * @return pmat::Matrix
        */
-      [[nodiscard]] pmat::Matrix subMatrix(const int &row, const int &col) const;
+      [[nodiscard]] pmat::Matrix rightBottomSubMatrix(const int &row, const int &col) const;
+
+      [[nodiscard]] pmat::Matrix leftTopSubMatrix(const int &row, const int &col) const;
 
       /**
        * @brief Writes each row of this matrix in a line of the specified file

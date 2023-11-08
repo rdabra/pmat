@@ -640,6 +640,10 @@ TEST(TestMatrix, TestAppends) {
    double dataResp1[] = {7, 8, 11, 12};
    pmat::Matrix resp1{(double *)dataResp1, 2, 2};
 
-   EXPECT_TRUE(m2.subMatrix(1, 2) == resp1);
+   double dataResp2[] = {1, 2, 3, 5, 6, 7};
+   pmat::Matrix resp2{(double *)dataResp2, 2, 3};
+
+   EXPECT_TRUE(m2.rightBottomSubMatrix(1, 2) == resp1);
+   EXPECT_TRUE(m2.leftTopSubMatrix(1, 2) == resp2);
    EXPECT_TRUE(m1 == resp);
 }

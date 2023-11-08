@@ -494,7 +494,7 @@ void pmat::Matrix::appendRight(const pmat::Vector &vector) {
    this->assignToColumn(this->columnSize() - 1, vector);
 }
 
-pmat::Matrix pmat::Matrix::subMatrix(const int &row, const int &col) const {
+pmat::Matrix pmat::Matrix::rightBottomSubMatrix(const int &row, const int &col) const {
    if (row >= this->rowSize() || col >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);
 
@@ -502,6 +502,18 @@ pmat::Matrix pmat::Matrix::subMatrix(const int &row, const int &col) const {
    for (int i{row}; i < this->rowSize(); i++)
       for (int j{col}; j < this->columnSize(); j++)
          resp(i - row, j - col) = (*this)(i, j);
+
+   return resp;
+}
+
+pmat::Matrix pmat::Matrix::leftTopSubMatrix(const int &row, const int &col) const {
+   if (row >= this->rowSize() || col >= this->columnSize())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
+   pmat::Matrix resp{row + 1, col + 1};
+   for (int i{0}; i <= row; i++)
+      for (int j{0}; j <= col; j++)
+         resp(i, j) = (*this)(i, j);
 
    return resp;
 }
