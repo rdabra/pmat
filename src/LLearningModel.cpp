@@ -99,7 +99,7 @@ std::pair<double, double> pmat::LLearningModel::maximumDistances() {
       _trainMD =
           this->calcMaximumDistance(_table->featureTrainingData(), _table->targetTrainingData());
       if (_table->featureTestData().rowSize() > 0)
-         _testRMSE = this->calcMaximumDistance(_table->featureTestData(), _table->targetTestData());
+         _testMD = this->calcMaximumDistance(_table->featureTestData(), _table->targetTestData());
       _MDCalculated = true;
    }
    auto res = std::make_pair(_trainMD, _testMD);
