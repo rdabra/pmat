@@ -51,10 +51,10 @@ double pmat::LLearningModel::calcMaxRelativeError(const pmat::Matrix feature,
    std::vector<pmat::Vector> targets{target.rowsToVectors()};
 
    double resp{pmat::utils::ZERO};
+   pmat::Vector zero{target.columnSize()};
    for (int i{0}; i < targets.size(); i++) {
       pmat::Vector pred{this->predict(features[i])};
-      double aux{this->targDistance(pred, targets[i]) /
-                 this->targDistance(pred, pmat::Vector{target.columnSize()})};
+      double aux{this->targDistance(pred, targets[i]) / this->targDistance(pred, zero)};
       if (aux > resp)
          resp = aux;
    }
