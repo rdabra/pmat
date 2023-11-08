@@ -45,6 +45,20 @@ double pmat::LLearningModel::calcRootMeanSquareError(const pmat::Matrix feature,
    return std::sqrt(distancesFromEstimation * aux) / average;
 }
 
+double pmat::LLearningModel::calcMaximumDistance(const pmat::Matrix feature,
+                                                 const pmat::Matrix target) {
+   std::vector<pmat::Vector> features{feature.rowsToVectors()};
+   std::vector<pmat::Vector> targets{target.rowsToVectors()};
+
+   double resp{pmat::utils::ZERO};
+   for (int i{0}; i < targets.size(); i++) {
+      double distFE{this->targDistance(targets[i], this->predict(features[i]))};
+      if (distFE > resp)
+         resp = distFE;
+   }
+   return resp;
+}
+
 void pmat::LLearningModel::setStatusFlags(bool status) {
    _DCCalculated = _RMSECalculated = status;
 }
@@ -75,6 +89,20 @@ std::pair<double, double> pmat::LLearningModel::relativeRootMeanSquareErrors() {
       _RMSECalculated = true;
    }
    auto res = std::make_pair(_trainRMSE, _testRMSE);
+
+   return res;
+}
+
+std::pair<double, double> pmat::LLearningModel::maximumDistances() {
+   if (!_MDCalculated) {
+      this->calcSolution();
+      _trainMD =
+          this->calcMaximumDistance(_table->featureTrainingData(), _table->targetTrainingData());
+      if (_table->featureTestData().rowSize() > 0)
+         _testRMSE = this->calcMaximumDistance(_table->featureTestData(), _table->targetTestData());
+      _MDCalculated = true;
+   }
+   auto res = std::make_pair(_trainMD, _testMD);
 
    return res;
 }

@@ -37,6 +37,12 @@ class LLearningModel {
       [[nodiscard]] double calcRootMeanSquareError(const pmat::Matrix feature,
                                                    const pmat::Matrix target);
 
+      bool _MDCalculated{false};
+      double _trainMD{-1};
+      double _testMD{-1};
+      [[nodiscard]] double calcMaximumDistance(const pmat::Matrix feature,
+                                               const pmat::Matrix target);
+
       void setStatusFlags(bool status);
 
    public:
@@ -62,6 +68,8 @@ class LLearningModel {
        * @return std::pair<double, double>
        */
       [[nodiscard]] virtual std::pair<double, double> relativeRootMeanSquareErrors();
+
+      [[nodiscard]] virtual std::pair<double, double> maximumDistances();
 
       /**
        * @brief Returns the model prediction of the specified query
