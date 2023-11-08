@@ -32,15 +32,16 @@ double pmat::LLearningModel::calcRootMeanSquareError(const pmat::Matrix feature,
    std::vector<pmat::Vector> targets{target.rowsToVectors()};
 
    double distancesFromEstimation{pmat::utils::ZERO};
-   pmat::Vector sumTarg{target.columnSize()};
+   pmat::Vector sumPred{target.columnSize()};
    for (int i{0}; i < targets.size(); i++) {
-      double distFE{this->targDistance(targets[i], this->predict(features[i]))};
-      sumTarg = sumTarg + targets[i];
+      pmat::Vector pred{this->predict(features[i])};
+      double distFE{this->targDistance(pred, targets[i])};
+      sumPred = sumPred + pred;
       distancesFromEstimation += distFE * distFE;
    }
 
    double aux = pmat::utils::inv((int)targets.size());
-   double average = this->targDistance(sumTarg * aux, pmat::Vector{target.columnSize()});
+   double average = this->targDistance(sumPred * aux, pmat::Vector{target.columnSize()});
 
    return std::sqrt(distancesFromEstimation * aux) / average;
 }
