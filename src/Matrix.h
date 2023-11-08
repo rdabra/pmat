@@ -411,6 +411,15 @@ class Matrix : public pmat::Array {
       virtual void appendRight(const pmat::Vector &vector);
 
       /**
+       * @brief Returns a submatrix to right and bottom from the specified position
+       *
+       * @param row
+       * @param col
+       * @return pmat::Matrix
+       */
+      [[nodiscard]] pmat::Matrix subMatrix(const int &row, const int &col) const;
+
+      /**
        * @brief Writes each row of this matrix in a line of the specified file
        *
        * @param fileName

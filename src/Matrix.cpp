@@ -494,6 +494,18 @@ void pmat::Matrix::appendRight(const pmat::Vector &vector) {
    this->assignToColumn(this->columnSize() - 1, vector);
 }
 
+pmat::Matrix pmat::Matrix::subMatrix(const int &row, const int &col) const {
+   if (row >= this->rowSize() || col >= this->columnSize())
+      throw std::invalid_argument(pmat::messages::INDEX_OUT);
+
+   pmat::Matrix resp{this->rowSize() - row, this->columnSize() - col};
+   for (int i{row}; i < this->rowSize(); i++)
+      for (int j{col}; j < this->columnSize(); j++)
+         resp(i - row, j - col) = (*this)(i, j);
+
+   return resp;
+}
+
 void pmat::Matrix::writeToFile(const std::string &fileName, char separator) const {
    std::ofstream f{fileName};
    std::string line;

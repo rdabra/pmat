@@ -634,5 +634,12 @@ TEST(TestMatrix, TestAppends) {
                         8., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9., 9.};
    pmat::Matrix resp{(double *)dataResp, 5, 6};
 
+   double data6[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+   pmat::Matrix m2{(double *)data6, 3, 4};
+
+   double dataResp1[] = {7, 8, 11, 12};
+   pmat::Matrix resp1{(double *)dataResp1, 2, 2};
+
+   EXPECT_TRUE(m2.subMatrix(1, 2) == resp1);
    EXPECT_TRUE(m1 == resp);
 }
