@@ -404,7 +404,7 @@ std::string pmat::Matrix::formattedString(const char &separator, int precision) 
       if (i != this->rowSize() - 1)
          res += "]\n";
    }
-   res += "]";
+   res += "]]";
    return res;
 }
 
