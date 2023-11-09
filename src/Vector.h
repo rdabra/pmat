@@ -126,6 +126,8 @@ class Vector : public Array {
        */
       void multiplyBy(const double &scalar);
 
+      [[nodiscard]] Vector multiplyHadamardBy(const Vector &matrix) const;
+
       /**
        * @brief Calculates the dot product of this vector with the specified vector
        * @param vector Second operand
@@ -201,6 +203,10 @@ class Vector : public Array {
       [[nodiscard]] double euclideanDistantFrom(const Vector &vector) const;
 
       [[nodiscard]] int hammingDistantFrom(const Vector &vector) const;
+
+      void invertElements() override;
+
+      void squareRootElements() override;
 
       [[nodiscard]] std::string formattedString(const char &separator,
                                                 int precision) const override;

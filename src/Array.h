@@ -73,6 +73,10 @@ class Array {
 
       virtual void writeToFile(const std::string &fileName, char separator,
                                int precision) const = 0;
+
+      virtual void invertElements() = 0;
+
+      virtual void squareRootElements() = 0;
 };
 
 } // namespace pmat

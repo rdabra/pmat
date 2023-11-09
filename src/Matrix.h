@@ -411,6 +411,10 @@ class Matrix : public pmat::Array {
 
       virtual void appendRight(const pmat::Vector &vector);
 
+      void invertElements() override;
+
+      void squareRootElements() override;
+
       /**
        * @brief Returns a submatrix to right and bottom from the specified position
        *

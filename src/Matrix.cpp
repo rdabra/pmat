@@ -494,6 +494,18 @@ void pmat::Matrix::appendRight(const pmat::Vector &vector) {
    this->assignToColumn(this->columnSize() - 1, vector);
 }
 
+void pmat::Matrix::invertElements() {
+   for (int i{0}; i < this->rowSize(); i++)
+      for (int j{0}; j < this->columnSize(); j++)
+         (*this)(i, j) = pmat::utils::inv((*this)(i, j));
+}
+
+void pmat::Matrix::squareRootElements() {
+   for (int i{0}; i < this->rowSize(); i++)
+      for (int j{0}; j < this->columnSize(); j++)
+         (*this)(i, j) = std::sqrt((*this)(i, j));
+}
+
 pmat::Matrix pmat::Matrix::rightBottomSubMatrix(const int &row, const int &col) const {
    if (row >= this->rowSize() || col >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);

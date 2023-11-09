@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "Messages.h"
 #include "pmatUtils.h"
+#include <cmath>
 #include <random>
 #include <stdexcept>
 #include <string>
@@ -135,6 +136,17 @@ void pmat::Vector::multiplyBy(const double &scalar) {
       (*this)(i) = (*this)(i)*scalar;
 }
 
+pmat::Vector pmat::Vector::multiplyHadamardBy(const Vector &vector) const {
+   if (vector.size() != this->size())
+      throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
+
+   pmat::Vector resp{vector.size()};
+   for (int i = 0; i < vector.size(); i++)
+      resp(i) = (*this)(i)*vector(i);
+
+   return resp;
+}
+
 double pmat::Vector::dotProduct(const Vector &vector) const {
    if (vector.size() != this->size())
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
@@ -233,6 +245,16 @@ int pmat::Vector::hammingDistantFrom(const Vector &vector) const {
    }
 
    return resp;
+}
+
+void pmat::Vector::invertElements() {
+   for (int i{0}; i < this->size(); i++)
+      (*this)(i) = pmat::utils::inv((*this)(i));
+}
+
+void pmat::Vector::squareRootElements() {
+   for (int i{0}; i < this->size(); i++)
+      (*this)(i) = std::sqrt((*this)(i));
 }
 
 std::string pmat::Vector::formattedString(const char &separator, int precision) const {

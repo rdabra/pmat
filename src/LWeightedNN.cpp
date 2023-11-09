@@ -4,15 +4,65 @@
 #include <utility>
 #include <vector>
 
-std::pair<double, double> pmat::LWeightedNN::relativeRootMeanSquareErrors() {
-   if (!_RMSECalculated) {
-      _trainRMSE = pmat::utils::ONE;
-      if (_table->featureTestData().rowSize() > 0)
-         _testRMSE =
-             this->calcRootMeanSquareError(_table->featureTestData(), _table->targetTestData());
-      _RMSECalculated = true;
-   }
-   auto res = std::make_pair(_trainRMSE, _testRMSE);
+std::pair<double, double> pmat::LWeightedNN::distanceRelativeRootMeanSquareErrors() {
+   double train = pmat::utils::ZERO;
+   double test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcRootMeanSquareError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<double, double> pmat::LWeightedNN::distanceDeterminationCoefficients() {
+   double train = pmat::utils::ONE;
+   double test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcDeterminationCoeff(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<double, double> pmat::LWeightedNN::distanceMaximumRelativeScalarError() {
+   double train = pmat::utils::ZERO;
+   double test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcMaxRelativeError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::determinationCoefficients() {
+   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   train.fillWith(pmat::utils::ONE);
+   pmat::Vector test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcVetDeterminationCoeff(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::relativeRootMeanSquareErrors() {
+   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   train.fillWith(pmat::utils::ZERO);
+   pmat::Vector test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcVetRootMeanSquareError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::maximumRelativeError() {
+   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   train.fillWith(pmat::utils::ZERO);
+   pmat::Vector test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcVetMaxRelativeError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
 
    return res;
 }
@@ -50,5 +100,4 @@ pmat::Vector pmat::LWeightedNN::predict(const pmat::Vector &query) {
 
 void pmat::LWeightedNN::setKNeighbors(int kNeighbors) {
    _kNeighbors = kNeighbors;
-   this->setStatusFlags(false);
 }

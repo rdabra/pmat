@@ -45,8 +45,8 @@ TEST(TestLinearOrdinaryLeastSquares, TestDCs) {
    gd.setTolerance(0.00001);
    pmat::LLinearOLS an{tab};
 
-   auto dcAn = an.determinationCoefficients();
-   auto dcGd = gd.determinationCoefficients();
+   auto dcAn = an.distanceDeterminationCoefficients();
+   auto dcGd = gd.distanceDeterminationCoefficients();
 
    EXPECT_TRUE(pmat::utils::areEqual(dcAn.first, 0.882423263));
    EXPECT_TRUE(pmat::utils::areEqual(dcAn.second, -2.360560985));

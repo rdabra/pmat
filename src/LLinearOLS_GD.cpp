@@ -58,7 +58,6 @@ const pmat::Matrix &pmat::LLinearOLS_GD::coefficients() {
 void pmat::LLinearOLS_GD::setTolerance(const double &tolerance) {
    _tolerance = tolerance;
    _gdCalculated = false;
-   this->setStatusFlags(false);
 }
 
 pmat::Vector pmat::LLinearOLS_GD::predict(const pmat::Vector &query) {

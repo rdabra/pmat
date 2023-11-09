@@ -26,24 +26,23 @@ class LLearningModel {
                                                                      : v1.hammingDistantFrom(v2);
       };
 
-      bool _DCCalculated{false};
-      double _trainDC{-1};
-      double _testDC{-1};
       [[nodiscard]] double calcDeterminationCoeff(const pmat::Matrix feature,
                                                   const pmat::Matrix target);
-      bool _RMSECalculated{false};
-      double _trainRMSE{-1};
-      double _testRMSE{-1};
+
+      [[nodiscard]] pmat::Vector calcVetDeterminationCoeff(const pmat::Matrix feature,
+                                                           const pmat::Matrix target);
+
       [[nodiscard]] double calcRootMeanSquareError(const pmat::Matrix feature,
                                                    const pmat::Matrix target);
 
-      bool _MDCalculated{false};
-      double _trainMD{-1};
-      double _testMD{-1};
+      [[nodiscard]] pmat::Vector calcVetRootMeanSquareError(const pmat::Matrix feature,
+                                                            const pmat::Matrix target);
+
       [[nodiscard]] double calcMaxRelativeError(const pmat::Matrix feature,
                                                 const pmat::Matrix target);
 
-      void setStatusFlags(bool status);
+      [[nodiscard]] pmat::Vector calcVetMaxRelativeError(const pmat::Matrix feature,
+                                                         const pmat::Matrix target);
 
    public:
       LLearningModel(const LLearningModel &) = default;
@@ -54,12 +53,14 @@ class LLearningModel {
 
       LLearningModel(const pmat::LAnalyticsBaseTable &table) : _table{&table} {}
 
+      [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> determinationCoefficients();
+
       /**
        * @brief Returns respectively the training and test Determination Coefficients
        *
        * @return std::pair<double, double>
        */
-      [[nodiscard]] virtual std::pair<double, double> determinationCoefficients();
+      [[nodiscard]] virtual std::pair<double, double> distanceDeterminationCoefficients();
 
       /**
        * @brief Returns respectively the training and test Root Mean Square Errors divided by the
@@ -67,9 +68,13 @@ class LLearningModel {
        *
        * @return std::pair<double, double>
        */
-      [[nodiscard]] virtual std::pair<double, double> relativeRootMeanSquareErrors();
+      [[nodiscard]] virtual std::pair<double, double> distanceRelativeRootMeanSquareErrors();
 
-      [[nodiscard]] virtual std::pair<double, double> maximumRelativeError();
+      [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> relativeRootMeanSquareErrors();
+
+      [[nodiscard]] virtual std::pair<double, double> distanceMaximumRelativeScalarError();
+
+      [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> maximumRelativeError();
 
       /**
        * @brief Returns the model prediction of the specified query
