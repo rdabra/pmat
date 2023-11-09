@@ -113,27 +113,27 @@ double pmat::LLearningModel::calcMaxRelativeError(const pmat::Matrix feature,
    return resp;
 }
 
-// pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix feature,
-//                                                            const pmat::Matrix target) {
-//    std::vector<pmat::Vector> features{feature.rowsToVectors()};
-//    std::vector<pmat::Vector> targets{target.rowsToVectors()};
-
-//    pmat::Vector resp{target.columnSize()};
-//    for (int i{0}; i < targets.size(); i++) {
-//       pmat::Vector pred{this->predict(features[i])};
-//       pmat::Vector dif{pred - targets[i]};
-//       pred.invertElements();
-
-//       pmat::Vector aux{dif.multiplyHadamardBy(pred)};
-//       for (int j{0}; j < target.columnSize(); j++)
-//          if (std::abs(aux(j)) > resp(j))
-//             resp(j) = std::abs(aux(j));
-//    }
-//    return resp;
-// }
-
 pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix feature,
                                                            const pmat::Matrix target) {
+   std::vector<pmat::Vector> features{feature.rowsToVectors()};
+   std::vector<pmat::Vector> targets{target.rowsToVectors()};
+
+   pmat::Vector resp{target.columnSize()};
+   for (int i{0}; i < targets.size(); i++) {
+      pmat::Vector pred{this->predict(features[i])};
+      pmat::Vector dif{pred - targets[i]};
+      pred.invertElements();
+
+      pmat::Vector aux{dif.multiplyHadamardBy(pred)};
+      for (int j{0}; j < target.columnSize(); j++)
+         if (std::abs(aux(j)) > resp(j))
+            resp(j) = std::abs(aux(j));
+   }
+   return resp;
+}
+
+pmat::Vector pmat::LLearningModel::calcVetMeanRelativeError(const pmat::Matrix feature,
+                                                            const pmat::Matrix target) {
    std::vector<pmat::Vector> features{feature.rowsToVectors()};
    std::vector<pmat::Vector> targets{target.rowsToVectors()};
 
@@ -220,6 +220,19 @@ std::pair<pmat::Vector, pmat::Vector> pmat::LLearningModel::maximumRelativeError
    pmat::Vector test{};
    if (_table->featureTestData().rowSize() > 0)
       test = this->calcVetMaxRelativeError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<pmat::Vector, pmat::Vector> pmat::LLearningModel::meanRelativeError() {
+
+   this->calcSolution();
+   pmat::Vector train{
+       this->calcVetMeanRelativeError(_table->featureTrainingData(), _table->targetTrainingData())};
+   pmat::Vector test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcVetMeanRelativeError(_table->featureTestData(), _table->targetTestData());
    auto res = std::make_pair(train, test);
 
    return res;

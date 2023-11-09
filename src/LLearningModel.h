@@ -44,6 +44,8 @@ class LLearningModel {
       [[nodiscard]] pmat::Vector calcVetMaxRelativeError(const pmat::Matrix feature,
                                                          const pmat::Matrix target);
 
+      pmat::Vector calcVetMeanRelativeError(const pmat::Matrix feature, const pmat::Matrix target);
+
    public:
       LLearningModel(const LLearningModel &) = default;
       LLearningModel(LLearningModel &&) = delete;
@@ -75,6 +77,8 @@ class LLearningModel {
       [[nodiscard]] virtual std::pair<double, double> distanceMaximumRelativeScalarError();
 
       [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> maximumRelativeError();
+
+      [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> meanRelativeError();
 
       /**
        * @brief Returns the model prediction of the specified query

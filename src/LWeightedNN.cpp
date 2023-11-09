@@ -67,6 +67,17 @@ std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::maximumRelativeError() 
    return res;
 }
 
+std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::meanRelativeError() {
+   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   train.fillWith(pmat::utils::ZERO);
+   pmat::Vector test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcVetMeanRelativeError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
 pmat::Vector pmat::LWeightedNN::predict(const pmat::Vector &query) {
    auto featTrainData = _table->featureTrainingData();
    auto targTrainData = _table->targetTrainingData();
