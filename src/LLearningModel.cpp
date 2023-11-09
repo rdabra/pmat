@@ -121,6 +121,8 @@ pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix fe
    for (int i{0}; i < targets.size(); i++) {
       pmat::Vector pred{this->predict(features[i])};
       pmat::Vector dif{pred - targets[i]};
+      dif.squareElements();
+      pred.squareElements();
       pred.invertElements();
 
       pmat::Vector aux{dif.multiplyHadamardBy(pred)};
