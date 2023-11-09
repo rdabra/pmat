@@ -1,5 +1,6 @@
 #include "LLearningModel.h"
 #include "pmatUtils.h"
+#include <cstdlib>
 #include <utility>
 
 double pmat::LLearningModel::calcDeterminationCoeff(const pmat::Matrix feature,
@@ -121,14 +122,12 @@ pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix fe
    for (int i{0}; i < targets.size(); i++) {
       pmat::Vector pred{this->predict(features[i])};
       pmat::Vector dif{pred - targets[i]};
-      dif.squareElements();
-      pred.squareElements();
       pred.invertElements();
 
       pmat::Vector aux{dif.multiplyHadamardBy(pred)};
       for (int j{0}; j < target.columnSize(); j++)
-         if (aux(j) > resp(j))
-            resp(j) = aux(j);
+         if (std::abs(aux(j)) > resp(j))
+            resp(j) = std::abs(aux(j));
    }
    return resp;
 }
