@@ -413,6 +413,8 @@ class Matrix : public pmat::Array {
 
       void invertElements() override;
 
+      void squareElements() override;
+
       void squareRootElements() override;
 
       /**

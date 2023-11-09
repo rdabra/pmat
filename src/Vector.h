@@ -206,6 +206,8 @@ class Vector : public Array {
 
       void invertElements() override;
 
+      void squareElements() override;
+
       void squareRootElements() override;
 
       [[nodiscard]] std::string formattedString(const char &separator,

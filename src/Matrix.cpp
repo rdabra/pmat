@@ -501,6 +501,12 @@ void pmat::Matrix::invertElements() {
          (*this)(i, j) = pmat::utils::inv((*this)(i, j));
 }
 
+void pmat::Matrix::squareElements() {
+   for (int i{0}; i < this->rowSize(); i++)
+      for (int j{0}; j < this->columnSize(); j++)
+         (*this)(i, j) = (*this)(i, j) * (*this)(i, j);
+}
+
 void pmat::Matrix::squareRootElements() {
    for (int i{0}; i < this->rowSize(); i++)
       for (int j{0}; j < this->columnSize(); j++)

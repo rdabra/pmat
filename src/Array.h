@@ -76,6 +76,8 @@ class Array {
 
       virtual void invertElements() = 0;
 
+      virtual void squareElements() = 0;
+
       virtual void squareRootElements() = 0;
 };
 

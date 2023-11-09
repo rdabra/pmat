@@ -252,6 +252,11 @@ void pmat::Vector::invertElements() {
       (*this)(i) = pmat::utils::inv((*this)(i));
 }
 
+void pmat::Vector::squareElements() {
+   for (int i{0}; i < this->size(); i++)
+      (*this)(i) = (*this)(i) * (*this)(i);
+}
+
 void pmat::Vector::squareRootElements() {
    for (int i{0}; i < this->size(); i++)
       (*this)(i) = std::sqrt((*this)(i));
