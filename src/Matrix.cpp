@@ -393,17 +393,18 @@ int pmat::Matrix::occurrencesInColumn(const int column, const double &value) con
 }
 
 std::string pmat::Matrix::formattedString(const char &separator, int precision) const {
-   std::string res{""};
+   std::string res{"["};
    for (int i{0}; i < this->rowSize(); i++) {
+      res += "[";
       for (int j{0}; j < this->columnSize(); j++) {
          res += pmat::utils::format((*this)(i, j), precision);
          if (j != this->columnSize() - 1)
             res += separator;
       }
       if (i != this->rowSize() - 1)
-         res += "\n";
+         res += "]\n";
    }
-
+   res += "]";
    return res;
 }
 

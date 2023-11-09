@@ -258,13 +258,14 @@ void pmat::Vector::squareRootElements() {
 }
 
 std::string pmat::Vector::formattedString(const char &separator, int precision) const {
-   std::string res{""};
+   std::string res{"["};
    for (int i{0}; i < this->size(); i++) {
       res += pmat::utils::format((*this)(i), precision);
       if (i != this->size() - 1)
          res += separator;
    }
 
+   res += "]";
    return res;
 }
 
