@@ -125,8 +125,8 @@ pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix fe
 
       pmat::Vector aux{dif.multiplyHadamardBy(pred)};
       for (int j{0}; j < target.columnSize(); j++)
-         if (aux(i) > resp(i))
-            resp(i) = aux(i);
+         if (aux(j) > resp(j))
+            resp(j) = aux(j);
    }
    return resp;
 }
