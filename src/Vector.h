@@ -210,6 +210,8 @@ class Vector : public Array {
 
       void squareRootElements() override;
 
+      void absElements() override;
+
       [[nodiscard]] std::string formattedString(const char &separator,
                                                 int precision) const override;
 

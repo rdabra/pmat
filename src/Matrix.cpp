@@ -513,6 +513,12 @@ void pmat::Matrix::squareRootElements() {
          (*this)(i, j) = std::sqrt((*this)(i, j));
 }
 
+void pmat::Matrix::absElements() {
+   for (int i{0}; i < this->rowSize(); i++)
+      for (int j{0}; j < this->columnSize(); j++)
+         (*this)(i, j) = std::abs((*this)(i, j));
+}
+
 pmat::Matrix pmat::Matrix::rightBottomSubMatrix(const int &row, const int &col) const {
    if (row >= this->rowSize() || col >= this->columnSize())
       throw std::invalid_argument(pmat::messages::INDEX_OUT);

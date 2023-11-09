@@ -79,6 +79,8 @@ class Array {
       virtual void squareElements() = 0;
 
       virtual void squareRootElements() = 0;
+
+      virtual void absElements() = 0;
 };
 
 } // namespace pmat

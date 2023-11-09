@@ -417,6 +417,8 @@ class Matrix : public pmat::Array {
 
       void squareRootElements() override;
 
+      void absElements() override;
+
       /**
        * @brief Returns a submatrix to right and bottom from the specified position
        *

@@ -262,6 +262,11 @@ void pmat::Vector::squareRootElements() {
       (*this)(i) = std::sqrt((*this)(i));
 }
 
+void pmat::Vector::absElements() {
+   for (int i{0}; i < this->size(); i++)
+      (*this)(i) = std::abs((*this)(i));
+}
+
 std::string pmat::Vector::formattedString(const char &separator, int precision) const {
    std::string res{"["};
    for (int i{0}; i < this->size(); i++) {

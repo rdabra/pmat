@@ -113,6 +113,25 @@ double pmat::LLearningModel::calcMaxRelativeError(const pmat::Matrix feature,
    return resp;
 }
 
+// pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix feature,
+//                                                            const pmat::Matrix target) {
+//    std::vector<pmat::Vector> features{feature.rowsToVectors()};
+//    std::vector<pmat::Vector> targets{target.rowsToVectors()};
+
+//    pmat::Vector resp{target.columnSize()};
+//    for (int i{0}; i < targets.size(); i++) {
+//       pmat::Vector pred{this->predict(features[i])};
+//       pmat::Vector dif{pred - targets[i]};
+//       pred.invertElements();
+
+//       pmat::Vector aux{dif.multiplyHadamardBy(pred)};
+//       for (int j{0}; j < target.columnSize(); j++)
+//          if (std::abs(aux(j)) > resp(j))
+//             resp(j) = std::abs(aux(j));
+//    }
+//    return resp;
+// }
+
 pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix feature,
                                                            const pmat::Matrix target) {
    std::vector<pmat::Vector> features{feature.rowsToVectors()};
@@ -125,10 +144,12 @@ pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix fe
       pred.invertElements();
 
       pmat::Vector aux{dif.multiplyHadamardBy(pred)};
-      for (int j{0}; j < target.columnSize(); j++)
-         if (std::abs(aux(j)) > resp(j))
-            resp(j) = std::abs(aux(j));
+      aux.absElements();
+      resp = resp + aux;
    }
+   double aux{pmat::utils::inv((int)targets.size())};
+   resp.multiplyBy(aux);
+
    return resp;
 }
 
