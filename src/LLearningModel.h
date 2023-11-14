@@ -112,6 +112,12 @@ class LLearningModel {
        */
       [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> meanRelativeError();
 
+      /**
+       * @brief Returns respectively the training and test Mean Relative Error based on vector
+       * distances
+       *
+       * @return std::pair<double, double>
+       */
       [[nodiscard]] virtual std::pair<double, double> distanceMeanRelativeError();
 
       /**
