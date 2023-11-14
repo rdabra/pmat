@@ -27,16 +27,28 @@ class LWeightedNN : public pmat::LLearningModel {
 
       [[nodiscard]] std::pair<pmat::Vector, pmat::Vector> relativeRootMeanSquareErrors() override;
 
-      [[nodiscard]] std::pair<double, double> distanceMaximumRelativeScalarError() override;
+      [[nodiscard]] std::pair<double, double> distanceMaximumRelativeError() override;
 
       [[nodiscard]] std::pair<pmat::Vector, pmat::Vector> maximumRelativeError() override;
 
       std::pair<pmat::Vector, pmat::Vector> meanRelativeError() override;
 
+      [[nodiscard]] std::pair<double, double> distanceMeanRelativeError() override;
+
       [[nodiscard]] pmat::Vector predict(const pmat::Vector &query) override;
 
+      /**
+       * @brief Returns the number of neighbors to be evaluated
+       *
+       * @return int
+       */
       [[nodiscard]] int kNeighbors() const { return _kNeighbors; }
 
+      /**
+       * @brief Specifies the number of neighbors to be evaluated
+       *
+       * @param kNeighbors
+       */
       void setKNeighbors(int kNeighbors);
 };
 

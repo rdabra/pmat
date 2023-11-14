@@ -195,13 +195,19 @@ class Vector : public Array {
       [[nodiscard]] Matrix toRowMatrix() const;
 
       /**
-       * @brief Returns the Euclidean distance between this vector and the specified
+       * @brief Returns the Euclidean distance between this and the specified vector
        *
        * @param vector
        * @return double
        */
       [[nodiscard]] double euclideanDistantFrom(const Vector &vector) const;
 
+      /**
+       * @brief Returns the hamming distance between this and the specified vector
+       *
+       * @param vector
+       * @return int
+       */
       [[nodiscard]] int hammingDistantFrom(const Vector &vector) const;
 
       void invertElements() override;

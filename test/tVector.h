@@ -353,3 +353,15 @@ TEST(TestVector, TestFile) {
 
    EXPECT_TRUE(d == p);
 }
+
+TEST(TestVector, TestMathFunctions) {
+
+   double data2[] = {1., 2., 3., 4., 5., 6.};
+   pmat::Vector m2{(double *)data2, 6};
+   m2.squareElements();
+
+   double data22[] = {1., 4., 9., 16., 25., 36.};
+   pmat::Vector resp_m2{(double *)data22, 6};
+
+   EXPECT_TRUE(m2 == resp_m2);
+}

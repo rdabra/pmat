@@ -39,7 +39,7 @@ pmat::Vector pmat::LLearningModel::calcVetDeterminationCoeff(const pmat::Matrix 
    pmat::Vector diffsFromMean{target.columnSize()};
    pmat::Vector diffsFromEstimation{target.columnSize()};
    for (int i{0}; i < targets.size(); i++) {
-      pmat::Vector diffFM{mean - targets[i]};
+      pmat::Vector diffFM{targets[i] - mean};
       diffsFromMean = diffsFromMean + diffFM.multiplyHadamardBy(diffFM);
       pmat::Vector diffFE{targets[i] - this->predict(features[i])};
       diffsFromEstimation = diffsFromEstimation + diffFE.multiplyHadamardBy(diffFE);
@@ -58,17 +58,17 @@ double pmat::LLearningModel::calcRootMeanSquareError(const pmat::Matrix feature,
    std::vector<pmat::Vector> features{feature.rowsToVectors()};
    std::vector<pmat::Vector> targets{target.rowsToVectors()};
    double distancesFromEstimation{pmat::utils::ZERO};
-   pmat::Vector sumPred{target.columnSize()};
+   pmat::Vector sumEst{target.columnSize()};
 
    for (int i{0}; i < targets.size(); i++) {
-      pmat::Vector pred{this->predict(features[i])};
-      double distFE{this->targDistance(pred, targets[i])};
-      sumPred = sumPred + pred;
+      pmat::Vector est{this->predict(features[i])};
+      double distFE{this->targDistance(est, targets[i])};
+      sumEst = sumEst + est;
       distancesFromEstimation += distFE * distFE;
    }
 
    double aux = pmat::utils::inv((int)targets.size());
-   double average = this->targDistance(sumPred * aux, pmat::Vector{target.columnSize()});
+   double average = this->targDistance(sumEst * aux, pmat::Vector{target.columnSize()});
 
    return std::sqrt(distancesFromEstimation * aux) / average;
 }
@@ -77,18 +77,18 @@ pmat::Vector pmat::LLearningModel::calcVetRootMeanSquareError(const pmat::Matrix
                                                               const pmat::Matrix target) {
    std::vector<pmat::Vector> features{feature.rowsToVectors()};
    std::vector<pmat::Vector> targets{target.rowsToVectors()};
-   pmat::Vector diffsFromEst{target.columnSize()};
-   pmat::Vector sumPred{target.columnSize()};
 
+   pmat::Vector diffsFromEst{target.columnSize()};
+   pmat::Vector sumEst{target.columnSize()};
    for (int i{0}; i < targets.size(); i++) {
-      pmat::Vector pred{this->predict(features[i])};
-      pmat::Vector distFE{pred - targets[i]};
-      sumPred = sumPred + pred;
+      pmat::Vector est{this->predict(features[i])};
+      pmat::Vector distFE{est - targets[i]};
+      sumEst = sumEst + est;
       diffsFromEst = diffsFromEst + distFE.multiplyHadamardBy(distFE);
    }
 
    double aux{pmat::utils::inv((int)targets.size())};
-   pmat::Vector average{sumPred * aux};
+   pmat::Vector average{sumEst * aux};
    average.invertElements();
    pmat::Vector resp{diffsFromEst * aux};
    resp.squareRootElements();
@@ -129,6 +129,22 @@ pmat::Vector pmat::LLearningModel::calcVetMaxRelativeError(const pmat::Matrix fe
          if (std::abs(aux(j)) > resp(j))
             resp(j) = std::abs(aux(j));
    }
+   return resp;
+}
+
+double pmat::LLearningModel::calcMeanRelativeError(const pmat::Matrix feature,
+                                                   const pmat::Matrix target) {
+   std::vector<pmat::Vector> features{feature.rowsToVectors()};
+   std::vector<pmat::Vector> targets{target.rowsToVectors()};
+
+   double resp{pmat::utils::ZERO};
+   pmat::Vector aux{target.columnSize()};
+   for (int i{0}; i < targets.size(); i++) {
+      pmat::Vector pred{this->predict(features[i])};
+      resp += this->targDistance(pred, targets[i]) / this->targDistance(pred, aux);
+   }
+   resp /= (int)targets.size();
+
    return resp;
 }
 
@@ -177,7 +193,7 @@ std::pair<double, double> pmat::LLearningModel::distanceRelativeRootMeanSquareEr
    return res;
 }
 
-std::pair<double, double> pmat::LLearningModel::distanceMaximumRelativeScalarError() {
+std::pair<double, double> pmat::LLearningModel::distanceMaximumRelativeError() {
    this->calcSolution();
    double train =
        this->calcMaxRelativeError(_table->featureTrainingData(), _table->targetTrainingData());
@@ -226,13 +242,24 @@ std::pair<pmat::Vector, pmat::Vector> pmat::LLearningModel::maximumRelativeError
 }
 
 std::pair<pmat::Vector, pmat::Vector> pmat::LLearningModel::meanRelativeError() {
-
    this->calcSolution();
    pmat::Vector train{
        this->calcVetMeanRelativeError(_table->featureTrainingData(), _table->targetTrainingData())};
    pmat::Vector test{};
    if (_table->featureTestData().rowSize() > 0)
       test = this->calcVetMeanRelativeError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<double, double> pmat::LLearningModel::distanceMeanRelativeError() {
+   this->calcSolution();
+   double train =
+       this->calcMeanRelativeError(_table->featureTrainingData(), _table->targetTrainingData());
+   double test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcMeanRelativeError(_table->featureTestData(), _table->targetTestData());
    auto res = std::make_pair(train, test);
 
    return res;

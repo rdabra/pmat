@@ -16,6 +16,10 @@ class MatrixTriangular : public pmat::MatrixSquare {
 
       void assignToRow(const int &row, const pmat::Vector &vector) override{};
       void assignToColumn(const int &col, const pmat::Vector &vector) override{};
+      void appendBottom(const pmat::Matrix &matrix) override{};
+      void appendBottom(const pmat::Vector &vector) override{};
+      void appendRight(const pmat::Matrix &matrix) override{};
+      void appendRight(const pmat::Vector &vector) override{};
 
    protected:
       [[nodiscard]] int vectorIndex(const int &i, const int &j) const override = 0;

@@ -400,6 +400,11 @@ class Matrix : public pmat::Array {
        */
       virtual void appendBottom(const pmat::Matrix &matrix);
 
+      /**
+       * @brief Appends a vector to the bottom of this matrix
+       *
+       * @param vector must have the same size of this matrix col size
+       */
       virtual void appendBottom(const pmat::Vector &vector);
 
       /**
@@ -409,6 +414,11 @@ class Matrix : public pmat::Array {
        */
       virtual void appendRight(const pmat::Matrix &matrix);
 
+      /**
+       * @brief Appends a vector to the right of this matrix
+       *
+       * @param vector must have the same size of this matrix row size
+       */
       virtual void appendRight(const pmat::Vector &vector);
 
       void invertElements() override;
@@ -428,6 +438,13 @@ class Matrix : public pmat::Array {
        */
       [[nodiscard]] pmat::Matrix rightBottomSubMatrix(const int &row, const int &col) const;
 
+      /**
+       * @brief Returns a submatrix to the left and top from the specified position
+       *
+       * @param row
+       * @param col
+       * @return pmat::Matrix
+       */
       [[nodiscard]] pmat::Matrix leftTopSubMatrix(const int &row, const int &col) const;
 
       /**

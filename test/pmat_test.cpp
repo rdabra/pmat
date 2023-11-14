@@ -5,7 +5,9 @@
 #include "tMatrixSquare.h"
 #include "tMatrixSymmetric.h"
 #include "tMatrixTriangular.h"
+#include "tNearestNeighbor.h"
 #include "tVector.h"
+
 
 int main(int argc, char **argv) {
    ::testing::InitGoogleTest(&argc, argv);

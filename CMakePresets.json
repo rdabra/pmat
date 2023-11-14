@@ -9,8 +9,8 @@
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
-            "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+            "CMAKE_C_COMPILER": "clang",
+            "CMAKE_CXX_COMPILER": "clang++",
             "CMAKE_CXX_FLAGS": "-O0 -coverage",
             "CMAKE_BUILD_TYPE": "Debug"
          }
@@ -23,8 +23,8 @@
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
-            "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+            "CMAKE_C_COMPILER": "clang",
+            "CMAKE_CXX_COMPILER": "clang++",
             "CMAKE_CXX_FLAGS": "-O0 -g",
             "CMAKE_BUILD_TYPE": "Debug"
          }
@@ -37,8 +37,8 @@
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_C_COMPILER": "C:/msys64/clang64/bin/clang.exe",
-            "CMAKE_CXX_COMPILER": "C:/msys64/clang64/bin/clang++.exe",
+            "CMAKE_C_COMPILER": "clang",
+            "CMAKE_CXX_COMPILER": "clang++",
             "CMAKE_CXX_FLAGS": "-Ofast",
             "CMAKE_BUILD_TYPE": "Release"
          }
@@ -51,8 +51,8 @@
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_C_COMPILER": "C:/msys64/mingw64/bin/gcc.exe",
-            "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
+            "CMAKE_C_COMPILER": "gcc",
+            "CMAKE_CXX_COMPILER": "g++",
             "CMAKE_CXX_FLAGS": "-Ofast",
             "CMAKE_BUILD_TYPE": "Release"
          }

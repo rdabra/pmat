@@ -24,7 +24,7 @@ std::pair<double, double> pmat::LWeightedNN::distanceDeterminationCoefficients()
    return res;
 }
 
-std::pair<double, double> pmat::LWeightedNN::distanceMaximumRelativeScalarError() {
+std::pair<double, double> pmat::LWeightedNN::distanceMaximumRelativeError() {
    double train = pmat::utils::ZERO;
    double test{};
    if (_table->featureTestData().rowSize() > 0)
@@ -35,7 +35,7 @@ std::pair<double, double> pmat::LWeightedNN::distanceMaximumRelativeScalarError(
 }
 
 std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::determinationCoefficients() {
-   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   pmat::Vector train{_table->targetTrainingData().columnSize()};
    train.fillWith(pmat::utils::ONE);
    pmat::Vector test{};
    if (_table->featureTestData().rowSize() > 0)
@@ -46,7 +46,7 @@ std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::determinationCoefficien
 }
 
 std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::relativeRootMeanSquareErrors() {
-   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   pmat::Vector train{_table->targetTrainingData().columnSize()};
    train.fillWith(pmat::utils::ZERO);
    pmat::Vector test{};
    if (_table->featureTestData().rowSize() > 0)
@@ -57,7 +57,7 @@ std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::relativeRootMeanSquareE
 }
 
 std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::maximumRelativeError() {
-   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   pmat::Vector train{_table->targetTrainingData().columnSize()};
    train.fillWith(pmat::utils::ZERO);
    pmat::Vector test{};
    if (_table->featureTestData().rowSize() > 0)
@@ -68,11 +68,21 @@ std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::maximumRelativeError() 
 }
 
 std::pair<pmat::Vector, pmat::Vector> pmat::LWeightedNN::meanRelativeError() {
-   pmat::Vector train{_table->featureTrainingData().columnSize()};
+   pmat::Vector train{_table->targetTrainingData().columnSize()};
    train.fillWith(pmat::utils::ZERO);
    pmat::Vector test{};
    if (_table->featureTestData().rowSize() > 0)
       test = this->calcVetMeanRelativeError(_table->featureTestData(), _table->targetTestData());
+   auto res = std::make_pair(train, test);
+
+   return res;
+}
+
+std::pair<double, double> pmat::LWeightedNN::distanceMeanRelativeError() {
+   double train = pmat::utils::ZERO;
+   double test{};
+   if (_table->featureTestData().rowSize() > 0)
+      test = this->calcMeanRelativeError(_table->featureTestData(), _table->targetTestData());
    auto res = std::make_pair(train, test);
 
    return res;

@@ -44,6 +44,8 @@ class LLearningModel {
       [[nodiscard]] pmat::Vector calcVetMaxRelativeError(const pmat::Matrix feature,
                                                          const pmat::Matrix target);
 
+      double calcMeanRelativeError(const pmat::Matrix feature, const pmat::Matrix target);
+
       pmat::Vector calcVetMeanRelativeError(const pmat::Matrix feature, const pmat::Matrix target);
 
    public:
@@ -55,30 +57,62 @@ class LLearningModel {
 
       LLearningModel(const pmat::LAnalyticsBaseTable &table) : _table{&table} {}
 
+      /**
+       * @brief Returns respectively the training and test Determination
+       * Coefficients for each target dimension
+       *
+       * @return std::pair<pmat::Vector, pmat::Vector>
+       */
       [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> determinationCoefficients();
 
       /**
-       * @brief Returns respectively the training and test Determination Coefficients
+       * @brief Returns respectively the training and test Determination Coefficients based on
+       * vector distances
        *
        * @return std::pair<double, double>
        */
       [[nodiscard]] virtual std::pair<double, double> distanceDeterminationCoefficients();
 
       /**
-       * @brief Returns respectively the training and test Root Mean Square Errors divided by the
-       * average target value
+       * @brief Returns respectively the training and test Relative Root Average Mean Square Errors
+       * for each target dimension
+       *
+       * @return std::pair<pmat::Vector, pmat::Vector>
+       */
+      [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> relativeRootMeanSquareErrors();
+
+      /**
+       * @brief Returns respectively the training and test Relative Root Average Mean Square Errors
        *
        * @return std::pair<double, double>
        */
       [[nodiscard]] virtual std::pair<double, double> distanceRelativeRootMeanSquareErrors();
 
-      [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> relativeRootMeanSquareErrors();
+      /**
+       * @brief Returns respectively the training and test Maximum Relative Error based on
+       * vector distances
+       *
+       * @return std::pair<double, double>
+       */
+      [[nodiscard]] virtual std::pair<double, double> distanceMaximumRelativeError();
 
-      [[nodiscard]] virtual std::pair<double, double> distanceMaximumRelativeScalarError();
-
+      /**
+       * @brief Returns respectively the training and test Maximum Relative Error for each
+       * target dimension
+       *
+       * @return std::pair<pmat::Vector, pmat::Vector>
+       */
       [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> maximumRelativeError();
 
+      /**
+       * @brief Returns respectively the training and test Mean Relative Error for each
+       * target dimension
+       *
+       * @return std::pair<pmat::Vector, pmat::Vector>
+       */
       [[nodiscard]] virtual std::pair<pmat::Vector, pmat::Vector> meanRelativeError();
+
+      [[nodiscard]] virtual std::pair<double, double> distanceMeanRelativeError();
 
       /**
        * @brief Returns the model prediction of the specified query

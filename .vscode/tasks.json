@@ -18,7 +18,7 @@
       {
          "label": "cmakeClean",
          "type": "shell",
-         "command": "cmake --build ${workspaceFolder}/out/build/covClang --parallel 8 --target clean",
+         "command": "cmake --build ${workspaceFolder}/out/build/gcovClang --parallel 8 --target clean",
          "options": {
             "cwd": "${workspaceFolder}"
          },
@@ -30,7 +30,7 @@
       {
          "label": "cmakeBuild",
          "type": "shell",
-         "command": "cmake --build ${workspaceFolder}/out/build/covClang --parallel 8 --target pmat_test",
+         "command": "cmake --build ${workspaceFolder}/out/build/gcovClang --parallel 8 --target pmat_test",
          "options": {
             "cwd": "${workspaceFolder}"
          },
@@ -44,7 +44,7 @@
          "type": "shell",
          "command": "pmat_test.exe",
          "options": {
-            "cwd": "${workspaceFolder}/out/build/covClang/test/"
+            "cwd": "${workspaceFolder}/out/build/gcovClang/test/"
          },
          "dependsOn": [
             "cmakeBuild"

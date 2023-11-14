@@ -71,15 +71,38 @@ class Array {
       [[nodiscard]] virtual std::string formattedString(const char &separator,
                                                         int precision) const = 0;
 
+      /**
+       * @brief Writes this array to a specified file
+       *
+       * @param fileName
+       * @param separator
+       * @param precision
+       */
       virtual void writeToFile(const std::string &fileName, char separator,
                                int precision) const = 0;
 
+      /**
+       * @brief Performs de numerical inversion (1/x) of all this matrix elements
+       *
+       */
       virtual void invertElements() = 0;
 
+      /**
+       * @brief Takes all the elements of this matrix to the square
+       *
+       */
       virtual void squareElements() = 0;
 
+      /**
+       * @brief Calculates the square root of all the elements of this matrix
+       *
+       */
       virtual void squareRootElements() = 0;
 
+      /**
+       * @brief Calculates the absolute value of all the elements of this matrix
+       *
+       */
       virtual void absElements() = 0;
 };
 

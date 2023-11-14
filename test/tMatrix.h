@@ -2,7 +2,6 @@
 #include "../src/pmatUtils.h"
 #include "gtest/gtest.h"
 #include <cmath>
-#include <iostream>
 #include <vector>
 
 using namespace pmat;
@@ -646,4 +645,40 @@ TEST(TestMatrix, TestAppends) {
    EXPECT_TRUE(m2.rightBottomSubMatrix(1, 2) == resp1);
    EXPECT_TRUE(m2.leftTopSubMatrix(1, 2) == resp2);
    EXPECT_TRUE(m1 == resp);
+}
+
+TEST(TestMatrix, TestMathFunctions) {
+
+   double data1[] = {1., 2., 3., 4., 5., 6.};
+   pmat::Matrix m1{(double *)data1, 2, 3};
+   m1.invertElements();
+
+   double data2[] = {1., 2., 3., 4., 5., 6.};
+   pmat::Matrix m2{(double *)data2, 2, 3};
+   m2.squareElements();
+
+   double data3[] = {1., 2., 3., 4., 5., 6.};
+   pmat::Matrix m3{(double *)data3, 2, 3};
+   m3.squareRootElements();
+
+   double data4[] = {-1., -2., 3., -4., 5., -6.};
+   pmat::Matrix m4{(double *)data4, 2, 3};
+   m4.absElements();
+
+   double data11[] = {1., 0.5, 0.333333333, 0.25, 0.20, 0.166666666};
+   pmat::Matrix resp_m1{(double *)data11, 2, 3};
+
+   double data22[] = {1., 4., 9., 16., 25., 36.};
+   pmat::Matrix resp_m2{(double *)data22, 2, 3};
+
+   double data33[] = {1., 1.414213562, 1.732050807, 2., 2.236067977, 2.449489742};
+   pmat::Matrix resp_m3{(double *)data33, 2, 3};
+
+   double data44[] = {1., 2., 3., 4., 5., 6.};
+   pmat::Matrix resp_m4{(double *)data44, 2, 3};
+
+   EXPECT_TRUE(m1 == resp_m1);
+   EXPECT_TRUE(m2 == resp_m2);
+   EXPECT_TRUE(m3 == resp_m3);
+   EXPECT_TRUE(m4 == resp_m4);
 }
