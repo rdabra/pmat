@@ -18,7 +18,7 @@
       {
          "name": "debugClang",
          "displayName": "Clang(debug)",
-         "description": "Using compilers: clang.exe, clang++.exe",
+         "description": "Using compilers: clang, clang++",
          "generator": "Ninja",
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
@@ -32,7 +32,7 @@
       {
          "name": "releaseClang",
          "displayName": "Clang(Release)",
-         "description": "Using compilers: clang.exe, clang++.exe",
+         "description": "Using compilers: clang, clang++",
          "generator": "Ninja",
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
@@ -65,7 +65,7 @@
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_CXX_COMPILER": "d:/Programs/Intel/oneAPI/compiler/latest/windows/bin/icx.exe",
+            "CMAKE_CXX_COMPILER": "icpx",
             "CMAKE_CXX_FLAGS": "/Ox /EHsc",
             "CMAKE_BUILD_TYPE": "Release"
          }

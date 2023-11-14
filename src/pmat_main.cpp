@@ -8,7 +8,7 @@ int main() {
    std::string root{"D:/myWorks/programacao/rbepp/data/"};
    char separator{','};
 
-   std::cout << "Reading File..." << std::endl;
+   std::cout << "Reading Fileee..." << std::endl;
    pmat::LAnalyticsBaseTable tableRBE{47, 1, 90, root + "pprbeSojaRBE.csv", true, separator};
    tableRBE.readFile();
    std::cout << "Training size: " << tableRBE.trainingSize() << std::endl;

@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.26)
+cmake_minimum_required (VERSION 3.25)
 
 
 project(pmat LANGUAGES CXX VERSION 0.1 DESCRIPTION "SIMPLE C++ STATIC LIBRARY FOR MATRIX OPERATIONS")
