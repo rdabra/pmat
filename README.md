@@ -1,4 +1,4 @@
-# pmat: A Simple C++ Library for Matrix Operations
+# pmat: A Simple C++ Library for Matrix Operations and Machine Learning
 
 This is the repository of the C++ source code of a static library for basic operations with matrices, including some matrix decompositions (PLU, PQR, etc.) which enable the solution of linear systems and the calculation of important magnitudes such as determinants, inverse matrices, rank and others. The library currently provides a multithreaded version for matrix multiplication aiming to implement in the near future more operations and magnitudes in their multithreaded versions.
 
