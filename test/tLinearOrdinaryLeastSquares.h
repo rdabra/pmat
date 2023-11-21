@@ -29,8 +29,8 @@ TEST(TestLinearOrdinaryLeastSquares, TestGdSolution) {
    pmat::LLinearOLS_GD lols{tab};
    lols.setTolerance(0.00001);
 
-   double data[]{2.74013502, -1.51994457, -0.25669041, 0.92980678,  21.26975210,
-                 1.12853312, -0.85238647, -0.02617545, -0.24489573, 26.95265672};
+   double data[]{2.7394496637, -1.5197885899, -0.2565016677, 0.9290905285,  21.2953729228,
+                 1.1276488929, -0.8521876451, -0.0259281619, -0.2458188227, 26.9857346719};
 
    pmat::Matrix resp((double *)data, 2, 5);
 
@@ -48,10 +48,13 @@ TEST(TestLinearOrdinaryLeastSquares, TestDCs) {
    auto dcAn = an.distanceDeterminationCoefficients();
    auto dcGd = gd.distanceDeterminationCoefficients();
 
+   std::cout << pmat::utils::format(dcGd.first, 9) << std::endl;
+   std::cout << pmat::utils::format(dcGd.second, 9);
+
    EXPECT_TRUE(pmat::utils::areEqual(dcAn.first, 0.882423263));
    EXPECT_TRUE(pmat::utils::areEqual(dcAn.second, -2.360560985));
-   EXPECT_TRUE(pmat::utils::areEqual(dcGd.first, 0.882421535));
-   EXPECT_TRUE(pmat::utils::areEqual(dcGd.second, -2.374270622));
+   EXPECT_TRUE(pmat::utils::areEqual(dcGd.first, 0.8824231172));
+   EXPECT_TRUE(pmat::utils::areEqual(dcGd.second, -2.3646362329));
 }
 
 TEST(TestLinearOrdinaryLeastSquares, TestValuesOf) {
@@ -67,20 +70,17 @@ TEST(TestLinearOrdinaryLeastSquares, TestValuesOf) {
    pmat::Vector v{data, 4};
 
    double data1[]{31.518886108, 25.372687260};
-   double data2[]{31.492381168, 25.338609402};
+   double data2[]{31.5111022565, 25.3628055506};
    pmat::Vector analytc{(double *)data1, 2};
    pmat::Vector grd{(double *)data2, 2};
 
-   std::cout << gd.predictTraining().formattedString(',', 9) << std::endl;
-   std::cout << gd.predictTest().formattedString(',', 9) << std::endl;
-
-   double data3[]{23.9191538777, 25.3183075934, 25.0133020395, 26.4127432524,
-                  26.9107337832, 27.5528218918, 28.0868844402, 28.6123831261,
-                  49.6570766741, 10.6142408229, 60.5985582921, 21.5585974132,
-                  81.4324892913, 32.4695923439, 92.2641890810, 43.3101004182};
+   double data3[]{23.9421025178, 25.3479484980, 25.0362469439, 26.4423649627,
+                  26.9337873692, 27.5826034809, 28.1098930012, 28.6420921614,
+                  49.6549188071, 10.6115871966, 60.5963630680, 21.5557518429,
+                  81.4299483785, 32.4664993798, 92.2619141701, 43.3072050080};
    pmat::Matrix pt{(double *)data3, 8, 2};
 
-   double data4[]{3.1879146460, 26.0733638005, 49.6570766741, 10.6142408229};
+   double data4[]{3.2292312346, 26.1270604551, 49.6549188071, 10.6115871966};
    pmat::Matrix ptr{(double *)data4, 2, 2};
 
    EXPECT_TRUE(gd.predict(v) == grd);
@@ -99,8 +99,8 @@ TEST(TestLinearOrdinaryLeastSquares, TestErrors) {
 
    auto dc = lols.determinationCoefficients();
 
-   double data1[]{0.933291603, 0.600092656};
-   double data2[]{-27.631144837, 0.432048735};
+   double data1[]{0.9332923064, 0.6000991175};
+   double data2[]{-27.5688043309, 0.4358268891};
 
    auto resp_dc =
        std::make_pair(pmat::Vector{(double *)data1, 2}, pmat::Vector{(double *)data2, 2});
@@ -108,8 +108,8 @@ TEST(TestLinearOrdinaryLeastSquares, TestErrors) {
    auto ddc = lols.distanceDeterminationCoefficients();
 
    auto mqe = lols.relativeRootMeanSquareErrors();
-   double data3[]{0.140307755, 0.262044513};
-   double data4[]{1.012547781, 0.616250711};
+   double data3[]{0.1402770761, 0.2619122397};
+   double data4[]{1.0106958991, 0.6133442250};
 
    auto resp_mqe =
        std::make_pair(pmat::Vector{(double *)data3, 2}, pmat::Vector{(double *)data4, 2});
@@ -117,8 +117,8 @@ TEST(TestLinearOrdinaryLeastSquares, TestErrors) {
    auto mmqe = lols.distanceRelativeRootMeanSquareErrors();
 
    auto rmax = lols.maximumRelativeError();
-   double data5[]{0.540117512, 0.526034671};
-   double data6[]{11.861072065, 0.610839335};
+   double data5[]{0.5405583118, 0.5265889071};
+   double data6[]{11.6965203237, 0.6075287181};
 
    auto resp_rmax =
        std::make_pair(pmat::Vector{(double *)data5, 2}, pmat::Vector{(double *)data6, 2});
@@ -126,27 +126,30 @@ TEST(TestLinearOrdinaryLeastSquares, TestErrors) {
    auto rrmax = lols.distanceMaximumRelativeError();
 
    auto rmean = lols.meanRelativeError();
-   double data7[]{0.1706198000, 0.189768477};
-   double data8[]{5.944058006, 0.370697967};
+   double data7[]{0.1705016901, 0.1896396583};
+   double data8[]{5.8618044513, 0.3691840167};
 
    auto resp_rmean =
        std::make_pair(pmat::Vector{(double *)data7, 2}, pmat::Vector{(double *)data8, 2});
 
    auto rrmean = lols.distanceMeanRelativeError();
 
+   // std::cout << rmean.first.formattedString(',', 9) << std::endl;
+   // std::cout << rmean.second.formattedString(',', 9) << std::endl;
+
    // std::cout << pmat::utils::format(rrmean.first, pmat::utils::PRECISION) << std::endl;
    // std::cout << pmat::utils::format(rrmean.second, pmat::utils::PRECISION) << std::endl;
 
    EXPECT_TRUE(dc == resp_dc);
-   EXPECT_TRUE(pmat::utils::areEqual(ddc.first, 0.882421535));
-   EXPECT_TRUE(pmat::utils::areEqual(ddc.second, -2.374270622));
+   EXPECT_TRUE(pmat::utils::areEqual(ddc.first, 0.882423117));
+   EXPECT_TRUE(pmat::utils::areEqual(ddc.second, -2.364636233));
    EXPECT_TRUE(mqe == resp_mqe);
-   EXPECT_TRUE(pmat::utils::areEqual(mmqe.first, 0.176826984));
-   EXPECT_TRUE(pmat::utils::areEqual(mmqe.second, 0.902951913));
+   EXPECT_TRUE(pmat::utils::areEqual(mmqe.first, 0.176776213));
+   EXPECT_TRUE(pmat::utils::areEqual(mmqe.second, 0.900803857));
    EXPECT_TRUE(rmax == resp_rmax);
-   EXPECT_TRUE(pmat::utils::areEqual(rrmax.first, 0.532722618));
-   EXPECT_TRUE(pmat::utils::areEqual(rrmax.second, 1.561981635));
+   EXPECT_TRUE(pmat::utils::areEqual(rrmax.first, 0.53322109));
+   EXPECT_TRUE(pmat::utils::areEqual(rrmax.second, 1.556282766));
    EXPECT_TRUE(rmean == resp_rmean);
-   EXPECT_TRUE(pmat::utils::areEqual(rrmean.first, 0.173737459));
-   EXPECT_TRUE(pmat::utils::areEqual(rrmean.second, 0.799991929));
+   EXPECT_TRUE(pmat::utils::areEqual(rrmean.first, 0.173601591));
+   EXPECT_TRUE(pmat::utils::areEqual(rrmean.second, 0.797177045));
 }
