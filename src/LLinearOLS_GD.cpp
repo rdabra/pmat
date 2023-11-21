@@ -21,11 +21,11 @@ void pmat::LLinearOLS_GD::calcSolution() {
 
          double invNormX = pmat::utils::inv(X.getFrobeniusNorm());
          pmat::Matrix B0{targTrainData.columnSize(), featTrainData.columnSize() + 1};
-         B0.fillWith(Y.getFrobeniusNorm() * invNormX);
+         B0.fillWith(Y.getFrobeniusNorm() * invNormX * invNormX);
 
          pmat::Matrix Bl{B0 * Z};
          Bl.subtractBy(K);
-         Bl.multiplyBy(pmat::utils::MINUS_ONE * invNormX * invNormX);
+         Bl.multiplyBy(pmat::utils::MINUS_ONE * pmat::utils::ONE_HALF * invNormX * invNormX);
          Bl.addBy(B0);
 
          pmat::Matrix L{Bl - B0};
