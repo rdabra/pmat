@@ -150,6 +150,13 @@ class Matrix : public pmat::Array {
        * @param matrix Second operand
        * @exception std::invalid_argument Incompatible sizes
        */
+      void operator+=(const Matrix &matrix);
+
+      /**
+       * @brief See operator +=
+       *
+       * @param matrix
+       */
       void addBy(const Matrix &matrix);
 
       /**
@@ -166,6 +173,13 @@ class Matrix : public pmat::Array {
        *
        * @param matrix Second operand
        * @exception std::invalid_argument Incompatible sizes
+       */
+      void operator-=(const Matrix &matrix);
+
+      /**
+       * @brief See operator -=
+       *
+       * @param matrix
        */
       void subtractBy(const Matrix &matrix);
 
@@ -199,6 +213,13 @@ class Matrix : public pmat::Array {
        * @brief Multiplies this matrix and the specified scalar, setting the result in this matrix
        *
        * @param scalar Second operand of the multiplication
+       */
+      virtual void operator*=(const double &scalar);
+
+      /**
+       * @brief See operator *=
+       *
+       * @param scalar
        */
       virtual void multiplyBy(const double &scalar);
 

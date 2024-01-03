@@ -27,10 +27,14 @@ pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator+(const MatrixSymmetry &ma
    return MatrixSquare::operator+(matrix);
 }
 
-void pmat::MatrixSkewSymmetric::addBy(const MatrixSkewSymmetric &matrix) {
+void pmat::MatrixSkewSymmetric::operator+=(const MatrixSkewSymmetric &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
          this->assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
+}
+
+void pmat::MatrixSkewSymmetric::addBy(const MatrixSkewSymmetric &matrix) {
+   (*this) += matrix;
 }
 
 pmat::MatrixSkewSymmetric
@@ -46,10 +50,14 @@ pmat::MatrixSquare pmat::MatrixSkewSymmetric::operator-(const MatrixSymmetry &ma
    return MatrixSquare::operator-(matrix);
 }
 
-void pmat::MatrixSkewSymmetric::subtractBy(const MatrixSkewSymmetric &matrix) {
+void pmat::MatrixSkewSymmetric::operator-=(const MatrixSkewSymmetric &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
          this->assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
+}
+
+void pmat::MatrixSkewSymmetric::subtractBy(const MatrixSkewSymmetric &matrix) {
+   (*this) -= matrix;
 }
 
 pmat::MatrixSkewSymmetric pmat::MatrixSkewSymmetric::operator*(const double &scalar) const {
@@ -72,7 +80,7 @@ pmat::Matrix pmat::MatrixSkewSymmetric::operator*(const Matrix &matrix) const {
    return Matrix::operator*(matrix);
 }
 
-void pmat::MatrixSkewSymmetric::multiplyBy(const double &scalar) {
+void pmat::MatrixSkewSymmetric::operator*=(const double &scalar) {
    for (int i = 0; i < this->size(); i++)
       for (int j = 0; j <= i; j++)
          this->assignNoCheck((*this)(i, j) * scalar, i, j);

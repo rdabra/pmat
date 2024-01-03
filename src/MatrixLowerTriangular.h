@@ -30,12 +30,14 @@ class MatrixLowerTriangular : public pmat::MatrixTriangular {
       [[nodiscard]] double at(const int &row, const int &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixLowerTriangular operator+(const MatrixLowerTriangular &matrix) const;
+      virtual void operator+=(const MatrixLowerTriangular &matrix);
       virtual void addBy(const MatrixLowerTriangular &matrix);
       MatrixLowerTriangular operator-(const MatrixLowerTriangular &matrix) const;
+      virtual void operator-=(const MatrixLowerTriangular &matrix);
       virtual void subtractBy(const MatrixLowerTriangular &matrix);
       MatrixLowerTriangular operator*(const double &scalar) const;
       MatrixSquare operator*(const MatrixSquare &matrix) const;
-      void multiplyBy(const double &scalar) override;
+      void operator*=(const double &scalar) override;
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
       MatrixSquare operator*(const MatrixTriangular &matrix) const;

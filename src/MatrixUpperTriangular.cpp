@@ -33,10 +33,14 @@ pmat::MatrixUpperTriangular::operator+(const MatrixUpperTriangular &matrix) cons
    return res;
 }
 
-void pmat::MatrixUpperTriangular::addBy(const MatrixUpperTriangular &matrix) {
+void pmat::MatrixUpperTriangular::operator+=(const MatrixUpperTriangular &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
          this->assignNoCheck((*this)(i, j) + matrix(i, j), i, j);
+}
+
+void pmat::MatrixUpperTriangular::addBy(const MatrixUpperTriangular &matrix) {
+   (*this) += matrix;
 }
 
 pmat::MatrixUpperTriangular
@@ -49,10 +53,14 @@ pmat::MatrixUpperTriangular::operator-(const MatrixUpperTriangular &matrix) cons
    return res;
 }
 
-void pmat::MatrixUpperTriangular::subtractBy(const MatrixUpperTriangular &matrix) {
+void pmat::MatrixUpperTriangular::operator-=(const MatrixUpperTriangular &matrix) {
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
          this->assignNoCheck((*this)(i, j) - matrix(i, j), i, j);
+}
+
+void pmat::MatrixUpperTriangular::subtractBy(const MatrixUpperTriangular &matrix) {
+   (*this) -= matrix;
 }
 
 pmat::MatrixUpperTriangular pmat::MatrixUpperTriangular::operator*(const double &scalar) const {
@@ -68,7 +76,7 @@ pmat::MatrixSquare pmat::MatrixUpperTriangular::operator*(const MatrixSquare &ma
    return MatrixSquare::operator*(matrix);
 }
 
-void pmat::MatrixUpperTriangular::multiplyBy(const double &scalar) {
+void pmat::MatrixUpperTriangular::operator*=(const double &scalar) {
    for (int i = 0; i < this->size(); i++)
       for (int j = i; j < this->size(); j++)
          this->assignNoCheck((*this)(i, j) * scalar, i, j);

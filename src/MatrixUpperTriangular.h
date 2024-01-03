@@ -28,12 +28,14 @@ class MatrixUpperTriangular : public pmat::MatrixTriangular {
       [[nodiscard]] double at(const int &row, const int &column) const override;
       [[nodiscard]] double dotProduct(const Matrix &matrix) const override;
       MatrixUpperTriangular operator+(const MatrixUpperTriangular &matrix) const;
+      virtual void operator+=(const MatrixUpperTriangular &matrix);
       virtual void addBy(const MatrixUpperTriangular &matrix);
       MatrixUpperTriangular operator-(const MatrixUpperTriangular &matrix) const;
+      virtual void operator-=(const MatrixUpperTriangular &matrix);
       virtual void subtractBy(const MatrixUpperTriangular &matrix);
       MatrixUpperTriangular operator*(const double &scalar) const;
       MatrixSquare operator*(const MatrixSquare &matrix) const;
-      void multiplyBy(const double &scalar) override;
+      void operator*=(const double &scalar) override;
       MatrixSquare operator+(const MatrixSquare &matrix) const;
       MatrixSquare operator-(const MatrixSquare &matrix) const;
       Vector operator*(const Vector &vector) const override;

@@ -94,6 +94,12 @@ class Vector : public Array {
        *
        * @param vector Second operand
        */
+      void operator+=(const Vector &vector);
+
+      /**
+       * @see Operator +=
+       *
+       */
       void addBy(const Vector &vector);
 
       /**
@@ -109,6 +115,12 @@ class Vector : public Array {
        *
        * @param vector Right operand
        */
+      void operator-=(const Vector &vector);
+
+      /**
+       * @see Operator -=
+       *
+       */
       void subtractBy(const Vector &vector);
 
       /**
@@ -123,6 +135,12 @@ class Vector : public Array {
        * @brief Multiplies this vector by the specified scalar, setting the result in this vector
        *
        * @param scalar Second operand of the multiplication
+       */
+      void operator*=(const double &scalar);
+
+      /**
+       * @see Operator *=
+       *
        */
       void multiplyBy(const double &scalar);
 

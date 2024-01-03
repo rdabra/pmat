@@ -27,15 +27,17 @@ class MatrixSymmetric : public pmat::MatrixSymmetry {
       [[nodiscard]] double at(const int &row, const int &column) const override;
       MatrixSymmetric operator+(const MatrixSymmetric &matrix) const;
       MatrixSquare operator+(const MatrixSymmetry &matrix) const;
+      virtual void operator+=(const MatrixSymmetric &matrix);
       virtual void addBy(const MatrixSymmetric &matrix);
       MatrixSymmetric operator-(const MatrixSymmetric &matrix) const;
       MatrixSquare operator-(const MatrixSymmetry &matrix) const;
+      virtual void operator-=(const MatrixSymmetric &matrix);
       virtual void subtractBy(const MatrixSymmetric &matrix);
       MatrixSymmetric operator*(const double &scalar) const;
       MatrixSquare operator*(const MatrixSymmetric &matrix) const;
       Matrix operator*(const Matrix &matrix) const override;
       Vector operator*(const Vector &vector) const override;
-      void multiplyBy(const double &scalar) override;
+      void operator*=(const double &scalar) override;
       void transpose() override{};
       void fillWithRandomValues(const double &min, const double &max) override;
 

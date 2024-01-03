@@ -152,13 +152,17 @@ pmat::Matrix pmat::Matrix::operator+(const Matrix &matrix) const {
    return resp;
 }
 
-void pmat::Matrix::addBy(const Matrix &matrix) {
+void pmat::Matrix::operator+=(const Matrix &matrix) {
    if (matrix.rowSize() != this->rowSize() || matrix.columnSize() != this->columnSize())
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    for (int i = 0; i < this->rowSize(); i++)
       for (int j = 0; j < this->columnSize(); j++)
          (*this)(i, j) = (*this)(i, j) + matrix(i, j);
+}
+
+void pmat::Matrix::addBy(const Matrix &matrix) {
+   (*this) += matrix;
 }
 
 pmat::Matrix pmat::Matrix::operator-(const Matrix &matrix) const {
@@ -173,13 +177,17 @@ pmat::Matrix pmat::Matrix::operator-(const Matrix &matrix) const {
    return resp;
 }
 
-void pmat::Matrix::subtractBy(const Matrix &matrix) {
+void pmat::Matrix::operator-=(const Matrix &matrix) {
    if (matrix.rowSize() != this->rowSize() || matrix.columnSize() != this->columnSize())
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    for (int i = 0; i < this->rowSize(); i++)
       for (int j = 0; j < this->columnSize(); j++)
          (*this)(i, j) = (*this)(i, j) - matrix(i, j);
+}
+
+void pmat::Matrix::subtractBy(const Matrix &matrix) {
+   (*this) -= matrix;
 }
 
 pmat::Matrix pmat::Matrix::operator*(const Matrix &matrix) const {
@@ -223,9 +231,13 @@ pmat::Matrix pmat::Matrix::operator*(const double &scalar) const {
    return resp;
 }
 
-void pmat::Matrix::multiplyBy(const double &scalar) {
+void pmat::Matrix::operator*=(const double &scalar) {
    for (long i = 0; i < this->length(); i++)
       _matrix.set(i, _matrix(i) * scalar);
+}
+
+void pmat::Matrix::multiplyBy(const double &scalar) {
+   (*this) *= scalar;
 }
 
 pmat::Matrix pmat::Matrix::multiply(const Matrix &matrix, int nThreads) {

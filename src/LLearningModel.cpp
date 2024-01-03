@@ -12,7 +12,7 @@ double pmat::LLearningModel::calcDeterminationCoeff(const pmat::Matrix feature,
    pmat::Vector mean{targets[0]};
    for (int i{1}; i < targets.size(); i++)
       mean = mean + targets[i];
-   mean.multiplyBy(pmat::utils::inv((double)targets.size()));
+   mean *= pmat::utils::inv((double)targets.size());
 
    double distancesFromMean{pmat::utils::ZERO};
    double distancesFromEstimation{pmat::utils::ZERO};
@@ -164,7 +164,7 @@ pmat::Vector pmat::LLearningModel::calcVetMeanRelativeError(const pmat::Matrix f
       resp = resp + aux;
    }
    double aux{pmat::utils::inv((int)targets.size())};
-   resp.multiplyBy(aux);
+   resp *= aux;
 
    return resp;
 }

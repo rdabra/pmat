@@ -96,12 +96,16 @@ pmat::Vector pmat::Vector::operator+(const Vector &vector) const {
    return resp;
 }
 
-void pmat::Vector::addBy(const Vector &vector) {
+void pmat::Vector::operator+=(const Vector &vector) {
    if (vector.size() != this->size())
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    for (int i{0}; i < vector.length(); i++)
       (*this)(i) = (*this)(i) + vector(i);
+}
+
+void pmat::Vector::addBy(const Vector &vector) {
+   (*this) += vector;
 }
 
 pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
@@ -115,12 +119,16 @@ pmat::Vector pmat::Vector::operator-(const Vector &vector) const {
    return resp;
 }
 
-void pmat::Vector::subtractBy(const Vector &vector) {
+void pmat::Vector::operator-=(const Vector &vector) {
    if (vector.size() != this->size())
       throw std::invalid_argument(pmat::messages::NONCOMPT_SIZE_ARG);
 
    for (int i{0}; i < vector.length(); i++)
       (*this)(i) = (*this)(i)-vector(i);
+}
+
+void pmat::Vector::subtractBy(const Vector &vector) {
+   (*this) -= vector;
 }
 
 pmat::Vector pmat::Vector::operator*(const double &scalar) const {
@@ -131,9 +139,13 @@ pmat::Vector pmat::Vector::operator*(const double &scalar) const {
    return resp;
 }
 
-void pmat::Vector::multiplyBy(const double &scalar) {
+void pmat::Vector::operator*=(const double &scalar) {
    for (int i{0}; i < this->length(); i++)
       (*this)(i) = (*this)(i)*scalar;
+}
+
+void pmat::Vector::multiplyBy(const double &scalar) {
+   (*this) *= scalar;
 }
 
 pmat::Vector pmat::Vector::multiplyHadamardBy(const Vector &vector) const {

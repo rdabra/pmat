@@ -28,15 +28,17 @@ class MatrixSkewSymmetric : public pmat::MatrixSymmetry {
       [[nodiscard]] double at(const int &row, const int &column) const override;
       MatrixSkewSymmetric operator+(const MatrixSkewSymmetric &matrix) const;
       MatrixSquare operator+(const MatrixSymmetry &matrix) const;
+      virtual void operator+=(const MatrixSkewSymmetric &matrix);
       virtual void addBy(const MatrixSkewSymmetric &matrix);
       MatrixSkewSymmetric operator-(const MatrixSkewSymmetric &matrix) const;
       MatrixSquare operator-(const MatrixSymmetry &matrix) const;
+      virtual void operator-=(const MatrixSkewSymmetric &matrix);
       virtual void subtractBy(const MatrixSkewSymmetric &matrix);
       MatrixSkewSymmetric operator*(const double &scalar) const;
       MatrixSquare operator*(const MatrixSkewSymmetric &matrix) const;
       Vector operator*(const Vector &vector) const override;
       Matrix operator*(const Matrix &matrix) const override;
-      void multiplyBy(const double &scalar) override;
+      void operator*=(const double &scalar) override;
       void transpose() override;
       void fillWithRandomValues(const double &min, const double &max) override;
 };

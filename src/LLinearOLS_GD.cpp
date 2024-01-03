@@ -24,20 +24,20 @@ void pmat::LLinearOLS_GD::calcSolution() {
          B0.fillWith(Y.getFrobeniusNorm() * invNormX * invNormX);
 
          pmat::Matrix Bl{B0 * Z};
-         Bl.subtractBy(K);
-         Bl.multiplyBy(pmat::utils::MINUS_ONE * pmat::utils::ONE_HALF * invNormX * invNormX);
-         Bl.addBy(B0);
+         Bl -= K;
+         Bl *= pmat::utils::MINUS_ONE * pmat::utils::ONE_HALF * invNormX * invNormX;
+         Bl += B0;
 
          pmat::Matrix L{Bl - B0};
          _nIterations = 0;
          while (L.getFrobeniusNorm() > _tolerance && _nIterations < _maxIterations) {
             pmat::Matrix LZ{L * Z};
             pmat::Matrix BlZ{Bl * Z};
-            BlZ.subtractBy(K);
+            BlZ -= K;
             double norm = LZ.getFrobeniusNorm();
-            BlZ.multiplyBy(std::fabs(L.dotProduct(LZ)) / (norm * norm));
+            BlZ *= std::fabs(L.dotProduct(LZ)) / (norm * norm);
             pmat::Matrix Bl1{Bl};
-            Bl1.subtractBy(BlZ);
+            Bl1 -= BlZ;
 
             L = Bl1 - Bl;
             Bl = std::move(Bl1);
