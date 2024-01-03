@@ -65,7 +65,7 @@
          "binaryDir": "${sourceDir}/out/build/${presetName}",
          "cacheVariables": {
             "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_CXX_COMPILER": "icx.exe",
+            "CMAKE_CXX_COMPILER": "C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/icx.exe",
             "CMAKE_CXX_FLAGS": "/Ox /EHsc",
             "CMAKE_BUILD_TYPE": "Release"
          }
