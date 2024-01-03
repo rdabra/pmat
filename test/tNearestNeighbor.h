@@ -66,11 +66,6 @@ TEST(TestNearestNeighbor, TestErrors) {
 
    auto rrmean = lols.distanceMeanRelativeError();
 
-   std::cout << rmean.first.formattedString(' ', pmat::utils::PRECISION) << std::endl;
-   std::cout << rmean.second.formattedString(' ', pmat::utils::PRECISION) << std::endl;
-   std::cout << pmat::utils::format(rrmean.first, pmat::utils::PRECISION) << std::endl;
-   std::cout << pmat::utils::format(rrmean.second, pmat::utils::PRECISION) << std::endl;
-
    EXPECT_TRUE(dc == resp_dc);
    EXPECT_TRUE(pmat::utils::areEqual(ddc.first, 1.000000000));
    EXPECT_TRUE(pmat::utils::areEqual(ddc.second, 0.474189992));

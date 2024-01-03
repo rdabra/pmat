@@ -48,9 +48,6 @@ TEST(TestLinearOrdinaryLeastSquares, TestDCs) {
    auto dcAn = an.distanceDeterminationCoefficients();
    auto dcGd = gd.distanceDeterminationCoefficients();
 
-   std::cout << pmat::utils::format(dcGd.first, 9) << std::endl;
-   std::cout << pmat::utils::format(dcGd.second, 9);
-
    EXPECT_TRUE(pmat::utils::areEqual(dcAn.first, 0.882423263));
    EXPECT_TRUE(pmat::utils::areEqual(dcAn.second, -2.360560985));
    EXPECT_TRUE(pmat::utils::areEqual(dcGd.first, 0.8824231172));
