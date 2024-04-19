@@ -56,19 +56,6 @@
             "CMAKE_CXX_FLAGS": "-Ofast",
             "CMAKE_BUILD_TYPE": "Release"
          }
-      },
-      {
-         "name": "releaseIntel",
-         "displayName": "Intel(release)",
-         "description": "Using compiler: icx.exe",
-         "generator": "Ninja",
-         "binaryDir": "${sourceDir}/out/build/${presetName}",
-         "cacheVariables": {
-            "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-            "CMAKE_CXX_COMPILER": "C:/Program Files (x86)/Intel/oneAPI/compiler/latest/bin/icx.exe",
-            "CMAKE_CXX_FLAGS": "/Ox /EHsc",
-            "CMAKE_BUILD_TYPE": "Release"
-         }
       }
    ],
    "buildPresets": [
@@ -99,13 +86,6 @@
          "displayName": "Gcc(Release)",
          "jobs": 8,
          "configurePreset": "releaseGcc"
-      },
-      {
-         "name": "releaseIntel",
-         "description": "",
-         "displayName": "Intel(Release)",
-         "jobs": 8,
-         "configurePreset": "releaseIntel"
       }
    ],
    "testPresets": [
